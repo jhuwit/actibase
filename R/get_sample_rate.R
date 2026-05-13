@@ -1,3 +1,14 @@
+get_sample_rate_from_header = function(hdr, sample_rate = NULL) {
+  if (is.null(sample_rate) && !is.null(hdr)) {
+    sample_rate = hdr$Value[hdr$Field == "Sample Rate"]
+    sample_rate = as.numeric(sample_rate)
+    if (length(sample_rate) == 0) {
+      sample_rate = NULL
+    }
+  }
+  sample_rate
+}
+
 #' Get Sample Rate
 #'
 #' @param data A data set of actigraphy/activity data
@@ -18,6 +29,9 @@ get_sample_rate = function(data, sample_rate = NULL) {
   }
   if (is.null(sample_rate) || is.na(sample_rate)) {
     sample_rate = attr(data, "sample_rate")
+  }
+  if (is.null(sample_rate) || is.na(sample_rate)) {
+    sample_rate = get_sample_rate_from_header(data)
   }
   if (
     (is.null(sample_rate) || is.na(sample_rate)) &&

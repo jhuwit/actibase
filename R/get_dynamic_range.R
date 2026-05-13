@@ -1,4 +1,15 @@
 
+get_range_from_header = function(hdr, dynamic_range = NULL) {
+  if (is.null(dynamic_range) && !is.null(hdr)) {
+    dynamic_range = c(hdr$Value[hdr$Field == "Acceleration Min"],
+                      hdr$Value[hdr$Field == "Acceleration Max"])
+    dynamic_range = as.numeric(dynamic_range)
+    if (length(dynamic_range) == 0) {
+      dynamic_range = NULL
+    }
+  }
+  dynamic_range
+}
 #' Get Dynamic Range
 #'
 #' @param data An \code{AccData} object from an actigraphy reader
@@ -11,17 +22,11 @@
 get_dynamic_range = function(data, dynamic_range = NULL) {
   if (is.AccData(data)) {
     hdr = data$header
-    if (is.null(dynamic_range)) {
-      dynamic_range = c(hdr$Value[hdr$Field == "Acceleration Min"],
-                        hdr$Value[hdr$Field == "Acceleration Max"])
-      dynamic_range = as.numeric(dynamic_range)
-      if (length(dynamic_range) == 0) {
-        dynamic_range = NULL
-      }
-    }
     drange = attr(data, "dynamic_range")
     if (!is.null(drange)) {
       dynamic_range = drange
+    } else {
+      dynamic_range = get_range_from_header(hdr, dynamic_range = dynamic_range)
     }
     if (is.null(dynamic_range)) {
       if (length(hdr$accrange) > 0) {
@@ -46,6 +51,11 @@ get_dynamic_range = function(data, dynamic_range = NULL) {
   if (!is.null(drange)) {
     dynamic_range = drange
   }
+  if (is.null(dynamic_range)) {
+    hdr = attr(data, "header")
+    dynamic_range = get_range_from_header(hdr, dynamic_range = dynamic_range)
+  }
+
   if (is.null(dynamic_range)) {
     warning("No dynamic range found in header, using data estimate")
     r = range(data[c("X", "Y", "Z")], na.rm = TRUE)
