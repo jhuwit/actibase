@@ -8,9 +8,9 @@
 A data.frame with the columns
 \describe{
 \item{time}{time column}
-\item{X}{X column}
-\item{Y}{Y column}
-\item{Z}{Y column}
+\item{X}{X-axis column}
+\item{Y}{Y-axis column}
+\item{Z}{Z-axis column}
 }
 }
 \usage{
