@@ -19,6 +19,9 @@ processed = acti_process(data)
 get_transformations(processed)
 
 res = create_day_inclusion(processed)
+data = data %>%
+  mutate(date = as.Date(time)) %>%
+  left_join(res)
 
 steps = acti_calculate_stepcount(data)
 

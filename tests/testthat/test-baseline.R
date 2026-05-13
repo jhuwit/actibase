@@ -189,6 +189,18 @@ test_that("separate time and day inclusion helpers return expected summaries", {
   expect_equal(inclusion$n_minutes_wear, c(2L, 1L))
   expect_equal(inclusion$is_included, c(TRUE, FALSE))
 
+  added <- add_day_inclusion(inclusion_data, min_required = 2L)
+  expect_equal(nrow(added), nrow(inclusion_data))
+  expect_equal(
+    names(added),
+    c(
+      "time", "wear", "date", "n_minutes_wear", "n_minutes_observed",
+      "prop_minutes_wear", "prop_minutes_wear_from_observed", "is_included"
+    )
+  )
+  expect_equal(added$n_minutes_wear, c(2L, 2L, 2L, 1L))
+  expect_equal(added$is_included, c(TRUE, TRUE, TRUE, FALSE))
+
   expect_error(
     create_day_inclusion(data.frame(time = as.POSIXct("2020-01-01 00:00:00", tz = "UTC"))),
     "Columns wear are not present"
