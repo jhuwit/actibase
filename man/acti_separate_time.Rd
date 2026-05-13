@@ -2,9 +2,18 @@
 % Please edit documentation in R/acti_separate_times.R
 \name{acti_separate_time}
 \alias{acti_separate_time}
+\alias{acti_create_date}
+\alias{acti_create_hour}
+\alias{acti_create_minute}
 \title{Separate Times into Date, Hour, and Minute}
 \usage{
 acti_separate_time(data)
+
+acti_create_date(data)
+
+acti_create_hour(data)
+
+acti_create_minute(data)
 }
 \arguments{
 \item{data}{a `data.frame` with a `time` column}
@@ -17,4 +26,7 @@ Separate Times into Date, Hour, and Minute
 }
 \examples{
 acti_separate_time(acti_raw_data)
+acti_create_date(acti_raw_data)
+acti_create_hour(acti_raw_data)
+acti_create_minute(acti_raw_data)
 }
