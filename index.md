@@ -1,0 +1,35 @@
+# actibase Package
+
+`actibase` is a baseline package for raw actigraphy and activity
+workflows. It provides readers and core preprocessing helpers that
+downstream packages can build on, such as step-count or summarization
+overlays.
+
+## Installation
+
+You can install `actibase` from GitHub with:
+
+``` r
+
+# install.packages("remotes")
+remotes::install_github("jhuwit/actibase")
+```
+
+## Quick start
+
+``` r
+
+library(actibase)
+res = acti_standardize_data(acti_raw_data)
+resampled = acti_resample(res, sample_rate = 30L)
+```
+
+## What lives here
+
+`actibase` keeps the primitives that other packages can build on:
+
+- standardization and reshaping helpers
+- resampling
+
+Higher-level summarization, step-count mapping, and downstream analysis
+should live in overlay packages.
