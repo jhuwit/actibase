@@ -1,7 +1,26 @@
+#' Is the object of class `AccData`
+#'
+#' @param x object to test
+#'
+#' @returns Logical(1)
+#' @export
+#'
+#' @examples
+#' is.AccData(mtcars)
 is.AccData = function(x) {
   inherits(x, "AccData")
 }
 
+floor_sec = function(x) {
+  if (lubridate::is.POSIXct(x)) {
+    tz = lubridate::tz(x)
+    x = as.numeric(x)
+    x = floor(x)
+    as.POSIXct(x, tz = tz, origin = lubridate::origin)
+  } else {
+    lubridate::floor_date(x, "1 sec")
+  }
+}
 
 ticks2datetime = function (ticks, tz = "GMT")
 {

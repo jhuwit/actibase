@@ -2,6 +2,8 @@ Type: Package
 Package: actibase
 Title: Baseline Package for Actigraphy and Activity Analysis
 Version: 0.0.0.9000
+Author: John Muschelli
+Maintainer: John Muschelli <muschellij2@gmail.com>
 Authors@R: c(
     person(given = "John",
            family = "Muschelli",
@@ -20,9 +22,6 @@ Suggests:
     utils,
     covr,
     knitr,
-    httr,
-    rmarkdown,
-    ggplot2,
     readr
 Encoding: UTF-8
 LazyData: true

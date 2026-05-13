@@ -6,3 +6,6 @@ README_cache/
 vignettes/.build.timestamp
 docs
 .positai
+actibase.Rcheck
+.DS_Store
+actibase*.tar.gz

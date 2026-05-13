@@ -5,6 +5,10 @@
 ^appveyor\.yml$
 ^README\.Rmd$
 ^LICENSE\.md$
+(^|/)\\.DS_Store$
+^\\.gitignore$
+^\\.Rhistory$
+^\\.git$
 ^limmi\.Rproj$
 ^\.Rproj\.user$
 ^_pkgdown\.yml$
@@ -14,6 +18,7 @@
 ^README_cache$
 ^\.github$
 ^cran-comments\.md$
+^\.{2}Rcheck$
 ^CRAN-RELEASE$
 ^todo\.txt$
 ^\.positai$
@@ -22,3 +27,5 @@
 ^run\.R$
 ^actibase\.Rproj$
 ^stepcount_example\.R$
+^\.DS_Store$
+^actibase*\.tar\.gz$
