@@ -64,7 +64,7 @@ create_day_inclusion = function(
     observed = TRUE
   )
   data = data %>%
-    dplyr::full_join(all_minutes) %>%
+    dplyr::full_join(all_minutes, by = dplyr::join_by(date, hourtime)) %>%
     tidyr::replace_na(list(wear = FALSE,
                            observed = FALSE))
 
@@ -84,4 +84,25 @@ create_day_inclusion = function(
     )
 
   return(res)
+}
+
+#' @export
+#' @rdname create_day_inclusion
+#' @param ... arguments to pass to [create_day_inclusion] when using
+#' [add_day_inclusion]
+add_day_inclusion = function(
+    data,
+    ...
+) {
+  day_data =   create_day_inclusion(data, ...)
+  data = acti_standardize_data(data, subset_xyz = FALSE, check_xyz = FALSE)
+  data = data %>%
+    dplyr::mutate(
+      date = as_date_safe(time)
+    )
+
+  data = data %>%
+    dplyr::left_join(day_data, day_data, by = dplyr::join_by(date))
+
+  data
 }

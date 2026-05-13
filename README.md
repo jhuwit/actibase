@@ -3,9 +3,7 @@
 
 [![R-CMD-check](https://github.com/jhuwit/actibase/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/jhuwit/actibase/actions/workflows/R-CMD-check.yaml)
 [![Codecov test
-coverage](https://codecov.io/gh/jhuwit/actibase/branch/master/graph/badge.svg)](https://codecov.io/gh/jhuwit/actibase?branch=master)
-[![Codecov test
-coverage](https://codecov.io/gh/jhuwit/actibase/graph/badge.svg)](https://app.codecov.io/gh/jhuwit/actibase)
+coverage](https://codecov.io/gh/jhuwit/actibase/branch/main/graph/badge.svg)](https://codecov.io/gh/jhuwit/actibase?branch=main)
 <!-- badges: end -->
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->

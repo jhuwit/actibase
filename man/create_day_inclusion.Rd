@@ -2,14 +2,20 @@
 % Please edit documentation in R/create_day_inclusion.R
 \name{create_day_inclusion}
 \alias{create_day_inclusion}
+\alias{add_day_inclusion}
 \title{Create Day-Level Inclusion information}
 \usage{
 create_day_inclusion(data, min_required = 1368L)
+
+add_day_inclusion(data, ...)
 }
 \arguments{
 \item{data}{A `data.frame` with the columns `time`}
 
 \item{min_required}{Number of minutes required in a day to be called `included`}
+
+\item{...}{arguments to pass to [create_day_inclusion] when using
+[add_day_inclusion]}
 }
 \value{
 A `data.frame` for each day with information of number of minutes observed
