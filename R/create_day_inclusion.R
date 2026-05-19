@@ -94,6 +94,9 @@ add_day_inclusion = function(
     data,
     ...
 ) {
+  time = date = NULL
+  rm(list = c("time", "date"))
+
   day_data =   create_day_inclusion(data, ...)
   data = acti_standardize_data(data, subset_xyz = FALSE, check_xyz = FALSE)
   data = data %>%
