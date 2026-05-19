@@ -99,6 +99,7 @@ acti_standardize_data = function(data,
   if ("time" %in% colnames(data)) {
     cn = colnames(data)
     cn[cn == "time"] = colname_time
+    colnames(data) = cn
   }
 
   if (check_xyz) {
