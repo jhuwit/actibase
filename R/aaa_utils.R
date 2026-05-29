@@ -34,6 +34,18 @@ Round = function (x, n = 0) {
   return(sign(x) * trunc(abs(x) * 10^n + 0.5)/10^n)
 }
 
+#' Strip Hour Shift from Character Time Vector
+#'
+#' @param x character vector with times that may include hour shifts
+#' (e.g., "2019-01-01 12:00+03:00")
+#' @param max_index maximum index to grab the shift from after splitting on
+#' spaces, default is 2 (e.g., "2019-01-01 12:00")
+#'
+#' @returns A character vector with the `+`/`-` hour shift removed
+#' @export
+#'
+#' @examples
+#' strip_hour_shift(c("2019-01-01 12:00+03:00", "2019-01-01 12:00-04:00"))
 strip_hour_shift = function(x, max_index = 2L) {
   x = sub("[+]", " +", x)
   x = sub("-(\\d\\d:00)$", " -\\1", x)
@@ -46,49 +58,9 @@ strip_hour_shift = function(x, max_index = 2L) {
   xx
 }
 
-read_csv_safe = function(..., guess_max = Inf) {
-  x = readr::read_csv(..., guess_max = guess_max)
-  p = readr::problems(x)
-  cn = list(...)$col_names
-  if (is.null(cn)) {
-    cn = TRUE
-  }
-  if (nrow(p) > 0) {
-    print(p)
-    rows = unique(p$row)
-    if (cn) {
-      rows = rows - 1
-    }
-    bad_data = x[rows, unique(p$col)]
-    print("Bad Data:")
-    print(bad_data)
-  }
-  readr::stop_for_problems(x)
-  x
-}
 
 
 
-as_convert_safe = function(x, ..., func = lubridate::as_datetime) {
-  nax = is.na(x)
-  xx = func(x, ...)
-  naxx = is.na(xx)
-  any_na = !nax & naxx
-  if (any(any_na)) {
-    message("Conversion not done for:")
-    print(x[any_na])
-    stop("conversion failed")
-  }
-  xx
-}
-
-as_date_safe = function(x, ...) {
-  as_convert_safe(x, ..., func = lubridate::as_date)
-}
-
-as_datetime_safe = function(x, ...) {
-  as_convert_safe(x, ..., func = lubridate::as_datetime)
-}
 
 
 tzoffset_to_tz = function(x) {

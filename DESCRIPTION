@@ -38,4 +38,4 @@ Imports:
 URL: https://github.com/muschellij2/actibase, http://johnmuschelli.com/actibase/
 BugReports: https://github.com/muschellij2/actibase/issues
 biocViews: Infrastructure
-RoxygenNote: 7.3.3
+Config/roxygen2/version: 8.0.0
