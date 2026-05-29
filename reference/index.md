@@ -20,6 +20,10 @@
   : Standardize the Accelerometry Data
 - [`acti_tidy_axes()`](http://johnmuschelli.com/SummarizedActigraphy/reference/acti_tidy_axes.md)
   : Tidy axes to a long format
+- [`as_convert_safe()`](http://johnmuschelli.com/SummarizedActigraphy/reference/as_convert_safe.md)
+  [`as_date_safe()`](http://johnmuschelli.com/SummarizedActigraphy/reference/as_convert_safe.md)
+  [`as_datetime_safe()`](http://johnmuschelli.com/SummarizedActigraphy/reference/as_convert_safe.md)
+  : Convert vectors ensuring no new NA
 - [`create_day_inclusion()`](http://johnmuschelli.com/SummarizedActigraphy/reference/create_day_inclusion.md)
   [`add_day_inclusion()`](http://johnmuschelli.com/SummarizedActigraphy/reference/create_day_inclusion.md)
   : Create Day-Level Inclusion information
@@ -47,6 +51,8 @@
   : Is the object of class \`AccData\`
 - [`mark_condition()`](http://johnmuschelli.com/SummarizedActigraphy/reference/mark_condition.md)
   : Mark a Condition of a Specified Minimum Length
+- [`strip_hour_shift()`](http://johnmuschelli.com/SummarizedActigraphy/reference/strip_hour_shift.md)
+  : Strip Hour Shift from Character Time Vector
 - [`xyz`](http://johnmuschelli.com/SummarizedActigraphy/reference/xyz.md)
   [`xyzt`](http://johnmuschelli.com/SummarizedActigraphy/reference/xyz.md)
   [`txyz`](http://johnmuschelli.com/SummarizedActigraphy/reference/xyz.md)
