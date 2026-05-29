@@ -143,6 +143,25 @@ test_that("separate time and day inclusion helpers return expected summaries", {
   expect_equal(as.character(separated$hour[1]), "00:00:00")
   expect_equal(as.character(separated$minute[3]), "01:01:00")
 
+  separated <- acti_separate_times(time_data)
+  expect_equal(names(separated), c("time", "X", "Y", "Z", "date", "hour", "minute", "day"))
+  expect_equal(separated$day, c(1, 1, 1))
+  expect_equal(as.character(separated$hour[1]), "00:00:00")
+  expect_equal(as.character(separated$minute[3]), "01:01:00")
+
+  separated <- acti_create_hour(time_data)
+  expect_equal(names(separated), c("time", "X", "Y", "Z", "hour"))
+  expect_equal(as.character(separated$hour[1]), "00:00:00")
+
+  separated <- acti_create_minute(time_data)
+  expect_equal(names(separated), c("time", "X", "Y", "Z", "minute"))
+  expect_equal(as.character(separated$minute[3]), "01:01:00")
+
+  separated <- acti_create_date(time_data)
+  expect_equal(names(separated), c("time", "X", "Y", "Z", "date"))
+  expect_equal(separated$date[1], as.Date("2020-01-01"))
+
+
   inclusion_data <- data.frame(
     time = as.POSIXct(
       c(

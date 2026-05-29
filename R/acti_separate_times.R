@@ -32,6 +32,10 @@ acti_separate_time = function(data) {
 
 #' @export
 #' @rdname acti_separate_time
+acti_separate_times = acti_separate_time
+
+#' @export
+#' @rdname acti_separate_time
 acti_create_date = function(data) {
   time = date = NULL
   rm(list = c("date", "time"))

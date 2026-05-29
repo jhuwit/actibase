@@ -2,12 +2,15 @@
 % Please edit documentation in R/acti_separate_times.R
 \name{acti_separate_time}
 \alias{acti_separate_time}
+\alias{acti_separate_times}
 \alias{acti_create_date}
 \alias{acti_create_hour}
 \alias{acti_create_minute}
 \title{Separate Times into Date, Hour, and Minute}
 \usage{
 acti_separate_time(data)
+
+acti_separate_times(data)
 
 acti_create_date(data)
 
