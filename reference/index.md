@@ -11,6 +11,7 @@
   [`acti_resample_to_time()`](http://johnmuschelli.com/SummarizedActigraphy/reference/acti_resample.md)
   : Resample 3-axial input signal to a specific sampling rate
 - [`acti_separate_time()`](http://johnmuschelli.com/SummarizedActigraphy/reference/acti_separate_time.md)
+  [`acti_separate_times()`](http://johnmuschelli.com/SummarizedActigraphy/reference/acti_separate_time.md)
   [`acti_create_date()`](http://johnmuschelli.com/SummarizedActigraphy/reference/acti_separate_time.md)
   [`acti_create_hour()`](http://johnmuschelli.com/SummarizedActigraphy/reference/acti_separate_time.md)
   [`acti_create_minute()`](http://johnmuschelli.com/SummarizedActigraphy/reference/acti_separate_time.md)

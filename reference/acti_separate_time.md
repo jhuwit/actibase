@@ -7,6 +7,8 @@ Separate Times into Date, Hour, and Minute
 ``` r
 acti_separate_time(data)
 
+acti_separate_times(data)
+
 acti_create_date(data)
 
 acti_create_hour(data)
