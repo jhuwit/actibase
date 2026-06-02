@@ -29,6 +29,7 @@ A \`data.frame\` with date, hour, minute, and day columns
 ## Examples
 
 ``` r
+library(actibase)
 acti_separate_time(acti_raw_data)
 #> # A tibble: 240,500 × 8
 #>    time                        X      Y     Z date       hour   minute   day
