@@ -28,6 +28,7 @@ A `data.frame` with date, hour, minute, and day columns
 Separate Times into Date, Hour, and Minute
 }
 \examples{
+library(actibase)
 acti_separate_time(acti_raw_data)
 acti_create_date(acti_raw_data)
 acti_create_hour(acti_raw_data)

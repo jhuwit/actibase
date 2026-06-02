@@ -6,6 +6,7 @@
 #' @export
 #'
 #' @examples
+#' library(actibase)
 #' acti_separate_time(acti_raw_data)
 #' acti_create_date(acti_raw_data)
 #' acti_create_hour(acti_raw_data)
