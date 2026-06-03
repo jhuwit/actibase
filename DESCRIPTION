@@ -33,7 +33,7 @@ Imports:
     janitor,
     assertthat,
     vctrs
-URL: https://github.com/muschellij2/actibase, http://johnmuschelli.com/actibase/
+URL: https://github.com/muschellij2/actibase, http://johnmuschelli.com/actibase/, https://jhuwit.github.io/actibase/
 BugReports: https://github.com/muschellij2/actibase/issues
 biocViews: Infrastructure
 Config/roxygen2/version: 8.0.0
