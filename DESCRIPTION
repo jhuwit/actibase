@@ -1,7 +1,7 @@
 Type: Package
 Package: actibase
 Title: Baseline Package for Actigraphy and Activity Analysis
-Version: 0.0.1
+Version: 0.0.2
 Authors@R: c(
     person(given = "John",
            family = "Muschelli",
