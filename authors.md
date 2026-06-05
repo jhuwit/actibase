@@ -8,16 +8,16 @@
 ## Citation
 
 Source:
-[`DESCRIPTION`](https://github.com/muschellij2/actibase/blob/main/DESCRIPTION)
+[`DESCRIPTION`](https://github.com/jhuwit/actibase/blob/main/DESCRIPTION)
 
 Muschelli J (2026). *actibase: Baseline Package for Actigraphy and
 Activity Analysis*. R package version 0.1.0,
-<https://github.com/muschellij2/actibase>.
+<https://github.com/jhuwit/actibase>.
 
     @Manual{,
       title = {actibase: Baseline Package for Actigraphy and Activity Analysis},
       author = {John Muschelli},
       year = {2026},
       note = {R package version 0.1.0},
-      url = {https://github.com/muschellij2/actibase},
+      url = {https://github.com/jhuwit/actibase},
     }
