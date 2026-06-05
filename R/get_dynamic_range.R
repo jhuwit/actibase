@@ -5,13 +5,12 @@ get_range_from_header = function(hdr, dynamic_range = NULL) {
                       hdr$Value[hdr$Field == "Acceleration Max"])
     dynamic_range = as.numeric(dynamic_range)
     if (length(dynamic_range) == 0) {
-      dynamic_range = NULL
-    }
-    dynamic_range = c(hdr$acceleration_min,
-                      hdr$acceleration_max)
-    dynamic_range = as.numeric(dynamic_range)
-    if (length(dynamic_range) == 0) {
-      dynamic_range = NULL
+      dynamic_range = c(hdr$acceleration_min,
+                        hdr$acceleration_max)
+      dynamic_range = as.numeric(dynamic_range)
+      if (length(dynamic_range) == 0) {
+        dynamic_range = NULL
+      }
     }
   }
   dynamic_range
