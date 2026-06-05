@@ -11,7 +11,7 @@ Authors@R: c(
     )
 Description: Provides baseline functions for actigraphy and activity data.
     This package is intended to be extended by downstream overlays such as
-    `actiread`, `actimetrics`, and `stepcount`.
+    'actiread', 'actimetrics', and 'stepcount'.
 License: GPL-3
 Depends: 
     R (>= 3.5)
