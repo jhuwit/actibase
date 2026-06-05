@@ -23,7 +23,6 @@ Suggests:
     readr
 Encoding: UTF-8
 LazyData: true
-VignetteBuilder: knitr
 Imports: 
     magrittr,
     dplyr,
@@ -33,7 +32,6 @@ Imports:
     janitor,
     assertthat,
     vctrs
-URL: https://github.com/muschellij2/actibase, http://johnmuschelli.com/actibase/, https://jhuwit.github.io/actibase/
-BugReports: https://github.com/muschellij2/actibase/issues
-biocViews: Infrastructure
+URL: https://github.com/jhuwit/actibase, https://jhuwit.github.io/actibase/
+BugReports: https://github.com/jhuwit/actibase/issues
 Config/roxygen2/version: 8.0.0
