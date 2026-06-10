@@ -1,7 +1,7 @@
 Type: Package
 Package: actibase
-Title: Baseline Package for Actigraphy and Activity Analysis
-Version: 0.1.0
+Title: Baseline Functions for Actigraphy and Activity Processsing and Analysis
+Version: 0.2.0
 Authors@R: c(
     person(given = "John",
            family = "Muschelli",
@@ -11,10 +11,10 @@ Authors@R: c(
     )
 Description: Provides baseline functions for actigraphy and activity data.
     This package is intended to be extended by downstream overlays such as
-    'actiread', 'actimetrics', and 'stepcount'.
+    'actiread', 'actimetrics', and  'stepcount'.
 License: GPL-3
 Depends: 
-    R (>= 3.5)
+    R (>= 4.1.0)
 Suggests:
     testthat,
     utils,

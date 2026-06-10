@@ -25,11 +25,11 @@ and included
 Create Day-Level Inclusion information
 }
 \examples{
-data = acti_raw_data \%>\%
+data = acti_raw_data |>
   dplyr::mutate(r = sqrt(X^2 + Y^2 + Z^2),
-                time = lubridate::floor_date(time, "1 minute")) \%>\%
-  dplyr::group_by(time) \%>\%
-  dplyr::summarise(r = sum(r), .groups = "drop") \%>\%
+                time = lubridate::floor_date(time, "1 minute")) |>
+  dplyr::group_by(time) |>
+  dplyr::summarise(r = sum(r), .groups = "drop") |>
   dplyr::mutate(wear = r > 4000)
 
 res = create_day_inclusion(data)

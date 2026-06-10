@@ -14,8 +14,10 @@ as_convert_safe = function(x, ..., func = lubridate::as_datetime) {
   naxx = is.na(xx)
   any_na = !nax & naxx
   if (any(any_na)) {
-    message("Conversion not done for:")
-    print(x[any_na])
+    message(
+      paste("Conversion not done for:"),
+      paste0(unique(x[any_na]), collapse = ", ")
+    )
     stop("conversion failed")
   }
   xx
