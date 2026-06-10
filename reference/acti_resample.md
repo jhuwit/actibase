@@ -44,7 +44,7 @@ A \`data.frame\`/\`tibble\` of \`time\` and \`X\`, \`Y\`, \`Z\`.
 ## Examples
 
 ``` r
-options(digits.secs = 3)
+old = options(digits.secs = 3)
 x = acti_raw_data
 res = acti_resample(data = x, sample_rate = 80)
 res = acti_resample(data = x, sample_rate = 100)
@@ -58,4 +58,5 @@ res_nat = acti_resample_to_time(
   times = lubridate::floor_date(x$time, unit = "1 sec"),
   method = "natural"
 )
+options(old)
 ```
