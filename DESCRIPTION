@@ -1,6 +1,6 @@
 Type: Package
 Package: actibase
-Title: Baseline Functions for Actigraphy and Activity Processsing and Analysis
+Title: Baseline Functions for Actigraphy and Activity Processing and Analysis
 Version: 0.2.0
 Authors@R: c(
     person(given = "John",
