@@ -55,6 +55,10 @@ get_sample_rate = function(data, sample_rate = NULL) {
       sample_rate = unique(1 / as.numeric(d))
     } else {
       sample_rate = unique(round(1 / as.numeric(d)))
+      if (length(sample_rate) > 1) {
+        warning("Multiple sample rates found in data, using the rounded mean!")
+        sample_rate = round(mean(1 / as.numeric(d)))
+      }
     }
     stopifnot(length(sample_rate) == 1)
   }
