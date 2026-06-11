@@ -187,4 +187,22 @@ test_that("get_sample_rate handles header timestamp fallbacks", {
     expect_equal(actibase::get_sample_rate(fast_df), 1),
     "Guessing sample_rate"
   )
+
+  uneven_fast_df <- data.frame(
+    time = as.POSIXct("2020-01-01 00:00:00", tz = "UTC") + c(0, 0.01, 0.03),
+    X = 1:3,
+    Y = 4:6,
+    Z = 7:9
+  )
+  warnings <- character()
+  uneven_sample_rate <- withCallingHandlers(
+    actibase::get_sample_rate(uneven_fast_df),
+    warning = function(w) {
+      warnings <<- c(warnings, conditionMessage(w))
+      invokeRestart("muffleWarning")
+    }
+  )
+  expect_equal(uneven_sample_rate, 75)
+  expect_true(any(grepl("Guessing sample_rate", warnings)))
+  expect_true(any(grepl("Multiple sample rates", warnings)))
 })
