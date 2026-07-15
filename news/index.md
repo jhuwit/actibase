@@ -2,7 +2,7 @@
 
 ## actibase 0.3.0
 
-- Bug fix for get_dynamic_range
+- Bug fix for get_dynamic_range.
 
 ## actibase 0.2.0
 
