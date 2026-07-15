@@ -5,4 +5,4 @@
 * This is a new release.
 
 ---
-No "methods" in this package need to be referenced.
+Quick bug fix.
