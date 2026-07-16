@@ -66,14 +66,16 @@ get_dynamic_range = function(data, dynamic_range = NULL) {
     hdr = attr(data, "header")
     dynamic_range = get_range_from_header(hdr, dynamic_range = dynamic_range)
   }
-
+  estimated = FALSE
   if (is.null(dynamic_range)) {
     warning("No dynamic range found in header, using data estimate")
     r = range(data[c("X", "Y", "Z")], na.rm = TRUE)
     r = max(abs(r))
     r = ceiling(r)
     dynamic_range = c(-r, r)
+    estimated = TRUE
   }
+  attr(dynamic_range, "estimated") = estimated
   return(dynamic_range)
 }
 
