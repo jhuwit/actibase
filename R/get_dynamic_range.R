@@ -69,6 +69,7 @@ get_dynamic_range = function(data, dynamic_range = NULL) {
   estimated = FALSE
   if (is.null(dynamic_range)) {
     warning("No dynamic range found in header, using data estimate")
+    data = acti_standardise_data(data)
     r = range(data[c("X", "Y", "Z")], na.rm = TRUE)
     r = max(abs(r))
     r = ceiling(r)

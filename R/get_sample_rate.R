@@ -49,6 +49,7 @@ get_sample_rate = function(data, sample_rate = NULL) {
     if (is.null(time)) {
       time = data[["HEADER_TIMESTAMP"]]
     }
+    stopifnot(!is.null(time))
     d = diff(time)
     units(d) = "secs"
     rm(list = "time")
