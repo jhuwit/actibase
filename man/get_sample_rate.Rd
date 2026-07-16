@@ -4,13 +4,16 @@
 \alias{get_sample_rate}
 \title{Get Sample Rate}
 \usage{
-get_sample_rate(data, sample_rate = NULL)
+get_sample_rate(data, sample_rate = NULL, flag_estimated = FALSE)
 }
 \arguments{
 \item{data}{A data set of actigraphy/activity data}
 
 \item{sample_rate}{the sample rate.  If this is not \code{NULL}, then
 it will be guess from the header or the data or the data separation}
+
+\item{flag_estimated}{if `TRUE`, then the output will have the attribute
+`"estimated"`, which is a logical indicated if it was found or estimated}
 }
 \value{
 A length-1 numeric vector

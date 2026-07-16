@@ -4,13 +4,16 @@
 \alias{get_dynamic_range}
 \title{Get Dynamic Range}
 \usage{
-get_dynamic_range(data, dynamic_range = NULL)
+get_dynamic_range(data, dynamic_range = NULL, flag_estimated = FALSE)
 }
 \arguments{
 \item{data}{An \code{AccData} object from an actigraphy reader}
 
 \item{dynamic_range}{the dynamic range.  If this is not \code{NULL}, then
 it will be guess from the header or the data}
+
+\item{flag_estimated}{if `TRUE`, then the output will have the attribute
+`"estimated"`, which is a logical indicated if it was found or estimated}
 }
 \value{
 A length-2 numeric vector, or the original dynamic range (no
