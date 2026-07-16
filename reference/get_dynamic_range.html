@@ -39,7 +39,7 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">get_dynamic_range</span><span class="op">(</span><span class="va">data</span>, dynamic_range <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">get_dynamic_range</span><span class="op">(</span><span class="va">data</span>, dynamic_range <span class="op">=</span> <span class="cn">NULL</span>, flag_estimated <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -53,6 +53,11 @@
 <dt id="arg-dynamic-range">dynamic_range<a class="anchor" aria-label="anchor" href="#arg-dynamic-range"></a></dt>
 <dd><p>the dynamic range.  If this is not <code>NULL</code>, then
 it will be guess from the header or the data</p></dd>
+
+
+<dt id="arg-flag-estimated">flag_estimated<a class="anchor" aria-label="anchor" href="#arg-flag-estimated"></a></dt>
+<dd><p>if `TRUE`, then the output will have the attribute
+`"estimated"`, which is a logical indicated if it was found or estimated</p></dd>
 
 </dl></div>
     <div class="section level2">

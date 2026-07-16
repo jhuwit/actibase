@@ -5,7 +5,7 @@ Get Sample Rate
 ## Usage
 
 ``` r
-get_sample_rate(data, sample_rate = NULL)
+get_sample_rate(data, sample_rate = NULL, flag_estimated = FALSE)
 ```
 
 ## Arguments
@@ -18,6 +18,11 @@ get_sample_rate(data, sample_rate = NULL)
 
   the sample rate. If this is not `NULL`, then it will be guess from the
   header or the data or the data separation
+
+- flag_estimated:
+
+  if \`TRUE\`, then the output will have the attribute \`"estimated"\`,
+  which is a logical indicated if it was found or estimated
 
 ## Value
 

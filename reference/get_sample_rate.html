@@ -39,7 +39,7 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">get_sample_rate</span><span class="op">(</span><span class="va">data</span>, sample_rate <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">get_sample_rate</span><span class="op">(</span><span class="va">data</span>, sample_rate <span class="op">=</span> <span class="cn">NULL</span>, flag_estimated <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -53,6 +53,11 @@
 <dt id="arg-sample-rate">sample_rate<a class="anchor" aria-label="anchor" href="#arg-sample-rate"></a></dt>
 <dd><p>the sample rate.  If this is not <code>NULL</code>, then
 it will be guess from the header or the data or the data separation</p></dd>
+
+
+<dt id="arg-flag-estimated">flag_estimated<a class="anchor" aria-label="anchor" href="#arg-flag-estimated"></a></dt>
+<dd><p>if `TRUE`, then the output will have the attribute
+`"estimated"`, which is a logical indicated if it was found or estimated</p></dd>
 
 </dl></div>
     <div class="section level2">
