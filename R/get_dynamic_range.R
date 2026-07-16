@@ -26,11 +26,13 @@ get_range_from_header = function(hdr, dynamic_range = NULL) {
 #' @param data An \code{AccData} object from an actigraphy reader
 #' @param dynamic_range the dynamic range.  If this is not \code{NULL}, then
 #' it will be guess from the header or the data
+#' @param flag_estimated if `TRUE`, then the output will have the attribute
+#' `"estimated"`, which is a logical indicated if it was found or estimated
 #'
 #' @return A length-2 numeric vector, or the original dynamic range (no
 #' checking done)
 #' @export
-get_dynamic_range = function(data, dynamic_range = NULL) {
+get_dynamic_range = function(data, dynamic_range = NULL, flag_estimated = FALSE) {
   if (is.AccData(data)) {
     hdr = data$header
     drange = attr(data, "dynamic_range")
@@ -76,7 +78,9 @@ get_dynamic_range = function(data, dynamic_range = NULL) {
     dynamic_range = c(-r, r)
     estimated = TRUE
   }
-  attr(dynamic_range, "estimated") = estimated
+  if (flag_estimated) {
+    attr(dynamic_range, "estimated") = estimated
+  }
   return(dynamic_range)
 }
 

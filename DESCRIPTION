@@ -16,7 +16,7 @@ License: GPL-3
 Depends: 
     R (>= 4.1.0)
 Suggests:
-    testthat,
+    testthat (>= 3.0.0),
     utils,
     covr,
     knitr,
@@ -35,3 +35,4 @@ Imports:
 URL: https://github.com/jhuwit/actibase, https://jhuwit.github.io/actibase/
 BugReports: https://github.com/jhuwit/actibase/issues
 Config/roxygen2/version: 8.0.0
+Config/testthat/edition: 3

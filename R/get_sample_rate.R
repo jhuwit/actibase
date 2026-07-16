@@ -14,10 +14,12 @@ get_sample_rate_from_header = function(hdr, sample_rate = NULL) {
 #' @param data A data set of actigraphy/activity data
 #' @param sample_rate the sample rate.  If this is not \code{NULL}, then
 #' it will be guess from the header or the data or the data separation
+#' @param flag_estimated if `TRUE`, then the output will have the attribute
+#' `"estimated"`, which is a logical indicated if it was found or estimated
 #'
 #' @return A length-1 numeric vector
 #' @export
-get_sample_rate = function(data, sample_rate = NULL) {
+get_sample_rate = function(data, sample_rate = NULL, flag_estimated = FALSE) {
   if (!is.null(sample_rate)) {
     assertthat::assert_that(
       is.numeric(sample_rate) && is.finite(sample_rate)
@@ -70,7 +72,9 @@ get_sample_rate = function(data, sample_rate = NULL) {
   assertthat::assert_that(
     is.numeric(sample_rate) && is.finite(sample_rate)
   )
+  if (flag_estimated) {
   attr(sample_rate, "estimated") = estimated
+  }
   return(sample_rate)
 }
 

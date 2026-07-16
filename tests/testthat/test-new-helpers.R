@@ -157,3 +157,4 @@ test_that("flag_spike flags large adjacent changes", {
   expect_identical(flagged$flag_spike, c(FALSE, TRUE, FALSE))
   expect_identical(flagged$time, data$time)
 })
+
