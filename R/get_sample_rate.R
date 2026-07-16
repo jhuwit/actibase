@@ -33,6 +33,8 @@ get_sample_rate = function(data, sample_rate = NULL) {
   if (is.null(sample_rate) || is.na(sample_rate)) {
     sample_rate = get_sample_rate_from_header(data)
   }
+  estimated = FALSE
+
   if (
     (is.null(sample_rate) || is.na(sample_rate)) &&
     any(
@@ -61,11 +63,13 @@ get_sample_rate = function(data, sample_rate = NULL) {
       }
     }
     stopifnot(length(sample_rate) == 1)
+    estimated = TRUE
   }
   stopifnot(!is.null(sample_rate))
   assertthat::assert_that(
     is.numeric(sample_rate) && is.finite(sample_rate)
   )
+  attr(sample_rate, "estimated") = estimated
   return(sample_rate)
 }
 
