@@ -2,6 +2,8 @@
 
 ## actibase 0.3.0
 
+CRAN release: 2026-07-15
+
 - Bug fix for get_dynamic_range.
 
 ## actibase 0.2.0
