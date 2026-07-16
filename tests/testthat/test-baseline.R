@@ -114,7 +114,7 @@ test_that("sorting and zero filling preserve order and transformations", {
 
   expect_identical(actibase:::sort_time_df(data.frame(X = 1:2)), data.frame(X = 1:2))
 
-  filled <- expect_warning(acti_fill_zeros(unsorted), "unsorted")
+  expect_warning({filled <- acti_fill_zeros(unsorted)}, "unsorted")
   expect_equal(filled$X, c(1, 1, 2))
   expect_equal(filled$Y, c(1, 1, 2))
   expect_equal(filled$Z, c(1, 1, 2))

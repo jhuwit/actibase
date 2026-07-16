@@ -125,8 +125,9 @@ test_that("flag QC helpers run every flag and retain labels", {
   attr(qc_df, "dynamic_range") <- c(-6, 6)
   attr(qc_df, "transformations") <- "seed"
 
-  qc_all <- expect_warning(
-    flag_qc_all(qc_df, verbose = FALSE, flags = "all"),
+  expect_warning({
+    qc_all <- flag_qc_all(qc_df, verbose = FALSE, flags = "all")
+    },
     "Data has columns starting with flag"
   )
   expect_true(all(startsWith(names(qc_all), "flag_") | names(qc_all) %in% c("time", "X", "Y", "Z")))
