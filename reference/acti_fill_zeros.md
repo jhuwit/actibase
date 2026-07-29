@@ -8,6 +8,10 @@ Fill in Zeros
 acti_fill_zeros(data)
 
 acti_fill_zeroes(data)
+
+acti_remove_leading_zeros(data)
+
+acti_remove_leading_zeroes(data)
 ```
 
 ## Arguments

@@ -40,6 +40,8 @@ should live in overlay packages.
 
 - [`acti_fill_zeros()`](https://jhuwit.github.io/actibase/reference/acti_fill_zeros.md)
   [`acti_fill_zeroes()`](https://jhuwit.github.io/actibase/reference/acti_fill_zeros.md)
+  [`acti_remove_leading_zeros()`](https://jhuwit.github.io/actibase/reference/acti_fill_zeros.md)
+  [`acti_remove_leading_zeroes()`](https://jhuwit.github.io/actibase/reference/acti_fill_zeros.md)
   : Fill in Zeros
 - [`acti_raw_data`](https://jhuwit.github.io/actibase/reference/acti_raw_data.md)
   : Example Actigraphy/Activity Raw Data
