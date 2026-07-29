@@ -3,11 +3,17 @@
 \name{acti_fill_zeros}
 \alias{acti_fill_zeros}
 \alias{acti_fill_zeroes}
+\alias{acti_remove_leading_zeros}
+\alias{acti_remove_leading_zeroes}
 \title{Fill in Zeros}
 \usage{
 acti_fill_zeros(data)
 
 acti_fill_zeroes(data)
+
+acti_remove_leading_zeros(data)
+
+acti_remove_leading_zeroes(data)
 }
 \arguments{
 \item{data}{a data frame containing columns time, X, Y, Z}

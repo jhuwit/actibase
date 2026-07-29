@@ -1,3 +1,8 @@
+
+# actibase 0.5.0
+
+* Added remove leading zeroes function for `acti_calibrate`.
+
 # actibase 0.3.0
 
 * Bug fix for get_dynamic_range.

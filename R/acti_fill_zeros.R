@@ -47,3 +47,34 @@ acti_fill_zeros = function(data) {
 #' @export
 #' @rdname acti_fill_zeros
 acti_fill_zeroes = acti_fill_zeros
+
+#' @export
+#' @rdname acti_fill_zeros
+acti_remove_leading_zeros = function(data) {
+  xdata = data
+  data = acti_standardize_data(data, subset_xyz = FALSE)
+  data = sort_time_df(data, prefix = "acti_remove_leading_zeros")
+
+  data$X[is.na(data$X)] = 0
+  data$Y[is.na(data$Y)] = 0
+  data$Z[is.na(data$Z)] = 0
+
+  data$all_zero = data$X == 0 & data$Y == 0 & data$Z == 0
+  # if first isn't all zero, just return the data unchanged
+  if (!data$all_zero[1]) {
+    return(xdata)
+  }
+  rm(xdata); gc()
+  rle_out = rle(data$all_zero)
+  stopifnot(rle_out$values[1])
+  index = rle_out$lengths[1]
+  data = data[(index+1):max(c(index+1, nrow(data))),]
+
+  data = set_transformations(data, "removed_leading_zeros",
+                             prefix = "acti_remove_leading_zeros", add = TRUE)
+  data
+}
+
+#' @export
+#' @rdname acti_fill_zeros
+acti_remove_leading_zeroes = acti_remove_leading_zeros

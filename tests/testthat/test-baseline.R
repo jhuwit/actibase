@@ -126,6 +126,31 @@ test_that("sorting and zero filling preserve order and transformations", {
   expect_identical(acti_fill_zeroes(unsorted), filled)
 })
 
+test_that("leading-zero removal drops only the initial all-zero rows", {
+  data <- data.frame(
+    time = as.POSIXct(
+      c(
+        "2020-01-01 00:00:00",
+        "2020-01-01 00:00:01",
+        "2020-01-01 00:00:02",
+        "2020-01-01 00:00:03"
+      ),
+      tz = "UTC"
+    ),
+    X = c(0, 0, 1, 0),
+    Y = c(0, 0, 2, 0),
+    Z = c(0, 0, 3, 0)
+  )
+
+  expected <- data[3:4, ]
+  expected$all_zero <- c(FALSE, TRUE)
+  attr(expected, "transformations") <- "acti_remove_leading_zeros:removed_leading_zeros"
+
+  trimmed <- acti_remove_leading_zeros(data)
+  expect_identical(trimmed, expected)
+  expect_identical(acti_remove_leading_zeroes(data), trimmed)
+})
+
 test_that("separate time and day inclusion helpers return expected summaries", {
   time_data <- data.frame(
     time = as.POSIXct(
@@ -306,4 +331,3 @@ test_that("tidy axes and duplicate checks can fail cleanly", {
     "duplicate rows of date and minute"
   )
 })
-
