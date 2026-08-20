@@ -5,6 +5,14 @@ get_sample_rate_from_header = function(hdr, sample_rate = NULL) {
     if (length(sample_rate) == 0) {
       sample_rate = NULL
     }
+    if (is.null(sample_rate))  {
+      sample_rate = hdr$SampleRate
+      sample_rate = as.numeric(sample_rate)
+      if (length(sample_rate) == 0 ||
+          all(is.na(sample_rate))) {
+        sample_rate = NULL
+      }
+    }
   }
   sample_rate
 }
@@ -33,7 +41,7 @@ get_sample_rate = function(data, sample_rate = NULL, flag_estimated = FALSE) {
     sample_rate = attr(data, "sample_rate")
   }
   if (is.null(sample_rate) || is.na(sample_rate)) {
-    sample_rate = get_sample_rate_from_header(data)
+    sample_rate = get_sample_rate_from_header(attr(data, "header"))
   }
   estimated = FALSE
 
@@ -73,7 +81,7 @@ get_sample_rate = function(data, sample_rate = NULL, flag_estimated = FALSE) {
     is.numeric(sample_rate) && is.finite(sample_rate)
   )
   if (flag_estimated) {
-  attr(sample_rate, "estimated") = estimated
+    attr(sample_rate, "estimated") = estimated
   }
   return(sample_rate)
 }

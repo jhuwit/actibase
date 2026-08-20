@@ -9,6 +9,7 @@ acti_standardize_data(
   data,
   subset_xyz = TRUE,
   colname_time = "time",
+  lower_case = FALSE,
   check_xyz = TRUE
 )
 
@@ -16,6 +17,7 @@ acti_standardise_data(
   data,
   subset_xyz = TRUE,
   colname_time = "time",
+  lower_case = FALSE,
   check_xyz = TRUE
 )
 }
@@ -27,6 +29,8 @@ acti_standardise_data(
 and `XYZ` be subset?}
 
 \item{colname_time}{column name of header for time}
+
+\item{lower_case}{flag to make sure all columns are lower case.}
 
 \item{check_xyz}{Check if X/Y/Z is in the data}
 }

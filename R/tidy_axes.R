@@ -55,6 +55,7 @@ rename_time = function(data) {
 #' `time`), and `X`, `Y`, `Z`
 #' @param subset_xyz should only the `time` (if available)
 #' and `XYZ` be subset?
+#' @param lower_case flag to make sure all columns are lower case.
 #' @param colname_time column name of header for time
 #' @param check_xyz Check if X/Y/Z is in the data
 #'
@@ -69,13 +70,15 @@ rename_time = function(data) {
 acti_standardize_data = function(data,
                                  subset_xyz = TRUE,
                                  colname_time = "time",
+                                 lower_case = FALSE,
                                  check_xyz = TRUE) {
   HEADER_TIMESTAMP = TIME = HEADER_TIME_STAMP = X = Y = Z = NULL
   rm(list = c("HEADER_TIMESTAMP", "HEADER_TIME_STAMP", "X", "Y", "Z",
               "TIME"))
   assertthat::assert_that(
     assertthat::is.string(colname_time),
-    assertthat::is.flag(subset_xyz)
+    assertthat::is.flag(subset_xyz),
+    assertthat::is.flag(lower_case)
   )
   if (is.matrix(data)) {
     if (is.numeric(data)) {
@@ -104,6 +107,9 @@ acti_standardize_data = function(data,
 
   if (check_xyz) {
     stopifnot(all(c("X", "Y", "Z") %in% colnames(data)))
+  }
+  if (lower_case) {
+    colnames(data) = tolower(colnames(data))
   }
   data
 }
