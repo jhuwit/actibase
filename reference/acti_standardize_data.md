@@ -9,6 +9,7 @@ acti_standardize_data(
   data,
   subset_xyz = TRUE,
   colname_time = "time",
+  lower_case = FALSE,
   check_xyz = TRUE
 )
 
@@ -16,6 +17,7 @@ acti_standardise_data(
   data,
   subset_xyz = TRUE,
   colname_time = "time",
+  lower_case = FALSE,
   check_xyz = TRUE
 )
 ```
@@ -34,6 +36,10 @@ acti_standardise_data(
 - colname_time:
 
   column name of header for time
+
+- lower_case:
+
+  flag to make sure all columns are lower case.
 
 - check_xyz:
 
