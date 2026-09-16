@@ -17,9 +17,11 @@
 <url><loc>https://jhuwit.github.io/actibase/reference/get_dynamic_range.html</loc></url>
 <url><loc>https://jhuwit.github.io/actibase/reference/get_sample_rate.html</loc></url>
 <url><loc>https://jhuwit.github.io/actibase/reference/get_transformations.html</loc></url>
+<url><loc>https://jhuwit.github.io/actibase/reference/hms_to_minute.html</loc></url>
 <url><loc>https://jhuwit.github.io/actibase/reference/index.html</loc></url>
 <url><loc>https://jhuwit.github.io/actibase/reference/is.AccData.html</loc></url>
 <url><loc>https://jhuwit.github.io/actibase/reference/mark_condition.html</loc></url>
+<url><loc>https://jhuwit.github.io/actibase/reference/posix_to_minute.html</loc></url>
 <url><loc>https://jhuwit.github.io/actibase/reference/strip_hour_shift.html</loc></url>
 <url><loc>https://jhuwit.github.io/actibase/reference/xyz.html</loc></url>
 </urlset>

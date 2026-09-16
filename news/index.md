@@ -2,6 +2,8 @@
 
 ## actibase 0.5.0
 
+CRAN release: 2026-08-21
+
 - Added remove leading zeroes function for `acti_calibrate`.
 
 ## actibase 0.3.0

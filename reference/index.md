@@ -50,10 +50,15 @@
   [`prefix_transformations()`](https://jhuwit.github.io/actibase/reference/get_transformations.md)
   [`set_transformations()`](https://jhuwit.github.io/actibase/reference/get_transformations.md)
   : Get Transformations
+- [`hms_to_minute()`](https://jhuwit.github.io/actibase/reference/hms_to_minute.md)
+  : Convert an \`hms\` Time to a Minute of the Day
 - [`is.AccData()`](https://jhuwit.github.io/actibase/reference/is.AccData.md)
   : Is the object of class \`AccData\`
 - [`mark_condition()`](https://jhuwit.github.io/actibase/reference/mark_condition.md)
   : Mark a Condition of a Specified Minimum Length
+- [`posix_to_minute()`](https://jhuwit.github.io/actibase/reference/posix_to_minute.md)
+  [`datetime_to_minute()`](https://jhuwit.github.io/actibase/reference/posix_to_minute.md)
+  : Convert a POSIX Time to a Minute of the Day
 - [`strip_hour_shift()`](https://jhuwit.github.io/actibase/reference/strip_hour_shift.md)
   : Strip Hour Shift from Character Time Vector
 - [`xyz`](https://jhuwit.github.io/actibase/reference/xyz.md)
