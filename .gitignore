@@ -10,3 +10,4 @@ actibase.Rcheck
 .DS_Store
 actibase*.tar.gz
 data/r-cache
+revdep

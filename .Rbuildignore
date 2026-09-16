@@ -30,3 +30,4 @@
 ^\.DS_Store$
 ^actibase*\.tar\.gz$
 ^CRAN-SUBMISSION$
+^revdep$
