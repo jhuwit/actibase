@@ -5,4 +5,4 @@
 * This is a new release.
 
 ---
-New functions added for release
+New functions added for release.
