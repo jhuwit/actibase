@@ -4,6 +4,8 @@
 [![R-CMD-check](https://github.com/jhuwit/actibase/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/jhuwit/actibase/actions/workflows/R-CMD-check.yaml)
 [![Codecov test
 coverage](https://app.codecov.io/gh/jhuwit/actibase/branch/main/graph/badge.svg)](https://app.codecov.io/gh/jhuwit/actibase?branch=main)
+[![CRAN
+status](https://www.r-pkg.org/badges/version/actibase)](https://CRAN.R-project.org/package=actibase)
 <!-- badges: end -->
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
