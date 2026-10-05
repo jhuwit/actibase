@@ -82,6 +82,7 @@ create_day_inclusion = function(
     dplyr::mutate(
       is_included = n_minutes_wear >= min_required
     )
+  attr(res, "min_required") = min_required
 
   return(res)
 }
@@ -97,7 +98,8 @@ add_day_inclusion = function(
   time = date = NULL
   rm(list = c("time", "date"))
 
-  day_data =   create_day_inclusion(data, ...)
+  day_data = create_day_inclusion(data, ...)
+  min_required = attr(data, "min_required")
   data = acti_standardize_data(data, subset_xyz = FALSE, check_xyz = FALSE)
   data = data %>%
     dplyr::mutate(
@@ -106,6 +108,12 @@ add_day_inclusion = function(
 
   data = data %>%
     dplyr::left_join(day_data, day_data, by = dplyr::join_by(date))
+  attr(data, "min_required") = min_required
+  data = set_transformations(
+    data,
+    paste0("added_inclusion_for_", min_required, "_minutes"),
+    prefix = "add_day_inclusion",
+    add = TRUE)
 
   data
 }
