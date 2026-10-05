@@ -11,3 +11,4 @@ actibase.Rcheck
 actibase*.tar.gz
 data/r-cache
 revdep
+counts.rds

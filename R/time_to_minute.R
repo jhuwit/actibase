@@ -194,9 +194,14 @@ acti_day_start = function(time, day_start = hms::hms(0), timezone = NULL) {
     stop("`day_start` must be one time within a day.", call. = FALSE)
   }
   dates = as.Date(time, tz = timezone)
-  boundary = as.POSIXct(dates, tz = timezone) + as.numeric(day_start)
-  boundary[time < boundary] = as.POSIXct(dates[time < boundary] - 1L,
-    tz = timezone) + as.numeric(day_start)
+  # Parse the boundary as local clock time: as.POSIXct.Date starts at UTC
+  # midnight, and adding seconds to local midnight can shift across DST.
+  local_boundary = function(dates) {
+    as.POSIXct(paste(dates, day_start), format = "%Y-%m-%d %H:%M:%OS",
+      tz = timezone)
+  }
+  boundary = local_boundary(dates)
+  boundary[time < boundary] = local_boundary(dates[time < boundary] - 1L)
   boundary
 }
 

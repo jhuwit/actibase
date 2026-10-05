@@ -62,6 +62,46 @@ test_that("activity day helpers support non-midnight boundaries", {
   expect_error(acti_day_index(time, origin = 1), "origin")
 })
 
+test_that("activity days start at local midnight in summer time", {
+  time = as.POSIXct(c(
+    "2013-06-10 23:59:00", "2013-06-11 00:00:00",
+    "2013-06-11 00:59:00", "2013-06-11 01:00:00",
+    "2013-06-11 03:59:00", "2013-06-11 04:00:00"
+  ), tz = "Europe/London")
+
+  expect_identical(
+    acti_day_start(time[1:4]),
+    as.POSIXct(c("2013-06-10 00:00:00", rep("2013-06-11 00:00:00", 3)),
+      tz = "Europe/London")
+  )
+  expect_identical(acti_day_index(time[1:4]), c(1L, 2L, 2L, 2L))
+  expect_identical(acti_day_index(time[1:4], origin = as.Date("2013-06-10")),
+    c(1L, 2L, 2L, 2L))
+
+  expect_identical(acti_day_start(time[5:6], day_start = "04:00"),
+    as.POSIXct(c("2013-06-10 04:00:00", "2013-06-11 04:00:00"),
+      tz = "Europe/London"))
+  expect_identical(acti_day_index(time[5:6], day_start = "04:00"), c(1L, 2L))
+
+  dst_time = as.POSIXct(c("2013-03-31 03:59:00", "2013-03-31 04:00:00"),
+    tz = "Europe/London")
+  expect_identical(acti_day_start(dst_time, day_start = "04:00"),
+    as.POSIXct(c("2013-03-30 04:00:00", "2013-03-31 04:00:00"),
+      tz = "Europe/London"))
+  expect_identical(acti_day_index(dst_time, day_start = "04:00"), c(1L, 2L))
+
+  local({
+    original_tz = Sys.getenv("TZ", unset = NA_character_)
+    on.exit(if (is.na(original_tz)) Sys.unsetenv("TZ") else Sys.setenv(TZ = original_tz))
+    for (host_tz in c("UTC", "America/New_York", "Pacific/Auckland")) {
+      Sys.setenv(TZ = host_tz)
+      expect_identical(acti_day_start(time[2]),
+        as.POSIXct("2013-06-11 00:00:00", tz = "Europe/London"))
+      expect_identical(acti_day_index(time[1:4]), c(1L, 2L, 2L, 2L))
+    }
+  })
+})
+
 test_that("time helpers validate malformed inputs", {
   expect_error(acti_time_to_minute("24:00"), "HH:MM")
   expect_error(acti_time_to_minute(1), "hms")
