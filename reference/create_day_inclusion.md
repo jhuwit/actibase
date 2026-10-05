@@ -14,20 +14,19 @@ add_day_inclusion(data, ...)
 
 - data:
 
-  A \`data.frame\` with the columns \`time\`
+  A `data.frame` with the columns `time`
 
 - min_required:
 
-  Number of minutes required in a day to be called \`included\`
+  Number of minutes required in a day to be called `included`
 
 - ...:
 
-  arguments to pass to \[create_day_inclusion\] when using
-  \[add_day_inclusion\]
+  arguments to pass to create_day_inclusion when using add_day_inclusion
 
 ## Value
 
-A \`data.frame\` for each day with information of number of minutes
+A `data.frame` for each day with information of number of minutes
 observed and included
 
 ## Examples

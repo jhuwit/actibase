@@ -18,19 +18,19 @@ acti_day_index(
 
 - time:
 
-  A \`POSIXt\` vector.
+  A `POSIXt` vector.
 
 - day_start:
 
-  An \`hms\` or \`HH:MM\[:SS\]\` day boundary.
+  An `hms` or `HH:MM[:SS]` day boundary.
 
 - origin:
 
-  Optional \`Date\` or \`POSIXt\` baseline; by default the first day.
+  Optional `Date` or `POSIXt` baseline; by default the first day.
 
 - start:
 
-  The index assigned to the baseline day, either \`0\` or \`1\`.
+  The index assigned to the baseline day, either `0` or `1`.
 
 - timezone:
 

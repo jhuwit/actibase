@@ -16,17 +16,18 @@ acti_minute_to_hms(minute, start = 1L)
 
 - start:
 
-  The index assigned to midnight, either \`0\` or \`1\`.
+  The index assigned to midnight, either `0` or `1`.
 
 ## Value
 
-An \`hms\` vector.
+An `hms` vector.
 
 ## Note
 
-This is the inverse of \[acti_time_to_minute()\] for readable axis
-labels and for joining minute-indexed results back to a time-of-day
-value.
+This is the inverse of
+[`acti_time_to_minute()`](https://jhuwit.github.io/actibase/reference/acti_time_to_minute.md)
+for readable axis labels and for joining minute-indexed results back to
+a time-of-day value.
 
 ## Examples
 

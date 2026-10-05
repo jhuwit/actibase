@@ -20,13 +20,13 @@ as_datetime_safe(x, ...)
 
 - ...:
 
-  additional arguments to pass to \`func\`
+  additional arguments to pass to `func`
 
 - func:
 
-  the function to use to transform the vector \`x\`
+  the function to use to transform the vector `x`
 
 ## Value
 
-A converted \`vector\` the same length as \`x\` or errors if there are
+A converted `vector` the same length as `x` or errors if there are
 introduced NAs.

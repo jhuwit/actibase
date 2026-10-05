@@ -12,11 +12,11 @@ acti_hms_to_minute(x, start = 1L)
 
 - x:
 
-  An \`hms\`, \`POSIXt\`, or \`HH:MM\[:SS\]\` character vector.
+  An `hms`, `POSIXt`, or `HH:MM[:SS]` character vector.
 
 - start:
 
-  The index assigned to midnight, either \`0\` or \`1\`.
+  The index assigned to midnight, either `0` or `1`.
 
 ## Value
 
@@ -24,7 +24,7 @@ An integer minute-of-day index.
 
 ## Note
 
-This is a strict \`hms\` entry point for callers that have already
+This is a strict `hms` entry point for callers that have already
 separated time of day from date and want the standard activity-day
 index.
 

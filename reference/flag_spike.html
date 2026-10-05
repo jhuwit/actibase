@@ -85,15 +85,15 @@ device limit.</p></dd>
 <dt id="arg-epsilon">epsilon<a class="anchor" aria-label="anchor" href="#arg-epsilon"></a></dt>
 <dd><p>A small adjustment so that if values are within the
 device limit, but minus epsilon, still flagged as hitting the limit.
-For example, if `dynamic_range = c(-6, 6)` and `epsilon = 0.05`, then any
-value &lt;= `-5.95` or `&gt;= 5.95` gravity units will be flagged</p></dd>
+For example, if <code>dynamic_range = c(-6, 6)</code> and <code>epsilon = 0.05</code>, then any
+value &lt;= <code>-5.95</code> or <code>&gt;= 5.95</code> gravity units will be flagged</p></dd>
 
 
 <dt id="arg-min-length">min_length<a class="anchor" aria-label="anchor" href="#arg-min-length"></a></dt>
 <dd><p>minimum length of the condition for contiguous
-samples.  If `min_length = 3`, then at least 3 `TRUE`s in a row is required,
-any stretches of single `TRUE` values or 2 `TRUE` followed by `FALSE`,
-will be set to `FALSE`.</p></dd>
+samples.  If <code>min_length = 3</code>, then at least 3 <code>TRUE</code>s in a row is required,
+any stretches of single <code>TRUE</code> values or 2 <code>TRUE</code> followed by <code>FALSE</code>,
+will be set to <code>FALSE</code>.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -102,11 +102,11 @@ will be set to `FALSE`.</p></dd>
     </div>
     <div class="section level2">
     <h2 id="note">Note<a class="anchor" aria-label="anchor" href="#note"></a></h2>
-    <p>`flag_spike` looks if 2 contiguous values, within each axis,
-are larger than a absolute size (`11` gravity units).  The
-`flag_spike_second` function groups the data by second, finds the
+    <p><code>flag_spike</code> looks if 2 contiguous values, within each axis,
+are larger than a absolute size (<code>11</code> gravity units).  The
+<code>flag_spike_second</code> function groups the data by second, finds the
 range of values, within each axis, and determines if this range is
-greater than a specified size (`11` g).</p>
+greater than a specified size (<code>11</code> g).</p>
     </div>
 
     <div class="section level2">

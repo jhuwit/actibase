@@ -20,11 +20,11 @@ acti_create_minute(data)
 
 - data:
 
-  a \`data.frame\` with a \`time\` column
+  a `data.frame` with a `time` column
 
 ## Value
 
-A \`data.frame\` with date, hour, minute, and day columns
+A `data.frame` with date, hour, minute, and day columns
 
 ## Examples
 

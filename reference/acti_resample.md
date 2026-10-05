@@ -14,32 +14,34 @@ acti_resample_to_time(data, times, method = "linear", ...)
 
 - data:
 
-  A \`data.frame\` with a column for time in \`POSIXct\` (usually
-  \`time\`), and \`X\`, \`Y\`, \`Z\`
+  A `data.frame` with a column for time in `POSIXct` (usually `time`),
+  and `X`, `Y`, `Z`
 
 - sample_rate:
 
   sampling frequency, coercible to an integer. This is the sampling rate
-  you're sampling the data \*into\*.
+  you're sampling the data *into*.
 
 - method:
 
-  method for interpolation. Options are \`"linear"/"constant"\`, which
-  uses \`stats::approx\`, or one of \`"fmm", "periodic", "natural",
-  "monoH.FC", "hyman"\`, which uses \`stats::spline\`
+  method for interpolation. Options are `"linear"/"constant"`, which
+  uses [`stats::approx`](https://rdrr.io/r/stats/approxfun.html), or one
+  of `"fmm", "periodic", "natural", "monoH.FC", "hyman"`, which uses
+  [`stats::spline`](https://rdrr.io/r/stats/splinefun.html)
 
 - ...:
 
-  additional arguments to pass to \[stats::approx()\] or
-  \[stats::spline\]
+  additional arguments to pass to
+  [`stats::approx()`](https://rdrr.io/r/stats/approxfun.html) or
+  [stats::spline](https://rdrr.io/r/stats/splinefun.html)
 
 - times:
 
-  a vector of \`POSIXct\` date/time values to interpolate the data to
+  a vector of `POSIXct` date/time values to interpolate the data to
 
 ## Value
 
-A \`data.frame\`/\`tibble\` of \`time\` and \`X\`, \`Y\`, \`Z\`.
+A `data.frame`/`tibble` of `time` and `X`, `Y`, `Z`.
 
 ## Examples
 

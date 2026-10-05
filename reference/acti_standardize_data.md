@@ -26,12 +26,12 @@ acti_standardise_data(
 
 - data:
 
-  A \`data.frame\` with a column for time in \`POSIXct\` (usually
-  \`time\`), and \`X\`, \`Y\`, \`Z\`
+  A `data.frame` with a column for time in `POSIXct` (usually `time`),
+  and `X`, `Y`, `Z`
 
 - subset_xyz:
 
-  should only the \`time\` (if available) and \`XYZ\` be subset?
+  should only the `time` (if available) and `XYZ` be subset?
 
 - colname_time:
 
@@ -47,7 +47,7 @@ acti_standardise_data(
 
 ## Value
 
-A \`data.frame\` with \`X/Y/Z\` and a time in \`time\` (if available).
+A `data.frame` with `X/Y/Z` and a time in `time` (if available).
 
 ## Examples
 

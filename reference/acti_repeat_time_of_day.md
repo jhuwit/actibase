@@ -12,20 +12,19 @@ acti_repeat_time_of_day(seconds, time, timezone = NULL)
 
 - seconds:
 
-  Seconds after midnight, or an \`hms\`/\`HH:MM\[:SS\]\` time.
+  Seconds after midnight, or an `hms`/`HH:MM[:SS]` time.
 
 - time:
 
-  A \`POSIXt\` recording time vector used to determine dates and
-  timezone.
+  A `POSIXt` recording time vector used to determine dates and timezone.
 
 - timezone:
 
-  Optional Olson timezone; by default the timezone of \`time\`.
+  Optional Olson timezone; by default the timezone of `time`.
 
 ## Value
 
-A \`POSIXct\` vector with one occurrence per recording date.
+A `POSIXct` vector with one occurrence per recording date.
 
 ## Note
 

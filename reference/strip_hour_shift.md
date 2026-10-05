@@ -22,7 +22,7 @@ strip_hour_shift(x, max_index = 2L)
 
 ## Value
 
-A character vector with the \`+\`/\`-\` hour shift removed
+A character vector with the `+`/`-` hour shift removed
 
 ## Examples
 

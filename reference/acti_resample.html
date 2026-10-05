@@ -49,35 +49,35 @@
 
 
 <dl><dt id="arg-data">data<a class="anchor" aria-label="anchor" href="#arg-data"></a></dt>
-<dd><p>A `data.frame` with a column for time in `POSIXct` (usually
-`time`), and `X`, `Y`, `Z`</p></dd>
+<dd><p>A <code>data.frame</code> with a column for time in <code>POSIXct</code> (usually
+<code>time</code>), and <code>X</code>, <code>Y</code>, <code>Z</code></p></dd>
 
 
 <dt id="arg-sample-rate">sample_rate<a class="anchor" aria-label="anchor" href="#arg-sample-rate"></a></dt>
 <dd><p>sampling frequency, coercible to an integer.
-This is the sampling rate you're sampling the data *into*.</p></dd>
+This is the sampling rate you're sampling the data <em>into</em>.</p></dd>
 
 
 <dt id="arg-method">method<a class="anchor" aria-label="anchor" href="#arg-method"></a></dt>
 <dd><p>method for interpolation. Options are
-`"linear"/"constant"`, which uses `stats::approx`, or one of
-`"fmm", "periodic", "natural", "monoH.FC", "hyman"`, which uses
-`stats::spline`</p></dd>
+<code>"linear"/"constant"</code>, which uses <code><a href="https://rdrr.io/r/stats/approxfun.html" class="external-link">stats::approx</a></code>, or one of
+<code>"fmm", "periodic", "natural", "monoH.FC", "hyman"</code>, which uses
+<code><a href="https://rdrr.io/r/stats/splinefun.html" class="external-link">stats::spline</a></code></p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
-<dd><p>additional arguments to pass to [stats::approx()] or
-[stats::spline]</p></dd>
+<dd><p>additional arguments to pass to <code><a href="https://rdrr.io/r/stats/approxfun.html" class="external-link">stats::approx()</a></code> or
+<a href="https://rdrr.io/r/stats/splinefun.html" class="external-link">stats::spline</a></p></dd>
 
 
 <dt id="arg-times">times<a class="anchor" aria-label="anchor" href="#arg-times"></a></dt>
-<dd><p>a vector of `POSIXct` date/time values to interpolate
+<dd><p>a vector of <code>POSIXct</code> date/time values to interpolate
 the data to</p></dd>
 
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>A `data.frame`/`tibble` of `time` and `X`, `Y`, `Z`.</p>
+    <p>A <code>data.frame</code>/<code>tibble</code> of <code>time</code> and <code>X</code>, <code>Y</code>, <code>Z</code>.</p>
     </div>
 
     <div class="section level2">

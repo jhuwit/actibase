@@ -12,7 +12,7 @@ acti_split_intervals_at_midnight(start, end, timezone = NULL)
 
 - start, end:
 
-  Equally sized \`POSIXt\` vectors.
+  Equally sized `POSIXt` vectors.
 
 - timezone:
 
@@ -20,7 +20,7 @@ acti_split_intervals_at_midnight(start, end, timezone = NULL)
 
 ## Value
 
-A data frame with input \`interval\` number and split \`start\`/\`end\`.
+A data frame with input `interval` number and split `start`/`end`.
 
 ## Note
 

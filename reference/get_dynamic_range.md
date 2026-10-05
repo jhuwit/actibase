@@ -21,7 +21,7 @@ get_dynamic_range(data, dynamic_range = NULL, flag_estimated = FALSE)
 
 - flag_estimated:
 
-  if \`TRUE\`, then the output will have the attribute \`"estimated"\`,
+  if `TRUE`, then the output will have the attribute `"estimated"`,
   which is a logical indicated if it was found or estimated
 
 ## Value

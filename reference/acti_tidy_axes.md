@@ -12,8 +12,8 @@ acti_tidy_axes(data, colname_time = "time")
 
 - data:
 
-  An object with columns a time column \`X\`, \`Y\`, and \`Z\` or an
-  object of class \`AccData\`
+  An object with columns a time column `X`, `Y`, and `Z` or an object of
+  class `AccData`
 
 - colname_time:
 
@@ -21,7 +21,7 @@ acti_tidy_axes(data, colname_time = "time")
 
 ## Value
 
-A long data set with \`time\`, \`axis\`, and \`value\`
+A long data set with `time`, `axis`, and `value`
 
 ## Examples
 

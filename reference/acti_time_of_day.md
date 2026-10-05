@@ -12,7 +12,7 @@ acti_time_of_day(time, timezone = NULL)
 
 - time:
 
-  A \`POSIXt\` vector.
+  A `POSIXt` vector.
 
 - timezone:
 
@@ -20,7 +20,7 @@ acti_time_of_day(time, timezone = NULL)
 
 ## Value
 
-An \`hms\` vector.
+An `hms` vector.
 
 ## Note
 

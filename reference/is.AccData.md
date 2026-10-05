@@ -1,6 +1,6 @@
-# Is the object of class \`AccData\`
+# Is the object of class `AccData`
 
-Is the object of class \`AccData\`
+Is the object of class `AccData`
 
 ## Usage
 

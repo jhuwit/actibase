@@ -24,15 +24,15 @@ set_transformations(data, transformations, add = TRUE, prefix = NULL)
 
 - prefix:
 
-  if not \`NULL\`, the prefix plus \`:\` would be pasted to the
+  if not `NULL`, the prefix plus `:` would be pasted to the
   transformations.
 
 - add:
 
-  Add the transformations to those already there in \`data\`
+  Add the transformations to those already there in `data`
 
 ## Value
 
-`set_transformations` returns the data, with the \`transformations\`
+`set_transformations` returns the data, with the `transformations`
 attribute updated and `set_transformations` returns the attribute
-\`transformations\`
+`transformations`

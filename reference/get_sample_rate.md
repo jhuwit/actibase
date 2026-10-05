@@ -21,7 +21,7 @@ get_sample_rate(data, sample_rate = NULL, flag_estimated = FALSE)
 
 - flag_estimated:
 
-  if \`TRUE\`, then the output will have the attribute \`"estimated"\`,
+  if `TRUE`, then the output will have the attribute `"estimated"`,
   which is a logical indicated if it was found or estimated
 
 ## Value

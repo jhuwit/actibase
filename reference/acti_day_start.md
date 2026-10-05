@@ -1,9 +1,10 @@
 # Find the Start of an Activity Day
 
-This is a custom-day-boundary alternative to \[lubridate::floor_date()\]
-with \`unit = "day"\`. Use \`floor_date()\` when days begin at midnight;
-use \`acti_day_start()\` when a recording day begins at a different
-time, such as 04:00.
+This is a custom-day-boundary alternative to
+[`lubridate::floor_date()`](https://lubridate.tidyverse.org/reference/round_date.html)
+with `unit = "day"`. Use `floor_date()` when days begin at midnight; use
+`acti_day_start()` when a recording day begins at a different time, such
+as 04:00.
 
 ## Usage
 
@@ -15,11 +16,11 @@ acti_day_start(time, day_start = hms::hms(0), timezone = NULL)
 
 - time:
 
-  A \`POSIXt\` vector.
+  A `POSIXt` vector.
 
 - day_start:
 
-  An \`hms\` or \`HH:MM\[:SS\]\` day boundary.
+  An `hms` or `HH:MM[:SS]` day boundary.
 
 - timezone:
 
@@ -27,7 +28,7 @@ acti_day_start(time, day_start = hms::hms(0), timezone = NULL)
 
 ## Value
 
-A \`POSIXct\` vector.
+A `POSIXct` vector.
 
 ## Note
 

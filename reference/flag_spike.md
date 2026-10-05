@@ -49,15 +49,15 @@ flag_impossible(df, min_length = 6)
 
   A small adjustment so that if values are within the device limit, but
   minus epsilon, still flagged as hitting the limit. For example, if
-  \`dynamic_range = c(-6, 6)\` and \`epsilon = 0.05\`, then any value
-  \<= \`-5.95\` or \`\>= 5.95\` gravity units will be flagged
+  `dynamic_range = c(-6, 6)` and `epsilon = 0.05`, then any value \<=
+  `-5.95` or `>= 5.95` gravity units will be flagged
 
 - min_length:
 
   minimum length of the condition for contiguous samples. If
-  \`min_length = 3\`, then at least 3 \`TRUE\`s in a row is required,
-  any stretches of single \`TRUE\` values or 2 \`TRUE\` followed by
-  \`FALSE\`, will be set to \`FALSE\`.
+  `min_length = 3`, then at least 3 `TRUE`s in a row is required, any
+  stretches of single `TRUE` values or 2 `TRUE` followed by `FALSE`,
+  will be set to `FALSE`.
 
 ## Value
 
@@ -65,11 +65,11 @@ A data set back
 
 ## Note
 
-\`flag_spike\` looks if 2 contiguous values, within each axis, are
-larger than a absolute size (\`11\` gravity units). The
-\`flag_spike_second\` function groups the data by second, finds the
-range of values, within each axis, and determines if this range is
-greater than a specified size (\`11\` g).
+`flag_spike` looks if 2 contiguous values, within each axis, are larger
+than a absolute size (`11` gravity units). The `flag_spike_second`
+function groups the data by second, finds the range of values, within
+each axis, and determines if this range is greater than a specified size
+(`11` g).
 
 ## Examples
 

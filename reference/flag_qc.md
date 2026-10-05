@@ -43,8 +43,8 @@ flag_qc_all(
 
 ## Value
 
-A data set with a \`flags\` column (\`flag_qc\`) or a number of columns
-starting with \`flag\_\*\` (\`flag_qc_all\`)
+A data set with a `flags` column (`flag_qc`) or a number of columns
+starting with `flag_*` (`flag_qc_all`)
 
 ## Examples
 
