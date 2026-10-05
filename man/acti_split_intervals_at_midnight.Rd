@@ -7,19 +7,19 @@
 acti_split_intervals_at_midnight(start, end, timezone = NULL)
 }
 \arguments{
-\item{start, end}{Equally sized `POSIXt` vectors.}
+\item{start, end}{Equally sized \code{POSIXt} vectors.}
 
 \item{timezone}{Optional Olson timezone used to define midnight.}
 }
 \value{
-A data frame with input `interval` number and split `start`/`end`.
+A data frame with input \code{interval} number and split \code{start}/\code{end}.
 }
 \description{
 Split Intervals at Midnight
 }
 \note{
 Sleep, wear, and activity episodes can span dates; splitting them
-  makes their durations and faceted daily displays unambiguous.
+makes their durations and faceted daily displays unambiguous.
 }
 \examples{
 start = as.POSIXct("2020-01-01 23:30:00", tz = "UTC")

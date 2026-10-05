@@ -19,10 +19,10 @@ acti_create_hour(data)
 acti_create_minute(data)
 }
 \arguments{
-\item{data}{a `data.frame` with a `time` column}
+\item{data}{a \code{data.frame} with a \code{time} column}
 }
 \value{
-A `data.frame` with date, hour, minute, and day columns
+A \code{data.frame} with date, hour, minute, and day columns
 }
 \description{
 Separate Times into Date, Hour, and Minute

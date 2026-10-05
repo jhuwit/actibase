@@ -9,17 +9,17 @@ acti_minute_to_hms(minute, start = 1L)
 \arguments{
 \item{minute}{Whole-minute positions in a day.}
 
-\item{start}{The index assigned to midnight, either `0` or `1`.}
+\item{start}{The index assigned to midnight, either \code{0} or \code{1}.}
 }
 \value{
-An `hms` vector.
+An \code{hms} vector.
 }
 \description{
 Convert a Minute Index to an HMS Time
 }
 \note{
-This is the inverse of [acti_time_to_minute()] for readable axis labels
-  and for joining minute-indexed results back to a time-of-day value.
+This is the inverse of \code{\link[=acti_time_to_minute]{acti_time_to_minute()}} for readable axis labels
+and for joining minute-indexed results back to a time-of-day value.
 }
 \examples{
 acti_minute_to_hms(c(1, 721, 1440))

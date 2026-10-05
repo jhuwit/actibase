@@ -7,9 +7,9 @@
 acti_hms_to_minute(x, start = 1L)
 }
 \arguments{
-\item{x}{An `hms`, `POSIXt`, or `HH:MM[:SS]` character vector.}
+\item{x}{An \code{hms}, \code{POSIXt}, or \verb{HH:MM[:SS]} character vector.}
 
-\item{start}{The index assigned to midnight, either `0` or `1`.}
+\item{start}{The index assigned to midnight, either \code{0} or \code{1}.}
 }
 \value{
 An integer minute-of-day index.
@@ -18,8 +18,8 @@ An integer minute-of-day index.
 Convert an HMS Time to a Minute Index
 }
 \note{
-This is a strict `hms` entry point for callers that have already
-  separated time of day from date and want the standard activity-day index.
+This is a strict \code{hms} entry point for callers that have already
+separated time of day from date and want the standard activity-day index.
 }
 \examples{
 acti_hms_to_minute(hms::hms(hours = c(0, 23), minutes = c(0, 59)))

@@ -10,25 +10,25 @@ acti_resample(data, sample_rate, method = "linear", ...)
 acti_resample_to_time(data, times, method = "linear", ...)
 }
 \arguments{
-\item{data}{A `data.frame` with a column for time in `POSIXct` (usually
-`time`), and `X`, `Y`, `Z`}
+\item{data}{A \code{data.frame} with a column for time in \code{POSIXct} (usually
+\code{time}), and \code{X}, \code{Y}, \code{Z}}
 
 \item{sample_rate}{sampling frequency, coercible to an integer.
-This is the sampling rate you're sampling the data *into*.}
+This is the sampling rate you're sampling the data \emph{into}.}
 
 \item{method}{method for interpolation. Options are
-`"linear"/"constant"`, which uses `stats::approx`, or one of
-`"fmm", "periodic", "natural", "monoH.FC", "hyman"`, which uses
-`stats::spline`}
+\code{"linear"/"constant"}, which uses \code{stats::approx}, or one of
+\verb{"fmm", "periodic", "natural", "monoH.FC", "hyman"}, which uses
+\code{stats::spline}}
 
-\item{...}{additional arguments to pass to [stats::approx()] or
-[stats::spline]}
+\item{...}{additional arguments to pass to \code{\link[stats:approx]{stats::approx()}} or
+\link[stats:spline]{stats::spline}}
 
-\item{times}{a vector of `POSIXct` date/time values to interpolate
+\item{times}{a vector of \code{POSIXct} date/time values to interpolate
 the data to}
 }
 \value{
-A `data.frame`/`tibble` of `time` and `X`, `Y`, `Z`.
+A \code{data.frame}/\code{tibble} of \code{time} and \code{X}, \code{Y}, \code{Z}.
 }
 \description{
 Resample 3-axial input signal to a specific sampling rate

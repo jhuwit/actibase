@@ -43,13 +43,13 @@ device limit.}
 
 \item{epsilon}{A small adjustment so that if values are within the
 device limit, but minus epsilon, still flagged as hitting the limit.
-For example, if `dynamic_range = c(-6, 6)` and `epsilon = 0.05`, then any
-value <= `-5.95` or `>= 5.95` gravity units will be flagged}
+For example, if \code{dynamic_range = c(-6, 6)} and \code{epsilon = 0.05}, then any
+value <= \code{-5.95} or \verb{>= 5.95} gravity units will be flagged}
 
 \item{min_length}{minimum length of the condition for contiguous
-samples.  If `min_length = 3`, then at least 3 `TRUE`s in a row is required,
-any stretches of single `TRUE` values or 2 `TRUE` followed by `FALSE`,
-will be set to `FALSE`.}
+samples.  If \code{min_length = 3}, then at least 3 \code{TRUE}s in a row is required,
+any stretches of single \code{TRUE} values or 2 \code{TRUE} followed by \code{FALSE},
+will be set to \code{FALSE}.}
 }
 \value{
 A data set back
@@ -58,11 +58,11 @@ A data set back
 Flag Spikes
 }
 \note{
-`flag_spike` looks if 2 contiguous values, within each axis,
-are larger than a absolute size (`11` gravity units).  The
-`flag_spike_second` function groups the data by second, finds the
+\code{flag_spike} looks if 2 contiguous values, within each axis,
+are larger than a absolute size (\code{11} gravity units).  The
+\code{flag_spike_second} function groups the data by second, finds the
 range of values, within each axis, and determines if this range is
-greater than a specified size (`11` g).
+greater than a specified size (\code{11} g).
 }
 \examples{
 res = acti_raw_data

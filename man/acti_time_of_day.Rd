@@ -7,20 +7,20 @@
 acti_time_of_day(time, timezone = NULL)
 }
 \arguments{
-\item{time}{A `POSIXt` vector.}
+\item{time}{A \code{POSIXt} vector.}
 
 \item{timezone}{Optional Olson timezone in which to extract time of day.}
 }
 \value{
-An `hms` vector.
+An \code{hms} vector.
 }
 \description{
 Extract the Time of Day
 }
 \note{
 This explicitly applies the recording or requested timezone before
-  dropping the date, which prevents a timestamp from being assigned to the
-  wrong activity-day minute.
+dropping the date, which prevents a timestamp from being assigned to the
+wrong activity-day minute.
 }
 \examples{
 time = as.POSIXct("2020-01-01 05:30:00", tz = "UTC")

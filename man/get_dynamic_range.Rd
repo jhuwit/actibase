@@ -12,8 +12,8 @@ get_dynamic_range(data, dynamic_range = NULL, flag_estimated = FALSE)
 \item{dynamic_range}{the dynamic range.  If this is not \code{NULL}, then
 it will be guess from the header or the data}
 
-\item{flag_estimated}{if `TRUE`, then the output will have the attribute
-`"estimated"`, which is a logical indicated if it was found or estimated}
+\item{flag_estimated}{if \code{TRUE}, then the output will have the attribute
+\code{"estimated"}, which is a logical indicated if it was found or estimated}
 }
 \value{
 A length-2 numeric vector, or the original dynamic range (no

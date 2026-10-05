@@ -7,13 +7,13 @@
 acti_tidy_axes(data, colname_time = "time")
 }
 \arguments{
-\item{data}{An object with columns a time column `X`, `Y`, and `Z` or an
-object of class `AccData`}
+\item{data}{An object with columns a time column \code{X}, \code{Y}, and \code{Z} or an
+object of class \code{AccData}}
 
 \item{colname_time}{column name of header for time}
 }
 \value{
-A long data set with `time`, `axis`, and `value`
+A long data set with \code{time}, \code{axis}, and \code{value}
 }
 \description{
 Tidy axes to a long format

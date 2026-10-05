@@ -2,7 +2,7 @@
 % Please edit documentation in R/aaa_utils.R
 \name{is.AccData}
 \alias{is.AccData}
-\title{Is the object of class `AccData`}
+\title{Is the object of class \code{AccData}}
 \usage{
 is.AccData(x)
 }
@@ -13,7 +13,7 @@ is.AccData(x)
 Logical(1)
 }
 \description{
-Is the object of class `AccData`
+Is the object of class \code{AccData}
 }
 \examples{
 is.AccData(mtcars)

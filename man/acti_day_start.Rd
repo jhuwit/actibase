@@ -7,24 +7,24 @@
 acti_day_start(time, day_start = hms::hms(0), timezone = NULL)
 }
 \arguments{
-\item{time}{A `POSIXt` vector.}
+\item{time}{A \code{POSIXt} vector.}
 
-\item{day_start}{An `hms` or `HH:MM[:SS]` day boundary.}
+\item{day_start}{An \code{hms} or \verb{HH:MM[:SS]} day boundary.}
 
 \item{timezone}{Optional Olson timezone used to define the day boundary.}
 }
 \value{
-A `POSIXct` vector.
+A \code{POSIXct} vector.
 }
 \description{
 This is a custom-day-boundary alternative to
-[lubridate::floor_date()] with `unit = "day"`. Use `floor_date()` when days
-begin at midnight; use `acti_day_start()` when a recording day begins at a
+\code{\link[lubridate:floor_date]{lubridate::floor_date()}} with \code{unit = "day"}. Use \code{floor_date()} when days
+begin at midnight; use \code{acti_day_start()} when a recording day begins at a
 different time, such as 04:00.
 }
 \note{
 Activity studies often use a non-midnight boundary (for example,
-  04:00) so nocturnal behavior is assigned to the preceding activity day.
+04:00) so nocturnal behavior is assigned to the preceding activity day.
 }
 \examples{
 time = as.POSIXct(c("2020-01-01 03:00:00", "2020-01-01 05:00:00"), tz = "UTC")

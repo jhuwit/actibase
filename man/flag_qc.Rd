@@ -33,8 +33,8 @@ device limit.}
 then all flags are run, as the default.}
 }
 \value{
-A data set with a `flags` column (`flag_qc`) or a number of
-columns starting with `flag_*` (`flag_qc_all`)
+A data set with a \code{flags} column (\code{flag_qc}) or a number of
+columns starting with \verb{flag_*} (\code{flag_qc_all})
 }
 \description{
 Flag Quality Control Values

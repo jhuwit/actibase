@@ -7,22 +7,22 @@
 acti_repeat_time_of_day(seconds, time, timezone = NULL)
 }
 \arguments{
-\item{seconds}{Seconds after midnight, or an `hms`/`HH:MM[:SS]` time.}
+\item{seconds}{Seconds after midnight, or an \code{hms}/\verb{HH:MM[:SS]} time.}
 
-\item{time}{A `POSIXt` recording time vector used to determine dates and
+\item{time}{A \code{POSIXt} recording time vector used to determine dates and
 timezone.}
 
-\item{timezone}{Optional Olson timezone; by default the timezone of `time`.}
+\item{timezone}{Optional Olson timezone; by default the timezone of \code{time}.}
 }
 \value{
-A `POSIXct` vector with one occurrence per recording date.
+A \code{POSIXct} vector with one occurrence per recording date.
 }
 \description{
 Repeat a Time of Day Across a Recording
 }
 \note{
 This supplies daily plotting boundaries such as a fixed bedtime or
-  wake time for every calendar date present in a recording.
+wake time for every calendar date present in a recording.
 }
 \examples{
 time = as.POSIXct(c("2020-01-01 12:00:00", "2020-01-03 12:00:00"), tz = "UTC")

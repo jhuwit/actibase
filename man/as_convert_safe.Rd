@@ -15,12 +15,12 @@ as_datetime_safe(x, ...)
 \arguments{
 \item{x}{a vector}
 
-\item{...}{additional arguments to pass to `func`}
+\item{...}{additional arguments to pass to \code{func}}
 
-\item{func}{the function to use to transform the vector `x`}
+\item{func}{the function to use to transform the vector \code{x}}
 }
 \value{
-A converted `vector` the same length as `x` or errors if there
+A converted \code{vector} the same length as \code{x} or errors if there
 are introduced NAs.
 }
 \description{

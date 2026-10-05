@@ -13,13 +13,13 @@ acti_day_index(
 )
 }
 \arguments{
-\item{time}{A `POSIXt` vector.}
+\item{time}{A \code{POSIXt} vector.}
 
-\item{day_start}{An `hms` or `HH:MM[:SS]` day boundary.}
+\item{day_start}{An \code{hms} or \verb{HH:MM[:SS]} day boundary.}
 
-\item{origin}{Optional `Date` or `POSIXt` baseline; by default the first day.}
+\item{origin}{Optional \code{Date} or \code{POSIXt} baseline; by default the first day.}
 
-\item{start}{The index assigned to the baseline day, either `0` or `1`.}
+\item{start}{The index assigned to the baseline day, either \code{0} or \code{1}.}
 
 \item{timezone}{Optional Olson timezone used to define the day boundary.}
 }
@@ -31,7 +31,7 @@ Calculate a Baseline-Relative Activity-Day Index
 }
 \note{
 A stable recording-relative day number supports faceting and alignment
-  across participants even when their calendar start dates differ.
+across participants even when their calendar start dates differ.
 }
 \examples{
 time = as.POSIXct(c("2020-01-01 03:00:00", "2020-01-01 05:00:00"), tz = "UTC")

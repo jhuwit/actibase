@@ -22,11 +22,11 @@ acti_standardise_data(
 )
 }
 \arguments{
-\item{data}{A `data.frame` with a column for time in `POSIXct` (usually
-`time`), and `X`, `Y`, `Z`}
+\item{data}{A \code{data.frame} with a column for time in \code{POSIXct} (usually
+\code{time}), and \code{X}, \code{Y}, \code{Z}}
 
-\item{subset_xyz}{should only the `time` (if available)
-and `XYZ` be subset?}
+\item{subset_xyz}{should only the \code{time} (if available)
+and \code{XYZ} be subset?}
 
 \item{colname_time}{column name of header for time}
 
@@ -35,8 +35,8 @@ and `XYZ` be subset?}
 \item{check_xyz}{Check if X/Y/Z is in the data}
 }
 \value{
-A `data.frame` with `X/Y/Z` and a time in
-`time` (if available).
+A \code{data.frame} with \code{X/Y/Z} and a time in
+\code{time} (if available).
 }
 \description{
 Standardize the Accelerometry Data

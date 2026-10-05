@@ -14,7 +14,7 @@ strip_hour_shift(x, max_index = 2L)
 spaces, default is 2 (e.g., "2019-01-01 12:00")}
 }
 \value{
-A character vector with the `+`/`-` hour shift removed
+A character vector with the \code{+}/\code{-} hour shift removed
 }
 \description{
 Strip Hour Shift from Character Time Vector

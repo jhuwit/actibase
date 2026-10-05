@@ -10,15 +10,15 @@ create_day_inclusion(data, min_required = 1368L)
 add_day_inclusion(data, ...)
 }
 \arguments{
-\item{data}{A `data.frame` with the columns `time`}
+\item{data}{A \code{data.frame} with the columns \code{time}}
 
-\item{min_required}{Number of minutes required in a day to be called `included`}
+\item{min_required}{Number of minutes required in a day to be called \code{included}}
 
-\item{...}{arguments to pass to [create_day_inclusion] when using
-[add_day_inclusion]}
+\item{...}{arguments to pass to \link{create_day_inclusion} when using
+\link{add_day_inclusion}}
 }
 \value{
-A `data.frame` for each day with information of number of minutes observed
+A \code{data.frame} for each day with information of number of minutes observed
 and included
 }
 \description{

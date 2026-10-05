@@ -17,15 +17,15 @@ set_transformations(data, transformations, add = TRUE, prefix = NULL)
 
 \item{transformations}{character string of transformations}
 
-\item{prefix}{if not `NULL`, the prefix plus `:` would be pasted to the
+\item{prefix}{if not \code{NULL}, the prefix plus \code{:} would be pasted to the
 transformations.}
 
-\item{add}{Add the transformations to those already there in `data`}
+\item{add}{Add the transformations to those already there in \code{data}}
 }
 \value{
 \code{\link{set_transformations}} returns the data, with the
-`transformations` attribute updated and \code{\link{set_transformations}}
-returns the attribute `transformations`
+\code{transformations} attribute updated and \code{\link{set_transformations}}
+returns the attribute \code{transformations}
 }
 \description{
 Get Transformations

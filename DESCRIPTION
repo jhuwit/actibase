@@ -13,6 +13,7 @@ Description: Provides baseline functions for actigraphy and activity data.
     This package is intended to be extended by downstream overlays such as
     'actiread', 'actimetrics', and  'stepcount'.
 License: GPL-3
+Roxygen: list(markdown = TRUE)
 Depends: 
     R (>= 4.1.0)
 Suggests:

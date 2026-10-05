@@ -7,11 +7,11 @@
 acti_time_to_minute(x, start = 1L, timezone = NULL)
 }
 \arguments{
-\item{x}{An `hms`, `POSIXt`, or `HH:MM[:SS]` character vector.}
+\item{x}{An \code{hms}, \code{POSIXt}, or \verb{HH:MM[:SS]} character vector.}
 
-\item{start}{The index assigned to midnight, either `0` or `1`.}
+\item{start}{The index assigned to midnight, either \code{0} or \code{1}.}
 
-\item{timezone}{Optional Olson timezone for `POSIXt` values.}
+\item{timezone}{Optional Olson timezone for \code{POSIXt} values.}
 }
 \value{
 An integer minute-of-day index.
@@ -20,8 +20,8 @@ An integer minute-of-day index.
 Convert a Time of Day to a Minute Index
 }
 \note{
-This converts each minute of a day to either `0` through `1439` or
-  `1` through `1440`, the two common minute-of-day conventions.
+This converts each minute of a day to either \code{0} through \code{1439} or
+\code{1} through \code{1440}, the two common minute-of-day conventions.
 }
 \examples{
 acti_time_to_minute(c("00:00", "12:00", "23:59"))
