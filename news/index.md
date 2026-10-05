@@ -1,5 +1,9 @@
 # Changelog
 
+## actibase 0.6.1
+
+- Fix for `create_day_inclusion`.
+
 ## actibase 0.6.0
 
 CRAN release: 2026-09-17
