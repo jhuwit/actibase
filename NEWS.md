@@ -1,4 +1,4 @@
-# actibase 0.6.1
+# actibase 0.7.0
 
 * Fix for `create_day_inclusion` -- number of observed minutes was wrong.
 * Added transformations for `add_day_inclusion` and `min_required` as attribute for `create_day_inclusion`.
