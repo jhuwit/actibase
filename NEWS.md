@@ -1,3 +1,7 @@
+# actibase 0.6.1
+
+* Fix for `create_day_inclusion`.
+
 # actibase 0.6.0
 
 * New helpers for time: `acti_day_index` `acti_day_start` `acti_split_intervals_at_midnight` `acti_repeat_time_of_day` `acti_time_of_day` `acti_minute_to_hms` `acti_hms_to_minute` `acti_time_to_minute`.

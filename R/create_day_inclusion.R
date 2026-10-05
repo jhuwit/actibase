@@ -60,10 +60,10 @@ create_day_inclusion = function(
   }
   all_minutes = expand.grid(
     date = unique(data$date),
-    hourtime = hms::hms(minutes = 1:1440),
-    observed = TRUE
+    hourtime = hms::hms(minutes = 1:1440)
   )
   data = data %>%
+    dplyr::mutate(observed = TRUE) |>
     dplyr::full_join(all_minutes, by = dplyr::join_by(date, hourtime)) %>%
     tidyr::replace_na(list(wear = FALSE,
                            observed = FALSE))
