@@ -33,3 +33,8 @@ resampled = acti_resample(res, sample_rate = 30L)
 
 Higher-level summarization, step-count mapping, and downstream analysis
 should live in overlay packages.
+
+## Funding
+
+This work was supported by NIH P30AG021334 and the Johns Hopkins Older
+Americans Independence Center (OAIC) Pepper Center grant.
