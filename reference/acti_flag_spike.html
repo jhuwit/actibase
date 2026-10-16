@@ -166,6 +166,16 @@ samples. If <code>min_length = 7</code>, then at least 7 <code>TRUE</code>s in a
 any stretches of single <code>TRUE</code> values or 2 <code>TRUE</code> followed by <code>FALSE</code>,
 will be set to <code>FALSE</code>.</p></dd>
 
+
+<dt id="arg-change-threshold">change_threshold<a class="anchor" aria-label="anchor" href="#arg-change-threshold"></a></dt>
+<dd><p>Maximum absolute change between adjacent samples
+on each axis for a stable run to qualify. The default is 0.01 g.</p></dd>
+
+
+<dt id="arg-magnitude-threshold">magnitude_threshold<a class="anchor" aria-label="anchor" href="#arg-magnitude-threshold"></a></dt>
+<dd><p>Minimum vector magnitude required at both ends
+of each stable adjacent pair. The default is 1.25 g.</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>

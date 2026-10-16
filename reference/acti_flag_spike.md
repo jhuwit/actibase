@@ -128,6 +128,16 @@ acti_flag_impossible(
   stretches of single `TRUE` values or 2 `TRUE` followed by `FALSE`,
   will be set to `FALSE`.
 
+- change_threshold:
+
+  Maximum absolute change between adjacent samples on each axis for a
+  stable run to qualify. The default is 0.01 g.
+
+- magnitude_threshold:
+
+  Minimum vector magnitude required at both ends of each stable adjacent
+  pair. The default is 1.25 g.
+
 ## Value
 
 A data set back
