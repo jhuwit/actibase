@@ -1,5 +1,20 @@
 # Changelog
 
+## actibase 0.7.2
+
+- Add
+  [`acti_flag_cdc_labels()`](https://jhuwit.github.io/actibase/reference/acti_flag_cdc_labels.md)
+  to map existing logical QC columns to CDC-style NHANES PAM letter
+  codes.
+- Document the CDC NHANES PAM flag mapping in the README and a package
+  vignette, including known differences from CDC output.
+- Standardize accelerometer axis columns named `X/Y/Z`, `x/y/z`,
+  `acc_X/acc_x` variants, or `acceleration_X/acceleration_x` variants.
+- Fail when upper- and lowercase versions of the same axis are both
+  present. Warn once and prefer `X/Y/Z` when a complete canonical
+  triplet and a complete `acc_*` or `acceleration_*` triplet are
+  present.
+
 ## actibase 0.7.1
 
 - Preserve missing values while applying minimum run lengths to logical

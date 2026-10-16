@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">actibase</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.7.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.7.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -36,6 +36,13 @@
       <small>Source: <a href="https://github.com/jhuwit/actibase/blob/main/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.7.2" id="actibase-072">actibase 0.7.2<a class="anchor" aria-label="anchor" href="#actibase-072"></a></h2>
+<ul><li>Add <code><a href="../reference/acti_flag_cdc_labels.html">acti_flag_cdc_labels()</a></code> to map existing logical QC columns to CDC-style NHANES PAM letter codes.</li>
+<li>Document the CDC NHANES PAM flag mapping in the README and a package vignette, including known differences from CDC output.</li>
+<li>Standardize accelerometer axis columns named <code>X/Y/Z</code>, <code>x/y/z</code>, <code>acc_X/acc_x</code> variants, or <code>acceleration_X/acceleration_x</code> variants.</li>
+<li>Fail when upper- and lowercase versions of the same axis are both present. Warn once and prefer <code>X/Y/Z</code> when a complete canonical triplet and a complete <code>acc_*</code> or <code>acceleration_*</code> triplet are present.</li>
+</ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.7.1" id="actibase-071">actibase 0.7.1<a class="anchor" aria-label="anchor" href="#actibase-071"></a></h2>
 <ul><li>Preserve missing values while applying minimum run lengths to logical QC flags.</li>
