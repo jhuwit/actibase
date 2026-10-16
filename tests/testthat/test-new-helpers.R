@@ -13,8 +13,13 @@ test_that("mark_condition keeps and drops contiguous runs as requested", {
     c(FALSE, TRUE, TRUE, TRUE, FALSE, FALSE, FALSE, FALSE, FALSE)
   )
 
-  expect_identical(actibase::mark_condition(rep(TRUE, 3), min_length = 5), rep(TRUE, 3))
+  expect_identical(actibase::mark_condition(rep(TRUE, 3), min_length = 5), rep(FALSE, 3))
   expect_identical(actibase::mark_condition(rep(FALSE, 3), min_length = 5), rep(FALSE, 3))
+  expect_identical(
+    actibase::mark_condition(c(TRUE, NA, TRUE, TRUE), min_length = 2),
+    c(FALSE, NA, TRUE, TRUE)
+  )
+  expect_identical(actibase::mark_condition(logical(), min_length = 2), logical())
 })
 
 test_that("floor_sec handles date and datetime inputs", {
@@ -152,7 +157,7 @@ test_that("flag_spike flags large adjacent changes", {
     Z = c(0, 0, 0)
   )
 
-  flagged <- actibase::flag_spike(data, spike_size = 11)
+  flagged <- actibase::acti_flag_spike(data, spike_size = 11)
   expect_true("flag_spike" %in% names(flagged))
   expect_identical(flagged$flag_spike, c(FALSE, TRUE, FALSE))
   expect_identical(flagged$time, data$time)

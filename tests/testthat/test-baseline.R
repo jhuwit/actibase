@@ -1,4 +1,6 @@
 test_that("basic helper utilities behave as expected", {
+  expect_identical(mark_condition(rep(TRUE, 3), min_length = 4),
+                   rep(FALSE, 3))
   expect_true(is.AccData(structure(list(), class = "AccData")))
   expect_false(is.AccData(list()))
 
@@ -149,6 +151,13 @@ test_that("leading-zero removal drops only the initial all-zero rows", {
   trimmed <- acti_remove_leading_zeros(data)
   expect_identical(trimmed, expected)
   expect_identical(acti_remove_leading_zeroes(data), trimmed)
+
+  all_zero <- data
+  all_zero$X <- all_zero$Y <- all_zero$Z <- 0
+  trimmed_all_zero <- acti_remove_leading_zeros(all_zero)
+  expect_equal(nrow(trimmed_all_zero), 0L)
+  expect_s3_class(trimmed_all_zero, "data.frame")
+  expect_true(all(c("X", "Y", "Z", "all_zero") %in% names(trimmed_all_zero)))
 })
 
 test_that("separate time and day inclusion helpers return expected summaries", {

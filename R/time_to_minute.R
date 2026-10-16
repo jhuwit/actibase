@@ -32,7 +32,12 @@ acti_hms_to_minute = function(x, start = 1L) {
     stop("`x` must be an `hms` vector.", call. = FALSE)
   }
   start = acti_validate_start(start)
-  as.integer(floor(as.numeric(x) / 60) %% 1440 + start)
+  seconds = as.numeric(x)
+  valid = is.na(seconds) | (is.finite(seconds) & seconds >= 0 & seconds < 86400)
+  if (any(!valid)) {
+    stop("`x` must contain times within a single day.", call. = FALSE)
+  }
+  as.integer(floor(seconds / 60) + start)
 }
 
 #' Convert a Minute Index to an HMS Time
@@ -142,6 +147,10 @@ acti_split_intervals_at_midnight = function(start, end, timezone = NULL) {
   end = as.POSIXct(end, tz = timezone)
   if (any(!is.na(start) & !is.na(end) & end < start)) {
     stop("Each `end` must be on or after its `start`.", call. = FALSE)
+  }
+  if (length(start) == 0L) {
+    empty_time = as.POSIXct(numeric(), origin = "1970-01-01", tz = timezone)
+    return(data.frame(interval = integer(), start = empty_time, end = empty_time))
   }
   pieces = lapply(seq_along(start), function(i) {
     if (is.na(start[i]) || is.na(end[i])) {

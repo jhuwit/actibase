@@ -7,6 +7,8 @@ test_that("minute helpers convert hms, character, and POSIXt values", {
   expect_identical(acti_time_to_minute(time_ct), c(1L, 1440L))
   expect_identical(acti_time_to_minute(as.POSIXlt(time_ct)), c(1L, 1440L))
   expect_identical(acti_time_to_minute(hms::hms(NA)), NA_integer_)
+  expect_error(acti_hms_to_minute(hms::hms(-60)), "within a single day")
+  expect_error(acti_hms_to_minute(hms::hms(86400)), "within a single day")
 })
 
 test_that("minute positions round trip through hms", {
@@ -44,6 +46,15 @@ test_that("intervals split at local midnight", {
   expect_identical(format(got$end, "%F %T"), c("2020-01-02 00:00:00", "2020-01-02 00:30:00", NA))
   expect_error(acti_split_intervals_at_midnight(end, start), "end")
   expect_error(acti_split_intervals_at_midnight(as.Date("2020-01-01"), end), "equally sized")
+
+  empty <- acti_split_intervals_at_midnight(
+    as.POSIXct(character(), tz = "UTC"),
+    as.POSIXct(character(), tz = "UTC")
+  )
+  expect_s3_class(empty, "data.frame")
+  expect_identical(names(empty), c("interval", "start", "end"))
+  expect_equal(nrow(empty), 0L)
+  expect_s3_class(empty$start, "POSIXct")
 })
 
 test_that("activity day helpers support non-midnight boundaries", {

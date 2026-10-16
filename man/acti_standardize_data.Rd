@@ -22,8 +22,10 @@ acti_standardise_data(
 )
 }
 \arguments{
-\item{data}{A \code{data.frame} with a column for time in \code{POSIXct} (usually
-\code{time}), and \code{X}, \code{Y}, \code{Z}}
+\item{data}{A \code{data.frame} with an optional time column and three
+accelerometer axes. Axes can be named \code{X/Y/Z}, \code{x/y/z}, \code{acc_X/acc_Y/acc_Z},
+\code{acc_x/acc_y/acc_z}, or \code{acceleration_X/acceleration_Y/acceleration_Z}
+(with lowercase axis letters also accepted).}
 
 \item{subset_xyz}{should only the \code{time} (if available)
 and \code{XYZ} be subset?}
@@ -40,6 +42,12 @@ A \code{data.frame} with \code{X/Y/Z} and a time in
 }
 \description{
 Standardize the Accelerometry Data
+}
+\details{
+When a complete canonical triplet and a complete prefixed triplet
+(\verb{acc_*} or \verb{acceleration_*}) are both present, the canonical columns are
+used and a single warning is issued. A data frame containing both \code{X} and
+\code{x} (or the analogous pair for Y or Z) is rejected as ambiguous.
 }
 \examples{
 
