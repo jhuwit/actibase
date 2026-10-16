@@ -303,8 +303,9 @@ acti_flag_device_limit = function(data, dynamic_range = NULL, epsilon = 0.05) {
 
 #' @rdname acti_flag_spike
 #' @export
-acti_flag_contiguous_device_limit = function(data, dynamic_range = NULL, epsilon = 0.05,
-                                        sample_rate = NULL) {
+acti_flag_adjacent_device_limit_samples = function(data, dynamic_range = NULL,
+                                                   epsilon = 0.05,
+                                                   sample_rate = NULL) {
   # #1
   flag_device_limit = X = Y = Z = NULL
   rm(list = c("X", "Y", "Z", "flag_device_limit"))
@@ -322,10 +323,24 @@ acti_flag_contiguous_device_limit = function(data, dynamic_range = NULL, epsilon
   }
   data = data %>%
     dplyr::mutate(
-      flag_contiguous_device_limit = flag_device_limit &
+      flag_adjacent_device_limit_samples = flag_device_limit &
         ((c(FALSE, adjacent) & dplyr::lag(flag_device_limit, default = FALSE)) |
          (c(adjacent, FALSE) & dplyr::lead(flag_device_limit, default = FALSE)))
     )
+  data
+}
+
+#' @rdname acti_flag_spike
+#' @export
+acti_flag_contiguous_device_limit = function(data, dynamic_range = NULL,
+                                             epsilon = 0.05,
+                                             sample_rate = NULL) {
+  data = acti_flag_adjacent_device_limit_samples(
+    data, dynamic_range = dynamic_range, epsilon = epsilon,
+    sample_rate = sample_rate
+  )
+  data$flag_contiguous_device_limit = data$flag_adjacent_device_limit_samples
+  data$flag_adjacent_device_limit_samples = NULL
   data
 }
 
@@ -451,20 +466,22 @@ acti_flag_impossible = function(data, min_length = 7, change_threshold = 0.01,
   data
 }
 
-#' Flag contiguous device-limit samples
+#' Flag contiguous device-limit runs
 #'
-#' Marks samples in runs meeting a device-limit condition. Runs are broken at
-#' timestamp gaps based on the extracted or supplied sampling rate.
+#' Marks axis-specific positive and negative device-limit samples in runs
+#' meeting `min_length`. Runs are broken at timestamp gaps based on the
+#' extracted or supplied sampling rate.
 #' @param data Raw accelerometer data.
 #' @param dynamic_range Device range; inferred when omitted.
 #' @param epsilon Margin inside the device limit, in g.
 #' @param min_length Minimum run length.
 #' @param sample_rate Sampling frequency; extracted from data when omitted.
-#' @return Input data with axis-specific contiguous device-limit columns.
+#' @return Input data with six axis- and sign-specific contiguous run columns.
 #' @export
-acti_flag_contiguous_device_limits = function(data, dynamic_range = NULL,
-                                         epsilon = 0.05, min_length = 1,
-                                         sample_rate = NULL) {
+acti_flag_contiguous_device_limit_runs = function(data, dynamic_range = NULL,
+                                                  epsilon = 0.05,
+                                                  min_length = 1,
+                                                  sample_rate = NULL) {
   data = acti_standardize_data(data, subset_xyz = FALSE)
   if (!"time" %in% names(data)) stop("Raw data must contain timestamps.", call. = FALSE)
   sample_rate = get_sample_rate(data, sample_rate)
@@ -481,6 +498,17 @@ acti_flag_contiguous_device_limits = function(data, dynamic_range = NULL,
     )
   }
   data
+}
+
+#' @rdname acti_flag_contiguous_device_limit_runs
+#' @export
+acti_flag_contiguous_device_limits = function(data, dynamic_range = NULL,
+                                              epsilon = 0.05, min_length = 1,
+                                              sample_rate = NULL) {
+  acti_flag_contiguous_device_limit_runs(
+    data, dynamic_range = dynamic_range, epsilon = epsilon,
+    min_length = min_length, sample_rate = sample_rate
+  )
 }
 
 #' Flag device-limit counts within time windows
@@ -648,6 +676,7 @@ acti_flag_cdc_labels = function(data, flag_map = c(
   if (!all(vapply(data[unname(flag_map)], is.logical, logical(1)))) {
     stop("Mapped flag columns must be logical.", call. = FALSE)
   }
+  flag_map = flag_map[order(names(flag_map))]
   labels = vapply(seq_len(nrow(data)), function(i) {
     hit = vapply(unname(flag_map), function(column) {
       value = data[[column]][i]

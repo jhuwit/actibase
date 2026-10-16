@@ -99,6 +99,52 @@ test_that("standardizing data renames axes and time", {
   )
 })
 
+test_that("standardization recognizes accelerometer axis aliases", {
+  expected <- data.frame(X = 1:2, Y = 3:4, Z = 5:6)
+  alias_sets <- list(
+    c("x", "y", "z"),
+    c("acc_X", "acc_Y", "acc_Z"),
+    c("acc_x", "acc_y", "acc_z"),
+    c("acceleration_X", "acceleration_Y", "acceleration_Z"),
+    c("acceleration_x", "acceleration_y", "acceleration_z"),
+    c("acc_X", "acceleration_y", "z")
+  )
+  for (axis_names in alias_sets) {
+    raw <- setNames(expected, axis_names)
+    expect_equal(acti_standardize_data(raw), expected)
+  }
+
+  expect_error(
+    acti_standardize_data(data.frame(X = 1, x = 2, Y = 3, Z = 4)),
+    "both `X` and `x`"
+  )
+  expect_error(
+    acti_standardize_data(data.frame(X = 1, Y = 2, y = 3, Z = 4)),
+    "both `Y` and `y`"
+  )
+
+  canonical <- data.frame(X = 1, Y = 2, Z = 3)
+  with_both_prefixes <- cbind(
+    canonical,
+    data.frame(acc_x = 10, acc_y = 20, acc_z = 30,
+               acceleration_X = 100, acceleration_Y = 200,
+               acceleration_Z = 300)
+  )
+  warning_count <- 0L
+  chosen <- withCallingHandlers(
+    acti_standardize_data(with_both_prefixes),
+    warning = function(w) {
+      warning_count <<- warning_count + 1L
+      invokeRestart("muffleWarning")
+    }
+  )
+  expect_equal(warning_count, 1L)
+  expect_equal(chosen, canonical)
+
+  incomplete_prefix <- cbind(canonical, data.frame(acceleration_X = 100))
+  expect_no_warning(acti_standardize_data(incomplete_prefix))
+})
+
 test_that("sorting and zero filling preserve order and transformations", {
   unsorted <- data.frame(
     time = as.POSIXct(
@@ -332,6 +378,10 @@ test_that("resampling works for data frames and tibbles", {
   missing$time[2] <- as.POSIXct(NA, tz = "UTC")
   expect_error(acti_resample(missing, sample_rate = 1),
                "drop those rows before resampling")
+  expect_error(
+    acti_resample_to_time(missing, times = times),
+    "drop those rows before resampling"
+  )
 
   one <- base[1, ]
   expect_equal(nrow(acti_resample(one, sample_rate = 10)), 1L)

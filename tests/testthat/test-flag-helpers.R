@@ -2,14 +2,42 @@ test_that("flag API functions use acti names and data as the first argument", {
   flag_functions <- c(
     "acti_flag_spike", "acti_flag_interval_jump", "acti_flag_spike_second",
     "acti_flag_device_limit", "acti_flag_contiguous_device_limit",
+    "acti_flag_adjacent_device_limit_samples",
     "acti_flag_same_value", "acti_flag_all_zero", "acti_flag_impossible",
-    "acti_flag_contiguous_device_limits", "acti_flag_device_limit_windows",
+    "acti_flag_contiguous_device_limits", "acti_flag_contiguous_device_limit_runs",
+    "acti_flag_device_limit_windows",
     "acti_flag_adjacent_invalid_periods", "acti_flag_repeated_samples",
     "acti_flag_qc", "acti_flag_qc_all"
   )
   expect_true(all(vapply(flag_functions, function(name) {
     identical(names(formals(get(name)))[1L], "data")
   }, logical(1))))
+})
+
+test_that("CDC flag labels support partial, missing, and custom flags", {
+  data <- data.frame(
+    flag_impossible = c(TRUE, FALSE, NA),
+    flag_spike_X = c(TRUE, FALSE, FALSE),
+    flag_all_zero = c(FALSE, TRUE, FALSE)
+  )
+  labelled <- acti_flag_cdc_labels(data)
+  expect_identical(labelled$PAXFLGSM, c("AP", "Q", ""))
+
+  custom <- acti_flag_cdc_labels(
+    data,
+    flag_map = c(B = "flag_impossible", A = "flag_spike_X"),
+    output = "letters",
+    separator = "+"
+  )
+  expect_identical(custom$letters, c("A+B", "", ""))
+  expect_error(
+    acti_flag_cdc_labels(data, flag_map = c(A = "not_a_flag")),
+    "Missing flag columns"
+  )
+  expect_error(
+    acti_flag_cdc_labels(transform(data, flag_spike_X = as.integer(flag_spike_X))),
+    "must be logical"
+  )
 })
 
 test_that("flag helpers set expected indicators and preserve metadata", {
@@ -74,6 +102,11 @@ test_that("flag helpers set expected indicators and preserve metadata", {
 
   contiguous <- acti_flag_contiguous_device_limit(device_df, epsilon = 0.05)
   expect_identical(contiguous$flag_contiguous_device_limit, c(FALSE, FALSE, FALSE))
+  adjacent <- acti_flag_adjacent_device_limit_samples(device_df, epsilon = 0.05)
+  expect_identical(
+    adjacent$flag_adjacent_device_limit_samples,
+    contiguous$flag_contiguous_device_limit
+  )
 
   preflagged <- device
   preflagged$flag_device_limit <- c(FALSE, TRUE, TRUE)
@@ -143,6 +176,10 @@ test_that("general flag helpers accept caller-supplied sampling and window norms
   raw$Z[1:160] <- -5.96
   limit <- acti_flag_contiguous_device_limits(raw, dynamic_range = c(-6, 6),
                                          min_length = 160, sample_rate = 80)
+  limit_runs <- acti_flag_contiguous_device_limit_runs(
+    raw, dynamic_range = c(-6, 6), min_length = 160, sample_rate = 80
+  )
+  expect_identical(limit_runs, limit)
   expect_true(all(limit$flag_contiguous_min_Z[1:160]))
   expect_false(any(limit$flag_contiguous_min_Z[161:320]))
 

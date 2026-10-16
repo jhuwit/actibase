@@ -46,9 +46,25 @@ resampled = acti_resample(res, sample_rate = 30L)
 
 `actibase` keeps the primitives that other packages can build on:
 
-* standardization and reshaping helpers
-* resampling
+* accelerometer column standardization and axis reshaping, including common
+  `x/y/z`, `acc_*`, and `acceleration_*` input names
+* timestamp-aware resampling to a sampling rate or requested timestamps
+* time-of-day, date, day-boundary, and interval helpers
+* sample-rate and device-range metadata lookup
+* raw-sample QC flags and CDC NHANES letter labels for comparing raw-data
+  checks with NHANES output
+* day-inclusion summaries and basic zero handling
 
+Device-limit helpers distinguish adjacent samples from sustained runs:
+`acti_flag_adjacent_device_limit_samples()` marks near-limit samples with a
+neighboring limit sample, while `acti_flag_contiguous_device_limit_runs()`
+marks axis- and sign-specific runs meeting `min_length`. The older function
+names remain available for compatibility.
+
+The flag functions label questionable raw samples and intervals; they do not
+replace vendor readers, wear/nonwear algorithms, or activity summaries.
+`acti_flag_cdc_labels()` is syntactic sugar for attaching CDC letter codes to
+flag columns already computed, so raw-data checks can be compared with NHANES.
 
 Higher-level summarization, step-count mapping, and downstream analysis
 should live in overlay packages.
@@ -67,8 +83,8 @@ combine the resulting logical columns into CDC-style letter strings.
 | A–C | Axis-specific spikes: adjacent-sample change ≥11 g | `acti_flag_spike(by_axis = TRUE)`: `flag_spike_X/Y/Z` | Sample-level; set `spike_size = 11` and use the appropriate sampling rate. |
 | D–F | Per-minute count of positive near-limit values, ≥690 samples | `acti_flag_device_limit_windows()`: `flag_device_max_X/Y/Z` | Set `min_count = 690`, `window_seconds = 60`, `dynamic_range = c(-6, 6)`, and `epsilon = 0.05`. |
 | G–I | Per-minute count of negative near-limit values, ≥690 samples | `acti_flag_device_limit_windows()`: `flag_device_min_X/Y/Z` | Same thresholds as D–F, for negative values. |
-| J–L | Contiguous positive near-limit run, ≥160 samples | `acti_flag_contiguous_device_limits()`: `flag_contiguous_max_X/Y/Z` | Set `min_length = 160`; CDC also assigns the run to every overlapping minute. |
-| M–O | Contiguous negative near-limit run, ≥160 samples | `acti_flag_contiguous_device_limits()`: `flag_contiguous_min_X/Y/Z` | Set `min_length = 160`; CDC permits runs to cross minute boundaries. |
+| J–L | Contiguous positive near-limit run, ≥160 samples | `acti_flag_contiguous_device_limit_runs()`: `flag_contiguous_max_X/Y/Z` | Set `min_length = 160`; CDC also assigns the run to every overlapping minute. |
+| M–O | Contiguous negative near-limit run, ≥160 samples | `acti_flag_contiguous_device_limit_runs()`: `flag_contiguous_min_X/Y/Z` | Set `min_length = 160`; CDC permits runs to cross minute boundaries. |
 | P | Contiguous impossible gravity values | `acti_flag_impossible()`: `flag_impossible` | Generalized thresholds are configurable; CDC uses seven samples, <0.01 g change on each axis, vector magnitude >1.25 g, excluding ±6 g values. |
 | Q | Contiguous adjacent zero values | `acti_flag_all_zero()`: `flag_all_zero` | Package checks all three axes. CDC documents a historical programming error that checked only X; exact reproduction of that error is not intended. |
 | R | Contiguous identical, non-zero three-axis samples | `acti_flag_repeated_samples()`: `flag_repeated_samples` | Configure `min_length = 2`, `exclude_zero = TRUE`, `require_equal_axes = TRUE`. CDC’s reported run length/minute attribution may differ. |
@@ -83,8 +99,8 @@ does not run detectors or infer missing axis-specific results:
 raw <- acti_flag_spike(raw, by_axis = TRUE)
 raw <- acti_flag_device_limit_windows(raw, dynamic_range = c(-6, 6),
                                       min_count = 690)
-raw <- acti_flag_contiguous_device_limits(raw, dynamic_range = c(-6, 6),
-                                          min_length = 160)
+raw <- acti_flag_contiguous_device_limit_runs(raw, dynamic_range = c(-6, 6),
+                                              min_length = 160)
 raw <- acti_flag_cdc_labels(raw)
 ```
 

@@ -4,6 +4,7 @@
 * Document the CDC NHANES PAM flag mapping in the README and a package vignette, including known differences from CDC output.
 * Standardize accelerometer axis columns named `X/Y/Z`, `x/y/z`, `acc_X/acc_x` variants, or `acceleration_X/acceleration_x` variants.
 * Fail when upper- and lowercase versions of the same axis are both present. Warn once and prefer `X/Y/Z` when a complete canonical triplet and a complete `acc_*` or `acceleration_*` triplet are present.
+* Add clearer names for adjacent device-limit sample flags and axis-specific contiguous device-limit runs; retain the former names as compatibility wrappers.
 
 # actibase 0.7.1
 

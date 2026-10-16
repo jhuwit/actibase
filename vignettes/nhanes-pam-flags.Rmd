@@ -30,8 +30,8 @@ settings for reproducing the NHANES rules.
 | A–C | Axis-specific spikes: adjacent-sample change ≥11 g | `acti_flag_spike(by_axis = TRUE)`: `flag_spike_X/Y/Z` | Sample-level; set `spike_size = 11`. |
 | D–F | Per-minute count of positive near-limit values, ≥690 samples | `acti_flag_device_limit_windows()`: `flag_device_max_X/Y/Z` | Set `min_count = 690`, `window_seconds = 60`, range ±6 g, and `epsilon = 0.05`. |
 | G–I | Per-minute count of negative near-limit values, ≥690 samples | `acti_flag_device_limit_windows()`: `flag_device_min_X/Y/Z` | Same thresholds as D–F, for negative values. |
-| J–L | Contiguous positive near-limit run, ≥160 samples | `acti_flag_contiguous_device_limits()`: `flag_contiguous_max_X/Y/Z` | Set `min_length = 160`; CDC assigns the run to every overlapping minute. |
-| M–O | Contiguous negative near-limit run, ≥160 samples | `acti_flag_contiguous_device_limits()`: `flag_contiguous_min_X/Y/Z` | Set `min_length = 160`; CDC permits runs to cross minute boundaries. |
+| J–L | Contiguous positive near-limit run, ≥160 samples | `acti_flag_contiguous_device_limit_runs()`: `flag_contiguous_max_X/Y/Z` | Set `min_length = 160`; CDC assigns the run to every overlapping minute. |
+| M–O | Contiguous negative near-limit run, ≥160 samples | `acti_flag_contiguous_device_limit_runs()`: `flag_contiguous_min_X/Y/Z` | Set `min_length = 160`; CDC permits runs to cross minute boundaries. |
 | P | Contiguous impossible gravity values | `acti_flag_impossible()`: `flag_impossible` | CDC settings: seven samples, <0.01 g change on each axis, vector magnitude >1.25 g, excluding ±6 g values. |
 | Q | Contiguous adjacent zero values | `acti_flag_all_zero()`: `flag_all_zero` | Package checks all three axes. CDC documents a historical programming error that checked only X; exact reproduction of that error is not intended. |
 | R | Contiguous identical, non-zero three-axis samples | `acti_flag_repeated_samples()`: `flag_repeated_samples` | Use `min_length = 2`, `exclude_zero = TRUE`, `require_equal_axes = TRUE`. CDC run lengths and minute attribution may differ. |
@@ -55,8 +55,8 @@ axis-specific outputs first (using `by_axis = TRUE` where available):
 raw <- acti_flag_spike(raw, by_axis = TRUE)
 raw <- acti_flag_device_limit_windows(raw, dynamic_range = c(-6, 6),
                                       min_count = 690)
-raw <- acti_flag_contiguous_device_limits(raw, dynamic_range = c(-6, 6),
-                                          min_length = 160)
+raw <- acti_flag_contiguous_device_limit_runs(raw, dynamic_range = c(-6, 6),
+                                              min_length = 160)
 raw <- acti_flag_cdc_labels(raw)
 ```
 

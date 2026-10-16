@@ -57,12 +57,14 @@ standardize_axis_names = function(data) {
   canonical = vapply(axis_names, function(axis) {
     any(c(axis, tolower(axis)) %in% names(data))
   }, logical(1))
-  prefixed = vapply(axis_names, function(axis) {
-    any(c(paste0("acc_", axis), paste0("acc_", tolower(axis)),
-          paste0("acceleration_", axis),
-          paste0("acceleration_", tolower(axis))) %in% names(data))
-  }, logical(1))
-  if (all(canonical) && all(prefixed)) {
+  has_prefixed_triplet = function(prefix) {
+    all(vapply(axis_names, function(axis) {
+      any(c(paste0(prefix, axis), paste0(prefix, tolower(axis))) %in% names(data))
+    }, logical(1)))
+  }
+  has_competing_triplet = has_prefixed_triplet("acc_") ||
+    has_prefixed_triplet("acceleration_")
+  if (all(canonical) && has_competing_triplet) {
     warning(paste0(
       "Canonical X/Y/Z columns were chosen, but a complete prefixed axis ",
       "set (acc_* or acceleration_*) also exists. The prefixed columns were not used."

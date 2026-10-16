@@ -5,6 +5,7 @@
 \alias{acti_flag_interval_jump}
 \alias{acti_flag_spike_second}
 \alias{acti_flag_device_limit}
+\alias{acti_flag_adjacent_device_limit_samples}
 \alias{acti_flag_contiguous_device_limit}
 \alias{acti_flag_same_value}
 \alias{acti_flag_all_zero}
@@ -36,6 +37,13 @@ acti_flag_spike_second(
 )
 
 acti_flag_device_limit(data, dynamic_range = NULL, epsilon = 0.05)
+
+acti_flag_adjacent_device_limit_samples(
+  data,
+  dynamic_range = NULL,
+  epsilon = 0.05,
+  sample_rate = NULL
+)
 
 acti_flag_contiguous_device_limit(
   data,
