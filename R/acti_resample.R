@@ -15,23 +15,23 @@ run_resample = function(
     natural = stats::spline,
     monoH.FC = stats::spline,
     hyman = stats::spline)
-  x_out = func(x = timestamp,
-               xout = time_interp,
-               method = method,
-               y = x,
-               ...)$y
+  interpolate = function(values) {
+    keep = is.finite(timestamp)
+    if (!any(keep)) return(rep(NA_real_, length(time_interp)))
+    if (sum(keep) == 1L) {
+      return(ifelse(time_interp == timestamp[keep][1L], values[keep][1L], NA_real_))
+    }
+    result = func(x = timestamp[keep], xout = time_interp, method = method,
+                  y = values[keep], ...)$y
+    result[time_interp < min(timestamp[keep]) |
+             time_interp > max(timestamp[keep])] = NA_real_
+    result
+  }
+  x_out = interpolate(x)
   rm(x)
-  y_out = func(x = timestamp,
-               xout = time_interp,
-               method = method,
-               y = y,
-               ...)$y
+  y_out = interpolate(y)
   rm(y)
-  z_out = func(x = timestamp,
-               xout = time_interp,
-               method = method,
-               y = z,
-               ...)$y
+  z_out = interpolate(z)
   rm(z)
   rm(timestamp)
 
@@ -91,19 +91,25 @@ acti_resample = function(
     method = "linear",
     ...
 ) {
-  assertthat::assert_that(
-    assertthat::is.count(sample_rate)
-  )
+  if (!is.numeric(sample_rate) || length(sample_rate) != 1L ||
+      !is.finite(sample_rate) || sample_rate <= 0 || sample_rate != floor(sample_rate)) {
+    stop("`sample_rate` must be one positive whole number.", call. = FALSE)
+  }
   sample_rate = as.integer(sample_rate)
 
   data = acti_standardize_data(data)
+  if (anyNA(data$time)) {
+    stop("`time` contains missing timestamps; drop those rows before resampling.",
+         call. = FALSE)
+  }
+  is_data_tibble = inherits(data, "tbl_df")
+  trans = get_transformations(data)
+  data = prepare_resample_data(data)
   orig_tz = lubridate::tz(data$time)
   timestamp = as.numeric(data$time)
   x = data[["X"]]
   y = data[["Y"]]
   z = data[["Z"]]
-  is_data_tibble = inherits(data, "tbl_df")
-  trans = get_transformations(data)
   rm(data)
 
   # Make it 0 to max so that no overflow issues with numerics
@@ -150,6 +156,13 @@ acti_resample_to_time = function(
 ) {
 
   data = acti_standardize_data(data)
+  is_data_tibble = inherits(data, "tbl_df")
+  trans = get_transformations(data)
+  data = prepare_resample_data(data)
+  if (!inherits(times, "POSIXt")) {
+    stop("`times` must be a POSIXt vector.", call. = FALSE)
+  }
+  if (anyNA(times)) stop("`times` cannot contain missing values.", call. = FALSE)
   orig_tz = lubridate::tz(data$time)
   time_tz = lubridate::tz(times)
   if (orig_tz != time_tz) {
@@ -159,8 +172,6 @@ acti_resample_to_time = function(
   x = data[["X"]]
   y = data[["Y"]]
   z = data[["Z"]]
-  is_data_tibble = inherits(data, "tbl_df")
-  trans = get_transformations(data)
   rm(data)
 
   time_interp = as.numeric(times)
@@ -184,4 +195,26 @@ acti_resample_to_time = function(
                             prefix = "acti_resample_to_time",
                             add = TRUE)
   return(out)
+}
+
+prepare_resample_data = function(data) {
+  time = X = Y = Z = NULL
+  rm(list = c("time", "X", "Y", "Z"))
+  if (!inherits(data$time, "POSIXt")) stop("`time` must be a POSIXt vector.", call. = FALSE)
+  if (nrow(data) == 0L) stop("`data` must contain at least one timestamp.", call. = FALSE)
+  if (anyNA(data$time)) {
+    stop("`time` contains missing timestamps; drop those rows before resampling.",
+         call. = FALSE)
+  }
+  data = data[order(data$time), , drop = FALSE]
+  if (anyDuplicated(data$time)) {
+    data = dplyr::summarise(
+      dplyr::group_by(data, time),
+      X = if (all(is.na(X))) NA_real_ else mean(X, na.rm = TRUE),
+      Y = if (all(is.na(Y))) NA_real_ else mean(Y, na.rm = TRUE),
+      Z = if (all(is.na(Z))) NA_real_ else mean(Z, na.rm = TRUE),
+      .groups = "drop"
+    )
+  }
+  data
 }

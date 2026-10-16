@@ -38,29 +38,16 @@ create_day_inclusion = function(
     dplyr::mutate(
       date = as_date_safe(time),
       minute = lubridate::floor_date(time, unit = "minutes"),
-      hourtime = hms::as_hms(time))
+      hourtime = hms::as_hms(minute))
 
-  # make distinct for summarization
+  # Count each minute once. A minute is wear if any sample in it is wear;
+  # missing wear labels are treated as non-wear while remaining observed.
   data = data %>%
-    dplyr::distinct(date, minute, hourtime, wear)
-
-  # Check for duplicates - should not be there
-  suppressMessages({
-    dupes = janitor::get_dupes(data, date, minute)
-  })
-  if (nrow(dupes) > 0) {
-    stop("There are duplicate rows of date and minute!")
-  }
-
-  suppressMessages({
-    dupes = janitor::get_dupes(data, date, hourtime)
-  })
-  if (nrow(dupes) > 0) {
-    stop("There are duplicate rows of date and minute!")
-  }
+    dplyr::group_by(date, minute, hourtime) %>%
+    dplyr::summarise(wear = any(wear %in% TRUE), .groups = "drop")
   all_minutes = expand.grid(
     date = unique(data$date),
-    hourtime = hms::hms(minutes = 1:1440)
+    hourtime = hms::hms(minutes = 0:1439)
   )
   data = data %>%
     dplyr::mutate(observed = TRUE) |>
@@ -77,7 +64,11 @@ create_day_inclusion = function(
     ) %>%
     dplyr::mutate(
       prop_minutes_wear = n_minutes_wear / 1440L,
-      prop_minutes_wear_from_observed = n_minutes_wear / n_minutes_observed
+      prop_minutes_wear_from_observed = dplyr::if_else(
+        n_minutes_observed > 0L,
+        n_minutes_wear / n_minutes_observed,
+        NA_real_
+      )
     ) %>%
     dplyr::mutate(
       is_included = n_minutes_wear >= min_required
@@ -99,7 +90,7 @@ add_day_inclusion = function(
   rm(list = c("time", "date"))
 
   day_data = create_day_inclusion(data, ...)
-  min_required = attr(data, "min_required")
+  min_required = attr(day_data, "min_required")
   data = acti_standardize_data(data, subset_xyz = FALSE, check_xyz = FALSE)
   data = data %>%
     dplyr::mutate(
@@ -107,7 +98,7 @@ add_day_inclusion = function(
     )
 
   data = data %>%
-    dplyr::left_join(day_data, day_data, by = dplyr::join_by(date))
+    dplyr::left_join(day_data, by = dplyr::join_by(date))
   attr(data, "min_required") = min_required
   data = set_transformations(
     data,

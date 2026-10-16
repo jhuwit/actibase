@@ -222,8 +222,7 @@ test_that("separate time and day inclusion helpers return expected summaries", {
     "Columns wear are not present"
   )
 
-  expect_error(
-    create_day_inclusion(
+  repeated_minute <- create_day_inclusion(
       data.frame(
         time = as.POSIXct(
           c("2020-01-01 00:00:00", "2020-01-01 00:00:00"),
@@ -231,9 +230,26 @@ test_that("separate time and day inclusion helpers return expected summaries", {
         ),
         wear = c(TRUE, FALSE)
       )
-    ),
-    "duplicate rows"
   )
+  expect_equal(repeated_minute$n_minutes_wear, 1L)
+  subminute <- create_day_inclusion(
+    data.frame(
+      time = as.POSIXct(c("2020-01-01 00:00:10", "2020-01-01 00:00:50"), tz = "UTC"),
+      wear = c(FALSE, TRUE)
+    )
+  )
+  expect_equal(subminute$n_minutes_observed, 1L)
+  expect_equal(subminute$n_minutes_wear, 1L)
+
+  missing_wear <- create_day_inclusion(
+    data.frame(time = as.POSIXct(c("2020-01-01 00:00:00", "2020-01-01 00:01:00"),
+                                 tz = "UTC"), wear = c(NA, FALSE)),
+    min_required = 1L
+  )
+  expect_equal(missing_wear$n_minutes_observed, 2L)
+  expect_equal(missing_wear$n_minutes_wear, 0L)
+  expect_equal(missing_wear$prop_minutes_wear_from_observed, 0)
+  expect_equal(attr(added, "min_required"), 2L)
 })
 
 test_that("tidy axes reshapes data and carries transformations", {
@@ -294,9 +310,37 @@ test_that("resampling works for data frames and tibbles", {
     ),
     "Timezone in data times do not match timezone in time vector"
   )
+
+  unsorted <- base[c(3, 1, 2), ]
+  expect_equal(acti_resample(unsorted, sample_rate = 2)$X, res_df$X)
+
+  duplicated <- base[c(1, 2, 2, 3), ]
+  duplicated$X[3] <- 3
+  duplicate_result <- acti_resample(duplicated, sample_rate = 1)
+  expect_equal(duplicate_result$X, c(0, 2, 2))
+
+  missing <- base
+  missing$time[2] <- as.POSIXct(NA, tz = "UTC")
+  expect_error(acti_resample(missing, sample_rate = 1),
+               "drop those rows before resampling")
+
+  one <- base[1, ]
+  expect_equal(nrow(acti_resample(one, sample_rate = 10)), 1L)
+  expect_error(acti_resample(base, sample_rate = 0), "positive whole number")
+
+  outside <- acti_resample_to_time(
+    base,
+    times = as.POSIXct(c("2019-12-31 23:59:59", "2020-01-01 00:00:01",
+                         "2020-01-01 00:00:03"), tz = "UTC"),
+    method = "natural"
+  )
+  expect_true(all(is.na(outside$X[c(1, 3)])))
+  expect_equal(outside$X[2], 1)
+  expect_error(acti_resample_to_time(base, times = as.Date("2020-01-01")),
+               "POSIXt")
 })
 
-test_that("tidy axes and duplicate checks can fail cleanly", {
+test_that("tidy axes dependency failures are clear", {
   expect_error(
     with_mocked_bindings(
       acti_tidy_axes(acti_raw_data),
@@ -304,30 +348,5 @@ test_that("tidy axes and duplicate checks can fail cleanly", {
       .package = "base"
     ),
     "tidyr required for tidy_axes"
-  )
-
-  call_count <- 0L
-  expect_error(
-    with_mocked_bindings(
-      create_day_inclusion(
-        data.frame(
-          time = as.POSIXct(
-            c("2020-01-01 00:00:00", "2020-01-01 00:01:00"),
-            tz = "UTC"
-          ),
-          wear = c(TRUE, FALSE)
-        )
-      ),
-      get_dupes = function(...) {
-        call_count <<- call_count + 1L
-        if (call_count == 1L) {
-          data.frame()
-        } else {
-          data.frame(date = as.Date("2020-01-01"), hourtime = hms::as_hms("00:00:00"))
-        }
-      },
-      .package = "janitor"
-    ),
-    "duplicate rows of date and minute"
   )
 })

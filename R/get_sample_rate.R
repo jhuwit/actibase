@@ -59,13 +59,23 @@ get_sample_rate = function(data, sample_rate = NULL, flag_estimated = FALSE) {
     if (is.null(time)) {
       time = data[["HEADER_TIMESTAMP"]]
     }
-    stopifnot(!is.null(time))
+    if (is.null(time)) stop("No usable timestamp column found.", call. = FALSE)
+    time = time[!is.na(time)]
+    if (length(time) < 2L) {
+      stop("At least two non-missing timestamps are required to estimate sample rate.",
+           call. = FALSE)
+    }
+    time = sort(unique(time))
+    if (length(time) < 2L) {
+      stop("At least two distinct timestamps are required to estimate sample rate.",
+           call. = FALSE)
+    }
     d = diff(time)
     units(d) = "secs"
     rm(list = "time")
     if (all(d > 1)) {
-      # minute level data
-      sample_rate = unique(1 / as.numeric(d))
+      # For sparse minute-level records, average observed interval rates.
+      sample_rate = mean(1 / as.numeric(d))
     } else {
       sample_rate = unique(round(1 / as.numeric(d)))
       if (length(sample_rate) > 1) {

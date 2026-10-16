@@ -30,7 +30,6 @@ Imports:
     lubridate,
     hms,
     tidyr,
-    janitor,
     assertthat,
     vctrs
 URL: https://github.com/jhuwit/actibase, https://jhuwit.github.io/actibase/
