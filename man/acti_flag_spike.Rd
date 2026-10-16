@@ -98,6 +98,12 @@ value <= \code{-5.95} or \verb{>= 5.95} gravity units will be flagged}
 samples. If \code{min_length = 7}, then at least 7 \code{TRUE}s in a row is required,
 any stretches of single \code{TRUE} values or 2 \code{TRUE} followed by \code{FALSE},
 will be set to \code{FALSE}.}
+
+\item{change_threshold}{Maximum absolute change between adjacent samples
+on each axis for a stable run to qualify. The default is 0.01 g.}
+
+\item{magnitude_threshold}{Minimum vector magnitude required at both ends
+of each stable adjacent pair. The default is 1.25 g.}
 }
 \value{
 A data set back

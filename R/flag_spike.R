@@ -100,6 +100,8 @@ acti_flag_interval_jump = function(data, verbose = FALSE, window_seconds = 1,
                               min_repeats = 10, min_distinct = 3,
                               min_separation = 0.5, by_axis = FALSE,
                               digits = 3, chunk_windows = 50000L) {
+  value = window = NULL
+  rm(list = c("value", "window"))
   data = acti_standardize_data(data, subset_xyz = FALSE)
   if (!"time" %in% names(data)) {
     stop("`time` is required for interval-jump windows.", call. = FALSE)
@@ -220,7 +222,7 @@ acti_flag_spike_second = function(data, spike_size = 11, window_seconds = 1,
   adjacent = is_sample_adjacent(time, sample_rate)
   segment = cumsum(c(TRUE, !adjacent))
   max_offset = min(n - 1L, max(0L, ceiling(sample_rate * max_change_seconds) - 1L))
-  axis_flags = setNames(vector("list", 3L), c("X", "Y", "Z"))
+  axis_flags = stats::setNames(vector("list", 3L), c("X", "Y", "Z"))
 
   for (axis in names(axis_flags)) {
     x = data[[axis]]
@@ -304,8 +306,8 @@ acti_flag_device_limit = function(data, dynamic_range = NULL, epsilon = 0.05) {
 acti_flag_contiguous_device_limit = function(data, dynamic_range = NULL, epsilon = 0.05,
                                         sample_rate = NULL) {
   # #1
-  X = Y = Z = NULL
-  rm(list = c("X", "Y", "Z"))
+  flag_device_limit = X = Y = Z = NULL
+  rm(list = c("X", "Y", "Z", "flag_device_limit"))
 
   if (!"flag_device_limit" %in% colnames(data)) {
     data = acti_flag_device_limit(data, dynamic_range = dynamic_range, epsilon = epsilon)
@@ -393,6 +395,10 @@ acti_flag_all_zero = function(data, min_length = 3, sample_rate = NULL) {
 
 #' @export
 #' @rdname acti_flag_spike
+#' @param change_threshold Maximum absolute change between adjacent samples
+#'   on each axis for a stable run to qualify. The default is 0.01 g.
+#' @param magnitude_threshold Minimum vector magnitude required at both ends
+#'   of each stable adjacent pair. The default is 1.25 g.
 #' @param dynamic_range Device dynamic range. When omitted, it is read from the
 #'   data with `get_dynamic_range()`; data-based estimates are rejected.
 acti_flag_impossible = function(data, min_length = 7, change_threshold = 0.01,
@@ -492,6 +498,8 @@ acti_flag_contiguous_device_limits = function(data, dynamic_range = NULL,
 acti_flag_device_limit_windows = function(data, dynamic_range = NULL,
                                     epsilon = 0.05, min_count = 1,
                                     window_seconds = 60) {
+  time = NULL
+  rm(list = c("time"))
   data = acti_standardize_data(data, subset_xyz = FALSE)
   if (!"time" %in% names(data)) stop("Raw data must contain timestamps.", call. = FALSE)
   data$time = parse_flag_time(data$time)
