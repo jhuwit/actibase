@@ -14,6 +14,9 @@
   present. Warn once and prefer `X/Y/Z` when a complete canonical
   triplet and a complete `acc_*` or `acceleration_*` triplet are
   present.
+- Add clearer names for adjacent device-limit sample flags and
+  axis-specific contiguous device-limit runs; retain the former names as
+  compatibility wrappers.
 
 ## actibase 0.7.1
 

@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">actibase</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.7.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -130,7 +130,7 @@ samples</td>
 <td align="left">J–L</td>
 <td align="left">Contiguous positive near-limit run, ≥160 samples</td>
 <td align="left">
-<code><a href="../reference/acti_flag_contiguous_device_limits.html">acti_flag_contiguous_device_limits()</a></code>:
+<code><a href="../reference/acti_flag_contiguous_device_limit_runs.html">acti_flag_contiguous_device_limit_runs()</a></code>:
 <code>flag_contiguous_max_X/Y/Z</code>
 </td>
 <td align="left">Set <code>min_length = 160</code>; CDC assigns the run
@@ -140,7 +140,7 @@ to every overlapping minute.</td>
 <td align="left">M–O</td>
 <td align="left">Contiguous negative near-limit run, ≥160 samples</td>
 <td align="left">
-<code><a href="../reference/acti_flag_contiguous_device_limits.html">acti_flag_contiguous_device_limits()</a></code>:
+<code><a href="../reference/acti_flag_contiguous_device_limit_runs.html">acti_flag_contiguous_device_limit_runs()</a></code>:
 <code>flag_contiguous_min_X/Y/Z</code>
 </td>
 <td align="left">Set <code>min_length = 160</code>; CDC permits runs to
@@ -230,8 +230,8 @@ axis-specific codes, create axis-specific outputs first (using
 <code class="sourceCode R"><span><span class="va">raw</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/acti_flag_spike.html">acti_flag_spike</a></span><span class="op">(</span><span class="va">raw</span>, by_axis <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="va">raw</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/acti_flag_device_limit_windows.html">acti_flag_device_limit_windows</a></span><span class="op">(</span><span class="va">raw</span>, dynamic_range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">6</span>, <span class="fl">6</span><span class="op">)</span>,</span>
 <span>                                      min_count <span class="op">=</span> <span class="fl">690</span><span class="op">)</span></span>
-<span><span class="va">raw</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/acti_flag_contiguous_device_limits.html">acti_flag_contiguous_device_limits</a></span><span class="op">(</span><span class="va">raw</span>, dynamic_range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">6</span>, <span class="fl">6</span><span class="op">)</span>,</span>
-<span>                                          min_length <span class="op">=</span> <span class="fl">160</span><span class="op">)</span></span>
+<span><span class="va">raw</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/acti_flag_contiguous_device_limit_runs.html">acti_flag_contiguous_device_limit_runs</a></span><span class="op">(</span><span class="va">raw</span>, dynamic_range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">6</span>, <span class="fl">6</span><span class="op">)</span>,</span>
+<span>                                              min_length <span class="op">=</span> <span class="fl">160</span><span class="op">)</span></span>
 <span><span class="va">raw</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/acti_flag_cdc_labels.html">acti_flag_cdc_labels</a></span><span class="op">(</span><span class="va">raw</span><span class="op">)</span></span></code></pre></div>
 <p>By default, the result is stored in <code>PAXFLGSM</code>, with
 multiple letters concatenated alphabetically (for example,

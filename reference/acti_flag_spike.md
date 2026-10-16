@@ -31,6 +31,13 @@ acti_flag_spike_second(
 
 acti_flag_device_limit(data, dynamic_range = NULL, epsilon = 0.05)
 
+acti_flag_adjacent_device_limit_samples(
+  data,
+  dynamic_range = NULL,
+  epsilon = 0.05,
+  sample_rate = NULL
+)
+
 acti_flag_contiguous_device_limit(
   data,
   dynamic_range = NULL,

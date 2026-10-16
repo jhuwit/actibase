@@ -20,8 +20,9 @@
 - [`acti_flag_cdc_labels()`](https://jhuwit.github.io/actibase/reference/acti_flag_cdc_labels.md)
   : Label quality flags with CDC NHANES letters
 
-- [`acti_flag_contiguous_device_limits()`](https://jhuwit.github.io/actibase/reference/acti_flag_contiguous_device_limits.md)
-  : Flag contiguous device-limit samples
+- [`acti_flag_contiguous_device_limit_runs()`](https://jhuwit.github.io/actibase/reference/acti_flag_contiguous_device_limit_runs.md)
+  [`acti_flag_contiguous_device_limits()`](https://jhuwit.github.io/actibase/reference/acti_flag_contiguous_device_limit_runs.md)
+  : Flag contiguous device-limit runs
 
 - [`acti_flag_device_limit_windows()`](https://jhuwit.github.io/actibase/reference/acti_flag_device_limit_windows.md)
   : Flag device-limit counts within time windows
@@ -37,6 +38,7 @@
   [`acti_flag_interval_jump()`](https://jhuwit.github.io/actibase/reference/acti_flag_spike.md)
   [`acti_flag_spike_second()`](https://jhuwit.github.io/actibase/reference/acti_flag_spike.md)
   [`acti_flag_device_limit()`](https://jhuwit.github.io/actibase/reference/acti_flag_spike.md)
+  [`acti_flag_adjacent_device_limit_samples()`](https://jhuwit.github.io/actibase/reference/acti_flag_spike.md)
   [`acti_flag_contiguous_device_limit()`](https://jhuwit.github.io/actibase/reference/acti_flag_spike.md)
   [`acti_flag_same_value()`](https://jhuwit.github.io/actibase/reference/acti_flag_spike.md)
   [`acti_flag_all_zero()`](https://jhuwit.github.io/actibase/reference/acti_flag_spike.md)

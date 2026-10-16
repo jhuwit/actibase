@@ -22,7 +22,7 @@
 
     <a class="navbar-brand me-2" href="index.html">actibase</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.7.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -79,9 +79,15 @@
 </h2>
 <p><code>actibase</code> keeps the primitives that other packages can build on:</p>
 <ul>
-<li>standardization and reshaping helpers</li>
-<li>resampling</li>
+<li>accelerometer column standardization and axis reshaping, including common <code>x/y/z</code>, <code>acc_*</code>, and <code>acceleration_*</code> input names</li>
+<li>timestamp-aware resampling to a sampling rate or requested timestamps</li>
+<li>time-of-day, date, day-boundary, and interval helpers</li>
+<li>sample-rate and device-range metadata lookup</li>
+<li>raw-sample QC flags and CDC NHANES letter labels for comparing raw-data checks with NHANES output</li>
+<li>day-inclusion summaries and basic zero handling</li>
 </ul>
+<p>Device-limit helpers distinguish adjacent samples from sustained runs: <code><a href="reference/acti_flag_spike.html">acti_flag_adjacent_device_limit_samples()</a></code> marks near-limit samples with a neighboring limit sample, while <code><a href="reference/acti_flag_contiguous_device_limit_runs.html">acti_flag_contiguous_device_limit_runs()</a></code> marks axis- and sign-specific runs meeting <code>min_length</code>. The older function names remain available for compatibility.</p>
+<p>The flag functions label questionable raw samples and intervals; they do not replace vendor readers, wear/nonwear algorithms, or activity summaries. <code><a href="reference/acti_flag_cdc_labels.html">acti_flag_cdc_labels()</a></code> is syntactic sugar for attaching CDC letter codes to flag columns already computed, so raw-data checks can be compared with NHANES.</p>
 <p>Higher-level summarization, step-count mapping, and downstream analysis should live in overlay packages.</p>
 </div>
 <div class="section level2">
@@ -131,7 +137,7 @@
 <td align="left">J–L</td>
 <td align="left">Contiguous positive near-limit run, ≥160 samples</td>
 <td align="left">
-<code><a href="reference/acti_flag_contiguous_device_limits.html">acti_flag_contiguous_device_limits()</a></code>: <code>flag_contiguous_max_X/Y/Z</code>
+<code><a href="reference/acti_flag_contiguous_device_limit_runs.html">acti_flag_contiguous_device_limit_runs()</a></code>: <code>flag_contiguous_max_X/Y/Z</code>
 </td>
 <td align="left">Set <code>min_length = 160</code>; CDC also assigns the run to every overlapping minute.</td>
 </tr>
@@ -139,7 +145,7 @@
 <td align="left">M–O</td>
 <td align="left">Contiguous negative near-limit run, ≥160 samples</td>
 <td align="left">
-<code><a href="reference/acti_flag_contiguous_device_limits.html">acti_flag_contiguous_device_limits()</a></code>: <code>flag_contiguous_min_X/Y/Z</code>
+<code><a href="reference/acti_flag_contiguous_device_limit_runs.html">acti_flag_contiguous_device_limit_runs()</a></code>: <code>flag_contiguous_min_X/Y/Z</code>
 </td>
 <td align="left">Set <code>min_length = 160</code>; CDC permits runs to cross minute boundaries.</td>
 </tr>
@@ -198,8 +204,8 @@
 <code class="sourceCode R"><span><span class="va">raw</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/acti_flag_spike.html">acti_flag_spike</a></span><span class="op">(</span><span class="va">raw</span>, by_axis <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="va">raw</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/acti_flag_device_limit_windows.html">acti_flag_device_limit_windows</a></span><span class="op">(</span><span class="va">raw</span>, dynamic_range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">6</span>, <span class="fl">6</span><span class="op">)</span>,</span>
 <span>                                      min_count <span class="op">=</span> <span class="fl">690</span><span class="op">)</span></span>
-<span><span class="va">raw</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/acti_flag_contiguous_device_limits.html">acti_flag_contiguous_device_limits</a></span><span class="op">(</span><span class="va">raw</span>, dynamic_range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">6</span>, <span class="fl">6</span><span class="op">)</span>,</span>
-<span>                                          min_length <span class="op">=</span> <span class="fl">160</span><span class="op">)</span></span>
+<span><span class="va">raw</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/acti_flag_contiguous_device_limit_runs.html">acti_flag_contiguous_device_limit_runs</a></span><span class="op">(</span><span class="va">raw</span>, dynamic_range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">6</span>, <span class="fl">6</span><span class="op">)</span>,</span>
+<span>                                              min_length <span class="op">=</span> <span class="fl">160</span><span class="op">)</span></span>
 <span><span class="va">raw</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/acti_flag_cdc_labels.html">acti_flag_cdc_labels</a></span><span class="op">(</span><span class="va">raw</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
