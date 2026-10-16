@@ -34,6 +34,43 @@ resampled = acti_resample(res, sample_rate = 30L)
 Higher-level summarization, step-count mapping, and downstream analysis
 should live in overlay packages.
 
+## NHANES PAM flag mapping
+
+The table maps the CDC NHANES PAM minute flags to the general-purpose
+sample-level or window-level helpers in `actibase`. The functions do not
+reproduce CDC’s data pipeline automatically: use the CDC thresholds and
+window rules when matching NHANES output. Flags with axis-specific
+output need `by_axis = TRUE` where that option is available.
+[`acti_flag_cdc_labels()`](https://jhuwit.github.io/actibase/reference/acti_flag_cdc_labels.md)
+can combine the resulting logical columns into CDC-style letter strings.
+
+| CDC code | CDC definition (summary) | `actibase` function and output | Match notes |
+|:---|:---|:---|:---|
+| A–C | Axis-specific spikes: adjacent-sample change ≥11 g | `acti_flag_spike(by_axis = TRUE)`: `flag_spike_X/Y/Z` | Sample-level; set `spike_size = 11` and use the appropriate sampling rate. |
+| D–F | Per-minute count of positive near-limit values, ≥690 samples | [`acti_flag_device_limit_windows()`](https://jhuwit.github.io/actibase/reference/acti_flag_device_limit_windows.md): `flag_device_max_X/Y/Z` | Set `min_count = 690`, `window_seconds = 60`, `dynamic_range = c(-6, 6)`, and `epsilon = 0.05`. |
+| G–I | Per-minute count of negative near-limit values, ≥690 samples | [`acti_flag_device_limit_windows()`](https://jhuwit.github.io/actibase/reference/acti_flag_device_limit_windows.md): `flag_device_min_X/Y/Z` | Same thresholds as D–F, for negative values. |
+| J–L | Contiguous positive near-limit run, ≥160 samples | [`acti_flag_contiguous_device_limits()`](https://jhuwit.github.io/actibase/reference/acti_flag_contiguous_device_limits.md): `flag_contiguous_max_X/Y/Z` | Set `min_length = 160`; CDC also assigns the run to every overlapping minute. |
+| M–O | Contiguous negative near-limit run, ≥160 samples | [`acti_flag_contiguous_device_limits()`](https://jhuwit.github.io/actibase/reference/acti_flag_contiguous_device_limits.md): `flag_contiguous_min_X/Y/Z` | Set `min_length = 160`; CDC permits runs to cross minute boundaries. |
+| P | Contiguous impossible gravity values | [`acti_flag_impossible()`](https://jhuwit.github.io/actibase/reference/acti_flag_spike.md): `flag_impossible` | Generalized thresholds are configurable; CDC uses seven samples, \<0.01 g change on each axis, vector magnitude \>1.25 g, excluding ±6 g values. |
+| Q | Contiguous adjacent zero values | [`acti_flag_all_zero()`](https://jhuwit.github.io/actibase/reference/acti_flag_spike.md): `flag_all_zero` | Package checks all three axes. CDC documents a historical programming error that checked only X; exact reproduction of that error is not intended. |
+| R | Contiguous identical, non-zero three-axis samples | [`acti_flag_repeated_samples()`](https://jhuwit.github.io/actibase/reference/acti_flag_repeated_samples.md): `flag_repeated_samples` | Configure `min_length = 2`, `exclude_zero = TRUE`, `require_equal_axes = TRUE`. CDC’s reported run length/minute attribution may differ. |
+| S–U | Axis-specific 1-second spike counts | `acti_flag_spike_second(by_axis = TRUE)`: `flag_spike_second_X/Y/Z` | Set `window_seconds = 1`, `min_spikes = 13`, `spike_size = 11`; CDC counts qualifying local-extremum events. |
+| V | Minute before and after an invalid minute | [`acti_flag_adjacent_invalid_periods()`](https://jhuwit.github.io/actibase/reference/acti_flag_adjacent_invalid_periods.md): `flag_adjacent_invalid` | Caller supplies invalid periods; CDC’s hour-boundary exception requires matching group boundaries. |
+| W–Y | Axis-specific interval jumps within a second | `acti_flag_interval_jump(by_axis = TRUE)`: `flag_interval_jump_X/Y/Z` | Set `window_seconds = 1`, `min_repeats = 10`, `min_distinct = 3`, `min_separation = 0.5`; implementation is an approximation of the CDC interval-jump rule. |
+
+Letter labels are made from columns already present in the data; the
+helper does not run detectors or infer missing axis-specific results:
+
+``` r
+
+raw <- acti_flag_spike(raw, by_axis = TRUE)
+raw <- acti_flag_device_limit_windows(raw, dynamic_range = c(-6, 6),
+                                      min_count = 690)
+raw <- acti_flag_contiguous_device_limits(raw, dynamic_range = c(-6, 6),
+                                          min_length = 160)
+raw <- acti_flag_cdc_labels(raw)
+```
+
 ## Funding
 
 This work was supported by NIH P30AG021334 and the Johns Hopkins Older

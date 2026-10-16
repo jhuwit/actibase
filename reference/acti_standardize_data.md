@@ -26,8 +26,10 @@ acti_standardise_data(
 
 - data:
 
-  A `data.frame` with a column for time in `POSIXct` (usually `time`),
-  and `X`, `Y`, `Z`
+  A `data.frame` with an optional time column and three accelerometer
+  axes. Axes can be named `X/Y/Z`, `x/y/z`, `acc_X/acc_Y/acc_Z`,
+  `acc_x/acc_y/acc_z`, or `acceleration_X/acceleration_Y/acceleration_Z`
+  (with lowercase axis letters also accepted).
 
 - subset_xyz:
 
@@ -48,6 +50,13 @@ acti_standardise_data(
 ## Value
 
 A `data.frame` with `X/Y/Z` and a time in `time` (if available).
+
+## Details
+
+When a complete canonical triplet and a complete prefixed triplet
+(`acc_*` or `acceleration_*`) are both present, the canonical columns
+are used and a single warning is issued. A data frame containing both
+`X` and `x` (or the analogous pair for Y or Z) is rejected as ambiguous.
 
 ## Examples
 

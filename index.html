@@ -22,7 +22,7 @@
 
     <a class="navbar-brand me-2" href="index.html">actibase</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.7.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -32,6 +32,12 @@
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto">
 <li class="nav-item"><a class="nav-link" href="reference/index.html">Reference</a></li>
+<li class="nav-item dropdown">
+  <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
+<li><a class="dropdown-item" href="articles/nhanes-pam-flags.html">Mapping NHANES PAM quality flags</a></li>
+  </ul>
+</li>
 <li class="nav-item"><a class="nav-link" href="news/index.html">Changelog</a></li>
       </ul>
 <ul class="navbar-nav">
@@ -79,6 +85,124 @@
 <p>Higher-level summarization, step-count mapping, and downstream analysis should live in overlay packages.</p>
 </div>
 <div class="section level2">
+<h2 id="nhanes-pam-flag-mapping">NHANES PAM flag mapping<a class="anchor" aria-label="anchor" href="#nhanes-pam-flag-mapping"></a>
+</h2>
+<p>The table maps the CDC NHANES PAM minute flags to the general-purpose sample-level or window-level helpers in <code>actibase</code>. The functions do not reproduce CDC’s data pipeline automatically: use the CDC thresholds and window rules when matching NHANES output. Flags with axis-specific output need <code>by_axis = TRUE</code> where that option is available. <code><a href="reference/acti_flag_cdc_labels.html">acti_flag_cdc_labels()</a></code> can combine the resulting logical columns into CDC-style letter strings.</p>
+<table class="table">
+<colgroup>
+<col width="25%">
+<col width="25%">
+<col width="25%">
+<col width="25%">
+</colgroup>
+<thead><tr>
+<th align="left">CDC code</th>
+<th align="left">CDC definition (summary)</th>
+<th align="left">
+<code>actibase</code> function and output</th>
+<th align="left">Match notes</th>
+</tr></thead>
+<tbody>
+<tr>
+<td align="left">A–C</td>
+<td align="left">Axis-specific spikes: adjacent-sample change ≥11 g</td>
+<td align="left">
+<code>acti_flag_spike(by_axis = TRUE)</code>: <code>flag_spike_X/Y/Z</code>
+</td>
+<td align="left">Sample-level; set <code>spike_size = 11</code> and use the appropriate sampling rate.</td>
+</tr>
+<tr>
+<td align="left">D–F</td>
+<td align="left">Per-minute count of positive near-limit values, ≥690 samples</td>
+<td align="left">
+<code><a href="reference/acti_flag_device_limit_windows.html">acti_flag_device_limit_windows()</a></code>: <code>flag_device_max_X/Y/Z</code>
+</td>
+<td align="left">Set <code>min_count = 690</code>, <code>window_seconds = 60</code>, <code>dynamic_range = c(-6, 6)</code>, and <code>epsilon = 0.05</code>.</td>
+</tr>
+<tr>
+<td align="left">G–I</td>
+<td align="left">Per-minute count of negative near-limit values, ≥690 samples</td>
+<td align="left">
+<code><a href="reference/acti_flag_device_limit_windows.html">acti_flag_device_limit_windows()</a></code>: <code>flag_device_min_X/Y/Z</code>
+</td>
+<td align="left">Same thresholds as D–F, for negative values.</td>
+</tr>
+<tr>
+<td align="left">J–L</td>
+<td align="left">Contiguous positive near-limit run, ≥160 samples</td>
+<td align="left">
+<code><a href="reference/acti_flag_contiguous_device_limits.html">acti_flag_contiguous_device_limits()</a></code>: <code>flag_contiguous_max_X/Y/Z</code>
+</td>
+<td align="left">Set <code>min_length = 160</code>; CDC also assigns the run to every overlapping minute.</td>
+</tr>
+<tr>
+<td align="left">M–O</td>
+<td align="left">Contiguous negative near-limit run, ≥160 samples</td>
+<td align="left">
+<code><a href="reference/acti_flag_contiguous_device_limits.html">acti_flag_contiguous_device_limits()</a></code>: <code>flag_contiguous_min_X/Y/Z</code>
+</td>
+<td align="left">Set <code>min_length = 160</code>; CDC permits runs to cross minute boundaries.</td>
+</tr>
+<tr>
+<td align="left">P</td>
+<td align="left">Contiguous impossible gravity values</td>
+<td align="left">
+<code><a href="reference/acti_flag_spike.html">acti_flag_impossible()</a></code>: <code>flag_impossible</code>
+</td>
+<td align="left">Generalized thresholds are configurable; CDC uses seven samples, &lt;0.01 g change on each axis, vector magnitude &gt;1.25 g, excluding ±6 g values.</td>
+</tr>
+<tr>
+<td align="left">Q</td>
+<td align="left">Contiguous adjacent zero values</td>
+<td align="left">
+<code><a href="reference/acti_flag_spike.html">acti_flag_all_zero()</a></code>: <code>flag_all_zero</code>
+</td>
+<td align="left">Package checks all three axes. CDC documents a historical programming error that checked only X; exact reproduction of that error is not intended.</td>
+</tr>
+<tr>
+<td align="left">R</td>
+<td align="left">Contiguous identical, non-zero three-axis samples</td>
+<td align="left">
+<code><a href="reference/acti_flag_repeated_samples.html">acti_flag_repeated_samples()</a></code>: <code>flag_repeated_samples</code>
+</td>
+<td align="left">Configure <code>min_length = 2</code>, <code>exclude_zero = TRUE</code>, <code>require_equal_axes = TRUE</code>. CDC’s reported run length/minute attribution may differ.</td>
+</tr>
+<tr>
+<td align="left">S–U</td>
+<td align="left">Axis-specific 1-second spike counts</td>
+<td align="left">
+<code>acti_flag_spike_second(by_axis = TRUE)</code>: <code>flag_spike_second_X/Y/Z</code>
+</td>
+<td align="left">Set <code>window_seconds = 1</code>, <code>min_spikes = 13</code>, <code>spike_size = 11</code>; CDC counts qualifying local-extremum events.</td>
+</tr>
+<tr>
+<td align="left">V</td>
+<td align="left">Minute before and after an invalid minute</td>
+<td align="left">
+<code><a href="reference/acti_flag_adjacent_invalid_periods.html">acti_flag_adjacent_invalid_periods()</a></code>: <code>flag_adjacent_invalid</code>
+</td>
+<td align="left">Caller supplies invalid periods; CDC’s hour-boundary exception requires matching group boundaries.</td>
+</tr>
+<tr>
+<td align="left">W–Y</td>
+<td align="left">Axis-specific interval jumps within a second</td>
+<td align="left">
+<code>acti_flag_interval_jump(by_axis = TRUE)</code>: <code>flag_interval_jump_X/Y/Z</code>
+</td>
+<td align="left">Set <code>window_seconds = 1</code>, <code>min_repeats = 10</code>, <code>min_distinct = 3</code>, <code>min_separation = 0.5</code>; implementation is an approximation of the CDC interval-jump rule.</td>
+</tr>
+</tbody>
+</table>
+<p>Letter labels are made from columns already present in the data; the helper does not run detectors or infer missing axis-specific results:</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">raw</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/acti_flag_spike.html">acti_flag_spike</a></span><span class="op">(</span><span class="va">raw</span>, by_axis <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="va">raw</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/acti_flag_device_limit_windows.html">acti_flag_device_limit_windows</a></span><span class="op">(</span><span class="va">raw</span>, dynamic_range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">6</span>, <span class="fl">6</span><span class="op">)</span>,</span>
+<span>                                      min_count <span class="op">=</span> <span class="fl">690</span><span class="op">)</span></span>
+<span><span class="va">raw</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/acti_flag_contiguous_device_limits.html">acti_flag_contiguous_device_limits</a></span><span class="op">(</span><span class="va">raw</span>, dynamic_range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">6</span>, <span class="fl">6</span><span class="op">)</span>,</span>
+<span>                                          min_length <span class="op">=</span> <span class="fl">160</span><span class="op">)</span></span>
+<span><span class="va">raw</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/acti_flag_cdc_labels.html">acti_flag_cdc_labels</a></span><span class="op">(</span><span class="va">raw</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level2">
 <h2 id="funding">Funding<a class="anchor" aria-label="anchor" href="#funding"></a>
 </h2>
 <p>This work was supported by NIH P30AG021334 and the Johns Hopkins Older Americans Independence Center (OAIC) Pepper Center grant.</p>
@@ -121,7 +245,7 @@
 <h2 data-toc-skip>Dev status</h2>
 <ul class="list-unstyled">
 <li><a href="https://github.com/jhuwit/actibase/actions/workflows/R-CMD-check.yaml" class="external-link"><img src="https://github.com/jhuwit/actibase/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check"></a></li>
-<li><a href="https://app.codecov.io/gh/jhuwit/actibase?branch=main" class="external-link"><img src="https://app.codecov.io/gh/jhuwit/actibase/branch/main/graph/badge.svg" alt="Codecov test coverage"></a></li>
+<li><a href="https://app.codecov.io/gh/jhuwit/actibase?branch=main" class="external-link"><img src="https://codecov.io/gh/jhuwit/actibase/graph/badge.svg" alt="Codecov test coverage"></a></li>
 <li><a href="https://CRAN.R-project.org/package=actibase" class="external-link"><img src="https://www.r-pkg.org/badges/version/actibase" alt="CRAN status"></a></li>
 </ul>
 </div>

@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">actibase</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.7.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -16,6 +16,10 @@
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto"><li class="active nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
+<li class="nav-item dropdown">
+  <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/nhanes-pam-flags.html">Mapping NHANES PAM quality flags</a></li>
+  </ul></li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
  <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json"></form></li>
@@ -61,8 +65,10 @@
 
 
 <dl><dt id="arg-data">data<a class="anchor" aria-label="anchor" href="#arg-data"></a></dt>
-<dd><p>A <code>data.frame</code> with a column for time in <code>POSIXct</code> (usually
-<code>time</code>), and <code>X</code>, <code>Y</code>, <code>Z</code></p></dd>
+<dd><p>A <code>data.frame</code> with an optional time column and three
+accelerometer axes. Axes can be named <code>X/Y/Z</code>, <code>x/y/z</code>, <code>acc_X/acc_Y/acc_Z</code>,
+<code>acc_x/acc_y/acc_z</code>, or <code>acceleration_X/acceleration_Y/acceleration_Z</code>
+(with lowercase axis letters also accepted).</p></dd>
 
 
 <dt id="arg-subset-xyz">subset_xyz<a class="anchor" aria-label="anchor" href="#arg-subset-xyz"></a></dt>
@@ -86,6 +92,13 @@ and <code>XYZ</code> be subset?</p></dd>
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     <p>A <code>data.frame</code> with <code>X/Y/Z</code> and a time in
 <code>time</code> (if available).</p>
+    </div>
+    <div class="section level2">
+    <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
+    <p>When a complete canonical triplet and a complete prefixed triplet
+(<code>acc_*</code> or <code>acceleration_*</code>) are both present, the canonical columns are
+used and a single warning is issued. A data frame containing both <code>X</code> and
+<code>x</code> (or the analogous pair for Y or Z) is rejected as ambiguous.</p>
     </div>
 
     <div class="section level2">

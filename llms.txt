@@ -34,6 +34,43 @@ resampled = acti_resample(res, sample_rate = 30L)
 Higher-level summarization, step-count mapping, and downstream analysis
 should live in overlay packages.
 
+## NHANES PAM flag mapping
+
+The table maps the CDC NHANES PAM minute flags to the general-purpose
+sample-level or window-level helpers in `actibase`. The functions do not
+reproduce CDC’s data pipeline automatically: use the CDC thresholds and
+window rules when matching NHANES output. Flags with axis-specific
+output need `by_axis = TRUE` where that option is available.
+[`acti_flag_cdc_labels()`](https://jhuwit.github.io/actibase/reference/acti_flag_cdc_labels.md)
+can combine the resulting logical columns into CDC-style letter strings.
+
+| CDC code | CDC definition (summary) | `actibase` function and output | Match notes |
+|:---|:---|:---|:---|
+| A–C | Axis-specific spikes: adjacent-sample change ≥11 g | `acti_flag_spike(by_axis = TRUE)`: `flag_spike_X/Y/Z` | Sample-level; set `spike_size = 11` and use the appropriate sampling rate. |
+| D–F | Per-minute count of positive near-limit values, ≥690 samples | [`acti_flag_device_limit_windows()`](https://jhuwit.github.io/actibase/reference/acti_flag_device_limit_windows.md): `flag_device_max_X/Y/Z` | Set `min_count = 690`, `window_seconds = 60`, `dynamic_range = c(-6, 6)`, and `epsilon = 0.05`. |
+| G–I | Per-minute count of negative near-limit values, ≥690 samples | [`acti_flag_device_limit_windows()`](https://jhuwit.github.io/actibase/reference/acti_flag_device_limit_windows.md): `flag_device_min_X/Y/Z` | Same thresholds as D–F, for negative values. |
+| J–L | Contiguous positive near-limit run, ≥160 samples | [`acti_flag_contiguous_device_limits()`](https://jhuwit.github.io/actibase/reference/acti_flag_contiguous_device_limits.md): `flag_contiguous_max_X/Y/Z` | Set `min_length = 160`; CDC also assigns the run to every overlapping minute. |
+| M–O | Contiguous negative near-limit run, ≥160 samples | [`acti_flag_contiguous_device_limits()`](https://jhuwit.github.io/actibase/reference/acti_flag_contiguous_device_limits.md): `flag_contiguous_min_X/Y/Z` | Set `min_length = 160`; CDC permits runs to cross minute boundaries. |
+| P | Contiguous impossible gravity values | [`acti_flag_impossible()`](https://jhuwit.github.io/actibase/reference/acti_flag_spike.md): `flag_impossible` | Generalized thresholds are configurable; CDC uses seven samples, \<0.01 g change on each axis, vector magnitude \>1.25 g, excluding ±6 g values. |
+| Q | Contiguous adjacent zero values | [`acti_flag_all_zero()`](https://jhuwit.github.io/actibase/reference/acti_flag_spike.md): `flag_all_zero` | Package checks all three axes. CDC documents a historical programming error that checked only X; exact reproduction of that error is not intended. |
+| R | Contiguous identical, non-zero three-axis samples | [`acti_flag_repeated_samples()`](https://jhuwit.github.io/actibase/reference/acti_flag_repeated_samples.md): `flag_repeated_samples` | Configure `min_length = 2`, `exclude_zero = TRUE`, `require_equal_axes = TRUE`. CDC’s reported run length/minute attribution may differ. |
+| S–U | Axis-specific 1-second spike counts | `acti_flag_spike_second(by_axis = TRUE)`: `flag_spike_second_X/Y/Z` | Set `window_seconds = 1`, `min_spikes = 13`, `spike_size = 11`; CDC counts qualifying local-extremum events. |
+| V | Minute before and after an invalid minute | [`acti_flag_adjacent_invalid_periods()`](https://jhuwit.github.io/actibase/reference/acti_flag_adjacent_invalid_periods.md): `flag_adjacent_invalid` | Caller supplies invalid periods; CDC’s hour-boundary exception requires matching group boundaries. |
+| W–Y | Axis-specific interval jumps within a second | `acti_flag_interval_jump(by_axis = TRUE)`: `flag_interval_jump_X/Y/Z` | Set `window_seconds = 1`, `min_repeats = 10`, `min_distinct = 3`, `min_separation = 0.5`; implementation is an approximation of the CDC interval-jump rule. |
+
+Letter labels are made from columns already present in the data; the
+helper does not run detectors or infer missing axis-specific results:
+
+``` r
+
+raw <- acti_flag_spike(raw, by_axis = TRUE)
+raw <- acti_flag_device_limit_windows(raw, dynamic_range = c(-6, 6),
+                                      min_count = 690)
+raw <- acti_flag_contiguous_device_limits(raw, dynamic_range = c(-6, 6),
+                                          min_length = 160)
+raw <- acti_flag_cdc_labels(raw)
+```
+
 ## Funding
 
 This work was supported by NIH P30AG021334 and the Johns Hopkins Older
@@ -54,6 +91,35 @@ Americans Independence Center (OAIC) Pepper Center grant.
   [`acti_remove_leading_zeros()`](https://jhuwit.github.io/actibase/reference/acti_fill_zeros.md)
   [`acti_remove_leading_zeroes()`](https://jhuwit.github.io/actibase/reference/acti_fill_zeros.md)
   : Fill in Zeros
+
+- [`acti_flag_adjacent_invalid_periods()`](https://jhuwit.github.io/actibase/reference/acti_flag_adjacent_invalid_periods.md)
+  : Flag periods adjacent to invalid periods
+
+- [`acti_flag_cdc_labels()`](https://jhuwit.github.io/actibase/reference/acti_flag_cdc_labels.md)
+  : Label quality flags with CDC NHANES letters
+
+- [`acti_flag_contiguous_device_limits()`](https://jhuwit.github.io/actibase/reference/acti_flag_contiguous_device_limits.md)
+  : Flag contiguous device-limit samples
+
+- [`acti_flag_device_limit_windows()`](https://jhuwit.github.io/actibase/reference/acti_flag_device_limit_windows.md)
+  : Flag device-limit counts within time windows
+
+- [`acti_flag_qc()`](https://jhuwit.github.io/actibase/reference/acti_flag_qc.md)
+  [`acti_flag_qc_all()`](https://jhuwit.github.io/actibase/reference/acti_flag_qc.md)
+  : Flag Quality Control Values
+
+- [`acti_flag_repeated_samples()`](https://jhuwit.github.io/actibase/reference/acti_flag_repeated_samples.md)
+  : Flag repeated samples
+
+- [`acti_flag_spike()`](https://jhuwit.github.io/actibase/reference/acti_flag_spike.md)
+  [`acti_flag_interval_jump()`](https://jhuwit.github.io/actibase/reference/acti_flag_spike.md)
+  [`acti_flag_spike_second()`](https://jhuwit.github.io/actibase/reference/acti_flag_spike.md)
+  [`acti_flag_device_limit()`](https://jhuwit.github.io/actibase/reference/acti_flag_spike.md)
+  [`acti_flag_contiguous_device_limit()`](https://jhuwit.github.io/actibase/reference/acti_flag_spike.md)
+  [`acti_flag_same_value()`](https://jhuwit.github.io/actibase/reference/acti_flag_spike.md)
+  [`acti_flag_all_zero()`](https://jhuwit.github.io/actibase/reference/acti_flag_spike.md)
+  [`acti_flag_impossible()`](https://jhuwit.github.io/actibase/reference/acti_flag_spike.md)
+  : Flag Spikes
 
 - [`acti_hms_to_minute()`](https://jhuwit.github.io/actibase/reference/acti_hms_to_minute.md)
   : Convert an HMS Time to a Minute Index
@@ -103,20 +169,6 @@ Americans Independence Center (OAIC) Pepper Center grant.
   [`add_day_inclusion()`](https://jhuwit.github.io/actibase/reference/create_day_inclusion.md)
   : Create Day-Level Inclusion information
 
-- [`flag_qc()`](https://jhuwit.github.io/actibase/reference/flag_qc.md)
-  [`flag_qc_all()`](https://jhuwit.github.io/actibase/reference/flag_qc.md)
-  : Flag Quality Control Values
-
-- [`flag_spike()`](https://jhuwit.github.io/actibase/reference/flag_spike.md)
-  [`flag_interval_jump()`](https://jhuwit.github.io/actibase/reference/flag_spike.md)
-  [`flag_spike_second()`](https://jhuwit.github.io/actibase/reference/flag_spike.md)
-  [`flag_device_limit()`](https://jhuwit.github.io/actibase/reference/flag_spike.md)
-  [`flag_contiguous_device_limit()`](https://jhuwit.github.io/actibase/reference/flag_spike.md)
-  [`flag_same_value()`](https://jhuwit.github.io/actibase/reference/flag_spike.md)
-  [`flag_all_zero()`](https://jhuwit.github.io/actibase/reference/flag_spike.md)
-  [`flag_impossible()`](https://jhuwit.github.io/actibase/reference/flag_spike.md)
-  : Flag Spikes
-
 - [`get_dynamic_range()`](https://jhuwit.github.io/actibase/reference/get_dynamic_range.md)
   : Get Dynamic Range
 
@@ -144,3 +196,9 @@ Americans Independence Center (OAIC) Pepper Center grant.
   [`txyz`](https://jhuwit.github.io/actibase/reference/xyz.md) : Vector
   of X, Y, Z, and maybe time
 
+# Articles
+
+### All vignettes
+
+- [Mapping NHANES PAM quality
+  flags](https://jhuwit.github.io/actibase/articles/nhanes-pam-flags.md):

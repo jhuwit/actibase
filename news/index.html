@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">actibase</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.7.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -16,6 +16,10 @@
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto"><li class="nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
+<li class="nav-item dropdown">
+  <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/nhanes-pam-flags.html">Mapping NHANES PAM quality flags</a></li>
+  </ul></li>
 <li class="active nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
  <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json"></form></li>
@@ -32,6 +36,21 @@
       <small>Source: <a href="https://github.com/jhuwit/actibase/blob/main/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.7.1" id="actibase-071">actibase 0.7.1<a class="anchor" aria-label="anchor" href="#actibase-071"></a></h2>
+<ul><li>Preserve missing values while applying minimum run lengths to logical QC flags.</li>
+<li>Return an empty data frame when all rows are removed by leading-zero trimming.</li>
+<li>Reject HMS times outside a single day instead of wrapping them to another minute.</li>
+<li>Return a typed empty data frame when splitting an empty set of intervals.</li>
+<li>Make the flag helpers configurable for different devices and sample rates. Sample rate defaults to <code>NULL</code> and is resolved through <code><a href="../reference/get_sample_rate.html">get_sample_rate()</a></code> when continuity checks need it.</li>
+<li>Add general helpers for device-limit counts in caller-defined windows, contiguous device-limit runs, adjacent invalid periods, and repeated samples. CDC threshold values are used only in regression tests.</li>
+<li>Respect the minimum run length when an entire logical vector is <code>TRUE</code>.</li>
+<li>Break contiguous sample runs at timestamp gaps using the resolved sample rate.</li>
+<li>Add optional per-axis spike indicators and implement time-window spike counts using local extrema, a large-change threshold, and a caller-specified count.</li>
+<li>Return axis-specific interval-jump indicators and process raw samples in bounded window chunks to limit temporary memory use.</li>
+<li>Set the default minimum run for impossible-gravity flags to seven samples, use the device dynamic range to exclude clipped readings, and require the range from an argument or data metadata.</li>
+<li>Prefix flagging functions with <code>acti_</code> and standardize their input argument to <code>data</code>; use <code>min_count</code> and <code>window_seconds</code> for window-count and duration arguments.</li>
+</ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.7.0" id="actibase-070">actibase 0.7.0<a class="anchor" aria-label="anchor" href="#actibase-070"></a></h2>
 <ul><li>Fix for <code>create_day_inclusion</code> – number of observed minutes was wrong.</li>

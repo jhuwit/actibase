@@ -1,5 +1,38 @@
 # Changelog
 
+## actibase 0.7.1
+
+- Preserve missing values while applying minimum run lengths to logical
+  QC flags.
+- Return an empty data frame when all rows are removed by leading-zero
+  trimming.
+- Reject HMS times outside a single day instead of wrapping them to
+  another minute.
+- Return a typed empty data frame when splitting an empty set of
+  intervals.
+- Make the flag helpers configurable for different devices and sample
+  rates. Sample rate defaults to `NULL` and is resolved through
+  [`get_sample_rate()`](https://jhuwit.github.io/actibase/reference/get_sample_rate.md)
+  when continuity checks need it.
+- Add general helpers for device-limit counts in caller-defined windows,
+  contiguous device-limit runs, adjacent invalid periods, and repeated
+  samples. CDC threshold values are used only in regression tests.
+- Respect the minimum run length when an entire logical vector is
+  `TRUE`.
+- Break contiguous sample runs at timestamp gaps using the resolved
+  sample rate.
+- Add optional per-axis spike indicators and implement time-window spike
+  counts using local extrema, a large-change threshold, and a
+  caller-specified count.
+- Return axis-specific interval-jump indicators and process raw samples
+  in bounded window chunks to limit temporary memory use.
+- Set the default minimum run for impossible-gravity flags to seven
+  samples, use the device dynamic range to exclude clipped readings, and
+  require the range from an argument or data metadata.
+- Prefix flagging functions with `acti_` and standardize their input
+  argument to `data`; use `min_count` and `window_seconds` for
+  window-count and duration arguments.
+
 ## actibase 0.7.0
 
 - Fix for `create_day_inclusion` – number of observed minutes was wrong.

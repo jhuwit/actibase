@@ -14,6 +14,35 @@
   [`acti_remove_leading_zeroes()`](https://jhuwit.github.io/actibase/reference/acti_fill_zeros.md)
   : Fill in Zeros
 
+- [`acti_flag_adjacent_invalid_periods()`](https://jhuwit.github.io/actibase/reference/acti_flag_adjacent_invalid_periods.md)
+  : Flag periods adjacent to invalid periods
+
+- [`acti_flag_cdc_labels()`](https://jhuwit.github.io/actibase/reference/acti_flag_cdc_labels.md)
+  : Label quality flags with CDC NHANES letters
+
+- [`acti_flag_contiguous_device_limits()`](https://jhuwit.github.io/actibase/reference/acti_flag_contiguous_device_limits.md)
+  : Flag contiguous device-limit samples
+
+- [`acti_flag_device_limit_windows()`](https://jhuwit.github.io/actibase/reference/acti_flag_device_limit_windows.md)
+  : Flag device-limit counts within time windows
+
+- [`acti_flag_qc()`](https://jhuwit.github.io/actibase/reference/acti_flag_qc.md)
+  [`acti_flag_qc_all()`](https://jhuwit.github.io/actibase/reference/acti_flag_qc.md)
+  : Flag Quality Control Values
+
+- [`acti_flag_repeated_samples()`](https://jhuwit.github.io/actibase/reference/acti_flag_repeated_samples.md)
+  : Flag repeated samples
+
+- [`acti_flag_spike()`](https://jhuwit.github.io/actibase/reference/acti_flag_spike.md)
+  [`acti_flag_interval_jump()`](https://jhuwit.github.io/actibase/reference/acti_flag_spike.md)
+  [`acti_flag_spike_second()`](https://jhuwit.github.io/actibase/reference/acti_flag_spike.md)
+  [`acti_flag_device_limit()`](https://jhuwit.github.io/actibase/reference/acti_flag_spike.md)
+  [`acti_flag_contiguous_device_limit()`](https://jhuwit.github.io/actibase/reference/acti_flag_spike.md)
+  [`acti_flag_same_value()`](https://jhuwit.github.io/actibase/reference/acti_flag_spike.md)
+  [`acti_flag_all_zero()`](https://jhuwit.github.io/actibase/reference/acti_flag_spike.md)
+  [`acti_flag_impossible()`](https://jhuwit.github.io/actibase/reference/acti_flag_spike.md)
+  : Flag Spikes
+
 - [`acti_hms_to_minute()`](https://jhuwit.github.io/actibase/reference/acti_hms_to_minute.md)
   : Convert an HMS Time to a Minute Index
 
@@ -61,20 +90,6 @@
 - [`create_day_inclusion()`](https://jhuwit.github.io/actibase/reference/create_day_inclusion.md)
   [`add_day_inclusion()`](https://jhuwit.github.io/actibase/reference/create_day_inclusion.md)
   : Create Day-Level Inclusion information
-
-- [`flag_qc()`](https://jhuwit.github.io/actibase/reference/flag_qc.md)
-  [`flag_qc_all()`](https://jhuwit.github.io/actibase/reference/flag_qc.md)
-  : Flag Quality Control Values
-
-- [`flag_spike()`](https://jhuwit.github.io/actibase/reference/flag_spike.md)
-  [`flag_interval_jump()`](https://jhuwit.github.io/actibase/reference/flag_spike.md)
-  [`flag_spike_second()`](https://jhuwit.github.io/actibase/reference/flag_spike.md)
-  [`flag_device_limit()`](https://jhuwit.github.io/actibase/reference/flag_spike.md)
-  [`flag_contiguous_device_limit()`](https://jhuwit.github.io/actibase/reference/flag_spike.md)
-  [`flag_same_value()`](https://jhuwit.github.io/actibase/reference/flag_spike.md)
-  [`flag_all_zero()`](https://jhuwit.github.io/actibase/reference/flag_spike.md)
-  [`flag_impossible()`](https://jhuwit.github.io/actibase/reference/flag_spike.md)
-  : Flag Spikes
 
 - [`get_dynamic_range()`](https://jhuwit.github.io/actibase/reference/get_dynamic_range.md)
   : Get Dynamic Range

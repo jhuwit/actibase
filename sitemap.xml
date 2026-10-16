@@ -1,12 +1,21 @@
 <urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
 <url><loc>https://jhuwit.github.io/actibase/404.html</loc></url>
 <url><loc>https://jhuwit.github.io/actibase/LICENSE.html</loc></url>
+<url><loc>https://jhuwit.github.io/actibase/articles/index.html</loc></url>
+<url><loc>https://jhuwit.github.io/actibase/articles/nhanes-pam-flags.html</loc></url>
 <url><loc>https://jhuwit.github.io/actibase/authors.html</loc></url>
 <url><loc>https://jhuwit.github.io/actibase/index.html</loc></url>
 <url><loc>https://jhuwit.github.io/actibase/news/index.html</loc></url>
 <url><loc>https://jhuwit.github.io/actibase/reference/acti_day_index.html</loc></url>
 <url><loc>https://jhuwit.github.io/actibase/reference/acti_day_start.html</loc></url>
 <url><loc>https://jhuwit.github.io/actibase/reference/acti_fill_zeros.html</loc></url>
+<url><loc>https://jhuwit.github.io/actibase/reference/acti_flag_adjacent_invalid_periods.html</loc></url>
+<url><loc>https://jhuwit.github.io/actibase/reference/acti_flag_cdc_labels.html</loc></url>
+<url><loc>https://jhuwit.github.io/actibase/reference/acti_flag_contiguous_device_limits.html</loc></url>
+<url><loc>https://jhuwit.github.io/actibase/reference/acti_flag_device_limit_windows.html</loc></url>
+<url><loc>https://jhuwit.github.io/actibase/reference/acti_flag_qc.html</loc></url>
+<url><loc>https://jhuwit.github.io/actibase/reference/acti_flag_repeated_samples.html</loc></url>
+<url><loc>https://jhuwit.github.io/actibase/reference/acti_flag_spike.html</loc></url>
 <url><loc>https://jhuwit.github.io/actibase/reference/acti_hms_to_minute.html</loc></url>
 <url><loc>https://jhuwit.github.io/actibase/reference/acti_minute_to_hms.html</loc></url>
 <url><loc>https://jhuwit.github.io/actibase/reference/acti_raw_data.html</loc></url>
@@ -20,8 +29,6 @@
 <url><loc>https://jhuwit.github.io/actibase/reference/acti_time_to_minute.html</loc></url>
 <url><loc>https://jhuwit.github.io/actibase/reference/as_convert_safe.html</loc></url>
 <url><loc>https://jhuwit.github.io/actibase/reference/create_day_inclusion.html</loc></url>
-<url><loc>https://jhuwit.github.io/actibase/reference/flag_qc.html</loc></url>
-<url><loc>https://jhuwit.github.io/actibase/reference/flag_spike.html</loc></url>
 <url><loc>https://jhuwit.github.io/actibase/reference/get_dynamic_range.html</loc></url>
 <url><loc>https://jhuwit.github.io/actibase/reference/get_sample_rate.html</loc></url>
 <url><loc>https://jhuwit.github.io/actibase/reference/get_transformations.html</loc></url>
