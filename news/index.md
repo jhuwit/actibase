@@ -1,5 +1,16 @@
 # Changelog
 
+## actibase 0.8.0
+
+- [`acti_fill_zeros()`](https://jhuwit.github.io/actibase/reference/acti_fill_zeros.md)
+  gains `method = "actilife"`, which fills only all-zero runs at least
+  one second (`sample_rate` rows) long, as in idle sleep, and keeps
+  shorter runs (e.g. a single recorded `(0, 0, 0)` sample) as ActiLife
+  does. The default `method = "all"` is unchanged.
+- [`get_sample_rate()`](https://jhuwit.github.io/actibase/reference/get_sample_rate.md)
+  now uses a message, not a warning, when it guesses the sample rate
+  from the timestamps.
+
 ## actibase 0.7.2
 
 - Add
