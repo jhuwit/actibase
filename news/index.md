@@ -1,5 +1,13 @@
 # Changelog
 
+## actibase (development version)
+
+- [`tzoffset_to_tz()`](https://jhuwit.github.io/actibase/reference/tzoffset_to_tz.md)
+  now lives in actibase and is exported. It uses the correct inverted
+  `Etc/GMT` sign convention (`"-05:00"` is `"Etc/GMT+5"`).
+- [`acti_flag_interval_jump()`](https://jhuwit.github.io/actibase/reference/acti_flag_spike.md)
+  now defaults to `verbose = TRUE`.
+
 ## actibase 0.8.0
 
 - [`acti_fill_zeros()`](https://jhuwit.github.io/actibase/reference/acti_fill_zeros.md)

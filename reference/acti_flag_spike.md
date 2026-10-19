@@ -9,7 +9,7 @@ acti_flag_spike(data, spike_size = 11, sample_rate = NULL, by_axis = FALSE)
 
 acti_flag_interval_jump(
   data,
-  verbose = FALSE,
+  verbose = TRUE,
   window_seconds = 1,
   min_repeats = 10,
   min_distinct = 3,
@@ -171,6 +171,9 @@ window.
 res = acti_raw_data
 res = acti_flag_spike(res)
 res = acti_flag_interval_jump(res)
+#> Processed X windows 2405 of 2405
+#> Processed Y windows 2405 of 2405
+#> Processed Z windows 2405 of 2405
 res = acti_flag_spike_second(res)
 res = acti_flag_same_value(res)
 res = acti_flag_device_limit(res)

@@ -47,7 +47,7 @@
 <span></span>
 <span><span class="fu">acti_flag_interval_jump</span><span class="op">(</span></span>
 <span>  <span class="va">data</span>,</span>
-<span>  verbose <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  verbose <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  window_seconds <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  min_repeats <span class="op">=</span> <span class="fl">10</span>,</span>
 <span>  min_distinct <span class="op">=</span> <span class="fl">3</span>,</span>
@@ -208,6 +208,9 @@ change within the requested time, then counts them within each window.</p>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">res</span> <span class="op">=</span> <span class="va">acti_raw_data</span></span></span>
 <span class="r-in"><span><span class="va">res</span> <span class="op">=</span> <span class="fu">acti_flag_spike</span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">res</span> <span class="op">=</span> <span class="fu">acti_flag_interval_jump</span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Processed X windows 2405 of 2405</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Processed Y windows 2405 of 2405</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Processed Z windows 2405 of 2405</span>
 <span class="r-in"><span><span class="va">res</span> <span class="op">=</span> <span class="fu">acti_flag_spike_second</span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">res</span> <span class="op">=</span> <span class="fu">acti_flag_same_value</span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">res</span> <span class="op">=</span> <span class="fu">acti_flag_device_limit</span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span></span>

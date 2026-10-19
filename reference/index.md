@@ -115,6 +115,9 @@
 - [`strip_hour_shift()`](https://jhuwit.github.io/actibase/reference/strip_hour_shift.md)
   : Strip Hour Shift from Character Time Vector
 
+- [`tzoffset_to_tz()`](https://jhuwit.github.io/actibase/reference/tzoffset_to_tz.md)
+  : Transform timezone offset to timezone
+
 - [`xyz`](https://jhuwit.github.io/actibase/reference/xyz.md)
   [`xyzt`](https://jhuwit.github.io/actibase/reference/xyz.md)
   [`txyz`](https://jhuwit.github.io/actibase/reference/xyz.md) : Vector
