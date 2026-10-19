@@ -19,9 +19,24 @@ test_that("basic helper utilities behave as expected", {
   )
   expect_error(strip_hour_shift("2019-01-01 12:00", max_index = 3))
 
-  expect_equal(tzoffset_to_tz("+04:00"), "Etc/GMT+4")
-  expect_equal(tzoffset_to_tz("-04:00"), "Etc/GMT-4")
-  expect_error(tzoffset_to_tz("+04:30"))
+})
+
+test_that("tzoffset_to_tz handles supported offsets", {
+  expect_equal(tzoffset_to_tz("+00:00"), "Etc/GMT0")
+  # Etc/GMT zones use the inverted sign convention
+  expect_equal(tzoffset_to_tz("-05:00"), "Etc/GMT+5")
+  expect_equal(tzoffset_to_tz("+01:00"), "Etc/GMT-1")
+  expect_equal(tzoffset_to_tz("+04:00"), "Etc/GMT-4")
+  expect_equal(tzoffset_to_tz("-04:00:00"), "Etc/GMT+4")
+  expect_equal(tzoffset_to_tz("+13:00"), "Etc/GMT-13")
+  expect_error(tzoffset_to_tz("+05:30"), "whole hours")
+  expect_error(tzoffset_to_tz("EST"), "must look like")
+  # the zone is the correct number of hours from UTC
+  x = as.POSIXct("2020-01-01 12:00:00", tz = "UTC")
+  expect_equal(format(x, tz = tzoffset_to_tz("-05:00")), "2020-01-01 07:00:00")
+  expect_equal(
+    tzoffset_to_seconds(c("+05:30", "-04:00:00", "+00:00")),
+    c(19800, -14400, 0))
 })
 
 

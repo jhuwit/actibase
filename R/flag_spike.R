@@ -96,7 +96,7 @@ acti_flag_spike = function(data, spike_size = 11, sample_rate = NULL,
 #' @param by_axis If `TRUE`, also return a separate indicator for each axis.
 #' @param digits Number of decimal places used when grouping axis values.
 #' @param chunk_windows Number of windows processed together to bound memory.
-acti_flag_interval_jump = function(data, verbose = FALSE, window_seconds = 1,
+acti_flag_interval_jump = function(data, verbose = TRUE, window_seconds = 1,
                               min_repeats = 10, min_distinct = 3,
                               min_separation = 0.5, by_axis = FALSE,
                               digits = 3, chunk_windows = 50000L) {

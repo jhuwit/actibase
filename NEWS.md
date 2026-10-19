@@ -1,3 +1,9 @@
+# actibase (development version)
+
+* `tzoffset_to_tz()` now lives in actibase and is exported. It uses the
+  correct inverted `Etc/GMT` sign convention (`"-05:00"` is `"Etc/GMT+5"`).
+* `acti_flag_interval_jump()` now defaults to `verbose = TRUE`.
+
 # actibase 0.8.0
 
 * `acti_fill_zeros()` gains `method = "actilife"`, which fills only all-zero runs at least one second (`sample_rate` rows) long, as in idle sleep, and keeps shorter runs (e.g. a single recorded `(0, 0, 0)` sample) as ActiLife does. The default `method = "all"` is unchanged.

@@ -59,19 +59,52 @@ strip_hour_shift = function(x, max_index = 2L) {
 }
 
 
-
-
-
-
+#' Transform timezone offset to timezone
+#'
+#' Converts UTC offsets such as `"-05:00"` (5 hours behind UTC) into the
+#' matching fixed-offset Olson time zone.  Note that `Etc/GMT` zones use an
+#' inverted sign convention, so `"-05:00"` is `"Etc/GMT+5"`.
+#'
+#' @param x A character vector of offsets in the form `"+HH:MM"` or
+#' `"+HH:MM:SS"`
+#'
+#' @returns A character vector
+#' @export
+#'
+#' @examples
+#' tzoffset_to_tz(c("+00:00", "-05:00", "+01:00"))
 tzoffset_to_tz = function(x) {
-  stopifnot(all(grepl(":00", x)))
-  x = sub(":00:00$", "", x)
-  x = sub(":00$", "", x)
-  stopifnot(nchar(x) <= 3)
-  x = as.numeric(x)
-  x = ifelse(x > 0, paste0("+", x), as.character(x))
+  seconds = tzoffset_to_seconds(x)
+  if (any(seconds %% 3600 != 0)) {
+    stop("Offsets that are not whole hours have no Etc/GMT time zone: ",
+         paste(unique(x[seconds %% 3600 != 0]), collapse = ", "),
+         call. = FALSE)
+  }
+  hours = -seconds / 3600
+  x = ifelse(hours > 0, paste0("+", hours), as.character(hours))
   x = paste0("Etc/GMT", x)
-  stopifnot(x %in% OlsonNames())
+  if (!all(x %in% OlsonNames())) {
+    stop("No Olson time zone for offset: ",
+         paste(unique(x[!x %in% OlsonNames()]), collapse = ", "),
+         call. = FALSE)
+  }
   x
+}
+
+# Convert "+HH:MM" or "+HH:MM:SS" offsets to signed seconds from UTC
+tzoffset_to_seconds = function(x) {
+  x = trimws(x)
+  pattern = "^([+-]?)([0-9]{1,2}):([0-9]{2})(:([0-9]{2}))?$"
+  if (!all(grepl(pattern, x))) {
+    stop("Timezone offsets must look like +HH:MM or +HH:MM:SS, got: ",
+         paste(unique(x[!grepl(pattern, x)]), collapse = ", "),
+         call. = FALSE)
+  }
+  sign = ifelse(sub(pattern, "\\1", x) == "-", -1, 1)
+  hours = as.numeric(sub(pattern, "\\2", x))
+  minutes = as.numeric(sub(pattern, "\\3", x))
+  secs = sub(pattern, "\\5", x)
+  secs = ifelse(nzchar(secs), as.numeric(secs), 0)
+  sign * (hours * 3600 + minutes * 60 + secs)
 }
 

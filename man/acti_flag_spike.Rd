@@ -16,7 +16,7 @@ acti_flag_spike(data, spike_size = 11, sample_rate = NULL, by_axis = FALSE)
 
 acti_flag_interval_jump(
   data,
-  verbose = FALSE,
+  verbose = TRUE,
   window_seconds = 1,
   min_repeats = 10,
   min_distinct = 3,
