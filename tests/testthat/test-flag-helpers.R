@@ -338,7 +338,7 @@ test_that("get_sample_rate handles header timestamp fallbacks", {
     Y = 4:6,
     Z = 7:9
   )
-  expect_warning(
+  expect_message(
     expect_equal(actibase::get_sample_rate(header_time_df), 0.1),
     "Guessing sample_rate"
   )
@@ -352,7 +352,7 @@ test_that("get_sample_rate handles header timestamp fallbacks", {
     Y = 4:6,
     Z = 7:9
   )
-  expect_warning(
+  expect_message(
     expect_equal(actibase::get_sample_rate(header_ts_df), 0.5),
     "Guessing sample_rate"
   )
@@ -366,7 +366,7 @@ test_that("get_sample_rate handles header timestamp fallbacks", {
     Y = 4:6,
     Z = 7:9
   )
-  expect_warning(
+  expect_message(
     expect_equal(actibase::get_sample_rate(fast_df), 1),
     "Guessing sample_rate"
   )
@@ -378,15 +378,14 @@ test_that("get_sample_rate handles header timestamp fallbacks", {
     Z = 7:9
   )
   warnings <- character()
-  uneven_sample_rate <- withCallingHandlers(
+  expect_message(uneven_sample_rate <- withCallingHandlers(
     actibase::get_sample_rate(uneven_fast_df),
     warning = function(w) {
       warnings <<- c(warnings, conditionMessage(w))
       invokeRestart("muffleWarning")
     }
-  )
+  ), "Guessing sample_rate")
   expect_equal(uneven_sample_rate, 75)
-  expect_true(any(grepl("Guessing sample_rate", warnings)))
   expect_true(any(grepl("Multiple sample rates", warnings)))
 
   one_time <- fast_df[1, ]
@@ -395,14 +394,14 @@ test_that("get_sample_rate handles header timestamp fallbacks", {
   expect_error(actibase::get_sample_rate(repeated_time), "distinct timestamps")
   missing_time <- fast_df
   missing_time$time[2] <- as.POSIXct(NA, tz = "UTC")
-  expect_warning(expect_equal(actibase::get_sample_rate(missing_time), 0.5),
+  expect_message(expect_equal(actibase::get_sample_rate(missing_time), 0.5),
                  "Guessing sample_rate")
 
   irregular_minute <- data.frame(
     time = as.POSIXct("2020-01-01 00:00:00", tz = "UTC") + c(0, 60, 180),
     X = 1:3, Y = 1:3, Z = 1:3
   )
-  expect_warning(
+  expect_message(
     expect_equal(actibase::get_sample_rate(irregular_minute), mean(c(1 / 60, 1 / 120))),
     "Guessing sample_rate"
   )

@@ -7,9 +7,9 @@
 \alias{acti_remove_leading_zeroes}
 \title{Fill in Zeros}
 \usage{
-acti_fill_zeros(data)
+acti_fill_zeros(data, method = c("all", "actilife"), sample_rate = NULL)
 
-acti_fill_zeroes(data)
+acti_fill_zeroes(data, method = c("all", "actilife"), sample_rate = NULL)
 
 acti_remove_leading_zeros(data)
 
@@ -17,6 +17,16 @@ acti_remove_leading_zeroes(data)
 }
 \arguments{
 \item{data}{a data frame containing columns time, X, Y, Z}
+
+\item{method}{\code{"all"} (default) fills every all-zero row.  \code{"actilife"}
+fills only runs of all-zero rows that are at least one second long
+(\code{sample_rate} rows) and keeps shorter runs as recorded zeros.  In idle
+sleep the device stops sampling for at least a second, and ActiLife repeats
+the last sample over that time, but a single recorded \verb{(0, 0, 0)} sample is
+kept by ActiLife.}
+
+\item{sample_rate}{sample rate, in Hz, used when \code{method = "actilife"}.
+If \code{NULL}, it is resolved with \code{\link[=get_sample_rate]{get_sample_rate()}}.}
 }
 \value{
 the modified data frame with zeros replaced by NA
@@ -24,7 +34,13 @@ the modified data frame with zeros replaced by NA
 \description{
 Fill in Zeros
 }
+\note{
+With \code{method = "actilife"}, the kept zero rows are still all zero, so
+a later step that treats all-zero rows as idle sleep (such as
+\code{agcounts::calculate_counts()}) will fill them anyway.
+}
 \examples{
 acti_fill_zeros(acti_raw_data)
 acti_fill_zeroes(acti_raw_data)
+acti_fill_zeros(acti_raw_data, method = "actilife")
 }

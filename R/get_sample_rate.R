@@ -51,7 +51,7 @@ get_sample_rate = function(data, sample_rate = NULL, flag_estimated = FALSE) {
       c("time", "HEADER_TIME_STAMP", "HEADER_TIMESTAMP") %in% colnames(data)
     )
   ) {
-    warning("Guessing sample_rate from the data")
+    message("Guessing sample_rate from the data")
     time = data[["time"]]
     if (is.null(time)) {
       time = data[["HEADER_TIME_STAMP"]]

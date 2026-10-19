@@ -174,6 +174,35 @@ test_that("sorting and zero filling preserve order and transformations", {
   expect_identical(acti_fill_zeroes(unsorted), filled)
 })
 
+test_that("acti_fill_zeros method = 'actilife' keeps runs shorter than a second", {
+  # 4 Hz: one isolated recorded zero, then a 1-second (4-row) idle-sleep gap
+  data <- data.frame(
+    time = as.POSIXct("2020-01-01 00:00:00", tz = "UTC") + (0:9) / 4,
+    X = c(1, 0, 2, 3, 0, 0, 0, 0, 4, 5),
+    Y = c(1, 0, 2, 3, 0, 0, 0, 0, 4, 5),
+    Z = c(1, 0, 2, 3, 0, 0, 0, 0, 4, 5)
+  )
+  filled <- acti_fill_zeros(data, method = "actilife", sample_rate = 4)
+  expect_equal(filled$X, c(1, 0, 2, 3, 3, 3, 3, 3, 4, 5))
+  expect_equal(filled$Z, filled$X)
+  expect_equal(
+    attr(filled, "transformations"),
+    "acti_fill_zeros:filled_zeros_actilife"
+  )
+
+  # default still fills every all-zero row
+  expect_equal(acti_fill_zeros(data)$X, c(1, 1, 2, 3, 3, 3, 3, 3, 4, 5))
+
+  # sample rate from the data attribute
+  attr(data, "sample_rate") <- 4
+  expect_equal(acti_fill_zeros(data, method = "actilife")$X, filled$X)
+  # a short gap at a higher rate is kept
+  expect_equal(
+    acti_fill_zeros(data, method = "actilife", sample_rate = 30)$X,
+    data$X
+  )
+})
+
 test_that("leading-zero removal drops only the initial all-zero rows", {
   data <- data.frame(
     time = as.POSIXct(

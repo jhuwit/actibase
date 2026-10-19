@@ -16,17 +16,37 @@ sort_time_df = function(data, prefix = NULL) {
 #' Fill in Zeros
 #'
 #' @param data a data frame containing columns time, X, Y, Z
+#' @param method `"all"` (default) fills every all-zero row.  `"actilife"`
+#' fills only runs of all-zero rows that are at least one second long
+#' (`sample_rate` rows) and keeps shorter runs as recorded zeros.  In idle
+#' sleep the device stops sampling for at least a second, and ActiLife repeats
+#' the last sample over that time, but a single recorded `(0, 0, 0)` sample is
+#' kept by ActiLife.
+#' @param sample_rate sample rate, in Hz, used when `method = "actilife"`.
+#' If `NULL`, it is resolved with [get_sample_rate()].
 #'
 #' @returns the modified data frame with zeros replaced by NA
+#' @note With `method = "actilife"`, the kept zero rows are still all zero, so
+#' a later step that treats all-zero rows as idle sleep (such as
+#' `agcounts::calculate_counts()`) will fill them anyway.
 #' @export
 #'
 #' @examples
 #' acti_fill_zeros(acti_raw_data)
 #' acti_fill_zeroes(acti_raw_data)
-acti_fill_zeros = function(data) {
+#' acti_fill_zeros(acti_raw_data, method = "actilife")
+acti_fill_zeros = function(data, method = c("all", "actilife"),
+                           sample_rate = NULL) {
+  method = match.arg(method)
+  if (method == "actilife") {
+    sample_rate = get_sample_rate(data, sample_rate = sample_rate)
+  }
   data = acti_standardize_data(data, subset_xyz = FALSE)
   data = sort_time_df(data, prefix = "acti_fill_zeros")
   data$all_zero = data$X == 0 & data$Y == 0 & data$Z == 0
+  if (method == "actilife") {
+    data$all_zero = zero_runs_at_least(data$all_zero, min_run = sample_rate)
+  }
   data$X = ifelse(data$all_zero, NA_real_, data$X)
   data$Y = ifelse(data$all_zero, NA_real_, data$Y)
   data$Z = ifelse(data$all_zero, NA_real_, data$Z)
@@ -40,8 +60,19 @@ acti_fill_zeros = function(data) {
   data$Y[is.na(data$Y)] = 0
   data$Z[is.na(data$Z)] = 0
 
-  data = set_transformations(data, "filled_zeros", prefix = "acti_fill_zeros", add = TRUE)
+  data = set_transformations(
+    data,
+    if (method == "actilife") "filled_zeros_actilife" else "filled_zeros",
+    prefix = "acti_fill_zeros", add = TRUE)
   data
+}
+
+# Keep TRUE only in runs of TRUE at least `min_run` long; NA is not TRUE
+zero_runs_at_least = function(x, min_run) {
+  x = x %in% TRUE
+  r = rle(x)
+  r$values = r$values & r$lengths >= min_run
+  inverse.rle(r)
 }
 
 #' @export

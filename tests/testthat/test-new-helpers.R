@@ -51,7 +51,7 @@ test_that("get_sample_rate prefers explicit values and falls back safely", {
   expect_equal(actibase::get_sample_rate(data), 25)
 
   attr(data, "sample_rate") <- NULL
-  expect_warning(expect_equal(actibase::get_sample_rate(data), 1), "Guessing sample_rate")
+  expect_message(expect_equal(actibase::get_sample_rate(data), 1), "Guessing sample_rate")
 
   acc <- structure(
     list(

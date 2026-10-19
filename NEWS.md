@@ -1,3 +1,8 @@
+# actibase 0.8.0
+
+* `acti_fill_zeros()` gains `method = "actilife"`, which fills only all-zero runs at least one second (`sample_rate` rows) long, as in idle sleep, and keeps shorter runs (e.g. a single recorded `(0, 0, 0)` sample) as ActiLife does. The default `method = "all"` is unchanged.
+* `get_sample_rate()` now uses a message, not a warning, when it guesses the sample rate from the timestamps.
+
 # actibase 0.7.2
 
 * Add `acti_flag_cdc_labels()` to map existing logical QC columns to CDC-style NHANES PAM letter codes.
