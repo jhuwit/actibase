@@ -28,7 +28,7 @@ LazyData: true
 Imports: 
     magrittr,
     dplyr,
-    lubridate,
+    lubridate (>= 1.9.0),
     hms,
     tidyr,
     assertthat,
