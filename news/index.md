@@ -2,6 +2,19 @@
 
 ## actibase (development version)
 
+- New
+  [`acti_standardize_epoch()`](https://jhuwit.github.io/actibase/reference/acti_standardize_epoch.md)
+  (and
+  [`acti_standardise_epoch()`](https://jhuwit.github.io/actibase/reference/acti_standardize_epoch.md))
+  converts an epoch given as a number, a string (`"1 min"`, `"30s"`,
+  `"1 hr"`), a `Duration`/`Period`, or a `difftime` into a number of
+  seconds/minutes/ hours/days or a
+  `floor_date()`/[`seq()`](https://rdrr.io/r/base/seq.html)-ready
+  string.
+- actibase now requires lubridate (\>= 1.9.0), the first version whose
+  `floor_date()` supports the absolute units (`"90 aseconds"`) that
+  [`acti_standardize_epoch()`](https://jhuwit.github.io/actibase/reference/acti_standardize_epoch.md)
+  can return.
 - [`tzoffset_to_tz()`](https://jhuwit.github.io/actibase/reference/tzoffset_to_tz.md)
   now lives in actibase and is exported. It uses the correct inverted
   `Etc/GMT` sign convention (`"-05:00"` is `"Etc/GMT+5"`).

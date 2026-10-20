@@ -75,6 +75,10 @@
   [`acti_standardise_data()`](https://jhuwit.github.io/actibase/reference/acti_standardize_data.md)
   : Standardize the Accelerometry Data
 
+- [`acti_standardize_epoch()`](https://jhuwit.github.io/actibase/reference/acti_standardize_epoch.md)
+  [`acti_standardise_epoch()`](https://jhuwit.github.io/actibase/reference/acti_standardize_epoch.md)
+  : Standardize an Epoch Length
+
 - [`acti_tidy_axes()`](https://jhuwit.github.io/actibase/reference/acti_tidy_axes.md)
   : Tidy axes to a long format
 
