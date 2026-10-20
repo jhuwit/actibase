@@ -69,10 +69,11 @@ strip_hour_shift = function(x, max_index = 2L) {
 #' `"+HH:MM:SS"`
 #'
 #' @returns A character vector
-#' @export
-#'
-#' @examples
-#' tzoffset_to_tz(c("+00:00", "-05:00", "+01:00"))
+#' @noRd
+# Not exported yet: CRAN actiread (<= 0.5.0) exports its own copy, and
+# packages that import() both actibase and actiread would warn about the
+# replaced import.  Export here (and re-export from actiread) in a later
+# release.
 tzoffset_to_tz = function(x) {
   seconds = tzoffset_to_seconds(x)
   if (any(seconds %% 3600 != 0)) {
