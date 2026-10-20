@@ -29,6 +29,7 @@
 
 - [`acti_flag_qc()`](https://jhuwit.github.io/actibase/reference/acti_flag_qc.md)
   [`acti_flag_qc_all()`](https://jhuwit.github.io/actibase/reference/acti_flag_qc.md)
+  [`flag_qc_all()`](https://jhuwit.github.io/actibase/reference/acti_flag_qc.md)
   : Flag Quality Control Values
 
 - [`acti_flag_repeated_samples()`](https://jhuwit.github.io/actibase/reference/acti_flag_repeated_samples.md)

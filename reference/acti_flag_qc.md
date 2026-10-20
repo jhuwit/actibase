@@ -1,6 +1,8 @@
 # Flag Quality Control Values
 
-Flag Quality Control Values
+`flag_qc_all()` is the pre-0.8.0 name of `acti_flag_qc_all()`, kept so
+that packages using it keep working. It will be deprecated in a future
+release; use `acti_flag_qc_all()` instead.
 
 ## Usage
 
@@ -14,6 +16,14 @@ acti_flag_qc(
 )
 
 acti_flag_qc_all(
+  data,
+  dynamic_range = NULL,
+  verbose = TRUE,
+  flags = c("all", "spike", "interval_jump", "spike_second", "same_value",
+    "device_limit", "all_zero", "impossible")
+)
+
+flag_qc_all(
   data,
   dynamic_range = NULL,
   verbose = TRUE,

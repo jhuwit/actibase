@@ -48,6 +48,8 @@
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.8.0" id="actibase-080">actibase 0.8.0<a class="anchor" aria-label="anchor" href="#actibase-080"></a></h2>
 <ul><li>
+<code><a href="../reference/acti_flag_qc.html">flag_qc_all()</a></code> is kept as an alias of <code><a href="../reference/acti_flag_qc.html">acti_flag_qc_all()</a></code> so that packages using the old name keep working; it will be deprecated later.</li>
+<li>
 <code><a href="../reference/acti_fill_zeros.html">acti_fill_zeros()</a></code> gains <code>method = "actilife"</code>, which fills only all-zero runs at least one second (<code>sample_rate</code> rows) long, as in idle sleep, and keeps shorter runs (e.g. a single recorded <code>(0, 0, 0)</code> sample) as ActiLife does. The default <code>method = "all"</code> is unchanged.</li>
 <li>
 <code><a href="../reference/get_sample_rate.html">get_sample_rate()</a></code> now uses a message, not a warning, when it guesses the sample rate from the timestamps.</li>

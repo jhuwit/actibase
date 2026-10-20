@@ -23,6 +23,11 @@
 
 ## actibase 0.8.0
 
+- [`flag_qc_all()`](https://jhuwit.github.io/actibase/reference/acti_flag_qc.md)
+  is kept as an alias of
+  [`acti_flag_qc_all()`](https://jhuwit.github.io/actibase/reference/acti_flag_qc.md)
+  so that packages using the old name keep working; it will be
+  deprecated later.
 - [`acti_fill_zeros()`](https://jhuwit.github.io/actibase/reference/acti_fill_zeros.md)
   gains `method = "actilife"`, which fills only all-zero runs at least
   one second (`sample_rate` rows) long, as in idle sleep, and keeps
