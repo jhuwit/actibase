@@ -40,8 +40,7 @@
 <h2 class="pkg-version" data-toc-text="development version" id="actibase-development-version">actibase (development version)<a class="anchor" aria-label="anchor" href="#actibase-development-version"></a></h2>
 <ul><li>New <code><a href="../reference/acti_standardize_epoch.html">acti_standardize_epoch()</a></code> (and <code><a href="../reference/acti_standardize_epoch.html">acti_standardise_epoch()</a></code>) converts an epoch given as a number, a string (<code>"1 min"</code>, <code>"30s"</code>, <code>"1 hr"</code>), a <code>Duration</code>/<code>Period</code>, or a <code>difftime</code> into a number of seconds/minutes/ hours/days or a <code>floor_date()</code>/<code><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq()</a></code>-ready string.</li>
 <li>actibase now requires lubridate (&gt;= 1.9.0), the first version whose <code>floor_date()</code> supports the absolute units (<code>"90 aseconds"</code>) that <code><a href="../reference/acti_standardize_epoch.html">acti_standardize_epoch()</a></code> can return.</li>
-<li>
-<code><a href="../reference/tzoffset_to_tz.html">tzoffset_to_tz()</a></code> now lives in actibase and is exported. It uses the correct inverted <code>Etc/GMT</code> sign convention (<code>"-05:00"</code> is <code>"Etc/GMT+5"</code>).</li>
+<li>The internal <code>tzoffset_to_tz()</code> now uses the correct inverted <code>Etc/GMT</code> sign convention (<code>"-05:00"</code> is <code>"Etc/GMT+5"</code>), matching actiread.</li>
 <li>
 <code><a href="../reference/acti_flag_spike.html">acti_flag_interval_jump()</a></code> now defaults to <code>verbose = TRUE</code>.</li>
 </ul></div>

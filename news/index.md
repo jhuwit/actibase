@@ -15,9 +15,9 @@
   `floor_date()` supports the absolute units (`"90 aseconds"`) that
   [`acti_standardize_epoch()`](https://jhuwit.github.io/actibase/reference/acti_standardize_epoch.md)
   can return.
-- [`tzoffset_to_tz()`](https://jhuwit.github.io/actibase/reference/tzoffset_to_tz.md)
-  now lives in actibase and is exported. It uses the correct inverted
-  `Etc/GMT` sign convention (`"-05:00"` is `"Etc/GMT+5"`).
+- The internal `tzoffset_to_tz()` now uses the correct inverted
+  `Etc/GMT` sign convention (`"-05:00"` is `"Etc/GMT+5"`), matching
+  actiread.
 - [`acti_flag_interval_jump()`](https://jhuwit.github.io/actibase/reference/acti_flag_spike.md)
   now defaults to `verbose = TRUE`.
 
