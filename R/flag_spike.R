@@ -61,7 +61,7 @@ mark_sample_runs = function(condition, min_length, time = NULL,
 #' res = acti_flag_all_zero(res)
 #' res = acti_flag_impossible(res)
 acti_flag_spike = function(data, spike_size = 11, sample_rate = NULL,
-                      by_axis = FALSE) {
+                           by_axis = FALSE) {
   X = Y = Z = NULL
   rm(list = c("X", "Y", "Z"))
 
@@ -97,9 +97,9 @@ acti_flag_spike = function(data, spike_size = 11, sample_rate = NULL,
 #' @param digits Number of decimal places used when grouping axis values.
 #' @param chunk_windows Number of windows processed together to bound memory.
 acti_flag_interval_jump = function(data, verbose = TRUE, window_seconds = 1,
-                              min_repeats = 10, min_distinct = 3,
-                              min_separation = 0.5, by_axis = FALSE,
-                              digits = 3, chunk_windows = 50000L) {
+                                   min_repeats = 10, min_distinct = 3,
+                                   min_separation = 0.5, by_axis = FALSE,
+                                   digits = 3, chunk_windows = 50000L) {
   value = window = NULL
   rm(list = c("value", "window"))
   data = acti_standardize_data(data, subset_xyz = FALSE)
@@ -192,8 +192,8 @@ acti_flag_interval_jump = function(data, verbose = TRUE, window_seconds = 1,
 #'   `acti_flag_spike_second` checks for repeated local extrema followed by a large
 #'   change within the requested time, then counts them within each window.
 acti_flag_spike_second = function(data, spike_size = 11, window_seconds = 1,
-                             min_spikes = 13, max_change_seconds = 0.1,
-                             sample_rate = NULL, by_axis = FALSE) {
+                                  min_spikes = 13, max_change_seconds = 0.1,
+                                  sample_rate = NULL, by_axis = FALSE) {
   data = acti_standardize_data(data, subset_xyz = FALSE)
   sample_rate = get_sample_rate(data, sample_rate)
   dynamic_range = attr(data, "dynamic_range")
@@ -325,7 +325,7 @@ acti_flag_adjacent_device_limit_samples = function(data, dynamic_range = NULL,
     dplyr::mutate(
       flag_adjacent_device_limit_samples = flag_device_limit &
         ((c(FALSE, adjacent) & dplyr::lag(flag_device_limit, default = FALSE)) |
-         (c(adjacent, FALSE) & dplyr::lead(flag_device_limit, default = FALSE)))
+           (c(adjacent, FALSE) & dplyr::lead(flag_device_limit, default = FALSE)))
     )
   data
 }
@@ -374,8 +374,8 @@ acti_flag_same_value = function(data, min_length = 1, sample_rate = NULL) {
         c(1, diff(Z)) == 0
     )
   data$flag_same_value = mark_sample_runs(data$flag_same_value,
-    min_length = min_length, time = if ("time" %in% names(data)) data$time else NULL,
-    sample_rate = sample_rate)
+                                          min_length = min_length, time = if ("time" %in% names(data)) data$time else NULL,
+                                          sample_rate = sample_rate)
   attr(data, "sample_rate") = sample_rate
   attr(data, "dynamic_range")   = dynamic_range
   data
@@ -400,8 +400,8 @@ acti_flag_all_zero = function(data, min_length = 3, sample_rate = NULL) {
       flag_all_zero = X == 0 & Y == 0 & Z == 0
     )
   data$flag_all_zero = mark_sample_runs(data$flag_all_zero,
-    min_length = min_length, time = if ("time" %in% names(data)) data$time else NULL,
-    sample_rate = sample_rate)
+                                        min_length = min_length, time = if ("time" %in% names(data)) data$time else NULL,
+                                        sample_rate = sample_rate)
   attr(data, "sample_rate") = sample_rate
   attr(data, "dynamic_range")   = dynamic_range
   data
@@ -417,8 +417,8 @@ acti_flag_all_zero = function(data, min_length = 3, sample_rate = NULL) {
 #' @param dynamic_range Device dynamic range. When omitted, it is read from the
 #'   data with `get_dynamic_range()`; data-based estimates are rejected.
 acti_flag_impossible = function(data, min_length = 7, change_threshold = 0.01,
-                           magnitude_threshold = 1.25, sample_rate = NULL,
-                           dynamic_range = NULL) {
+                                magnitude_threshold = 1.25, sample_rate = NULL,
+                                dynamic_range = NULL) {
   # #4
   # CDC's P rule requires at least seven contiguous samples. A run of seven
   # samples has six qualifying adjacent pairs.
@@ -524,8 +524,8 @@ acti_flag_contiguous_device_limits = function(data, dynamic_range = NULL,
 #' @return One row per window with axis-specific flags.
 #' @export
 acti_flag_device_limit_windows = function(data, dynamic_range = NULL,
-                                    epsilon = 0.05, min_count = 1,
-                                    window_seconds = 60) {
+                                          epsilon = 0.05, min_count = 1,
+                                          window_seconds = 60) {
   time = NULL
   rm(list = c("time"))
   data = acti_standardize_data(data, subset_xyz = FALSE)
@@ -535,7 +535,7 @@ acti_flag_device_limit_windows = function(data, dynamic_range = NULL,
   limit = max(abs(dynamic_range)) - epsilon
   origin = min(data$time, na.rm = TRUE)
   window = origin + floor(as.numeric(difftime(data$time, origin,
-                                               units = "secs")) / window_seconds) * window_seconds
+                                              units = "secs")) / window_seconds) * window_seconds
   out = data.frame(time = window)
   out$flag_device_max_X <- data$X > limit
   out$flag_device_max_Y <- data$Y > limit
@@ -546,7 +546,7 @@ acti_flag_device_limit_windows = function(data, dynamic_range = NULL,
   out = dplyr::as_tibble(out) %>%
     dplyr::group_by(time) %>%
     dplyr::summarise(dplyr::across(dplyr::starts_with("flag_"),
-      ~ sum(.x, na.rm = TRUE) >= min_count), .groups = "drop")
+                                   ~ sum(.x, na.rm = TRUE) >= min_count), .groups = "drop")
   out
 }
 
@@ -562,7 +562,7 @@ acti_flag_device_limit_windows = function(data, dynamic_range = NULL,
 #' @return Input data with `flag_adjacent_invalid`.
 #' @export
 acti_flag_adjacent_invalid_periods = function(data, invalid, time = "time",
-                                        window_seconds, group = NULL) {
+                                              window_seconds, group = NULL) {
   if (length(invalid) != nrow(data)) stop("`invalid` must match the number of rows.", call. = FALSE)
   invalid[is.na(invalid)] = FALSE
   if (!time %in% names(data)) stop("`time` column not found.", call. = FALSE)
@@ -607,8 +607,8 @@ acti_flag_adjacent_invalid_periods = function(data, invalid, time = "time",
 #' @return Input data with `flag_repeated_samples`.
 #' @export
 acti_flag_repeated_samples = function(data, sample_rate = NULL, min_length = 2,
-                                 exclude_zero = FALSE,
-                                 require_equal_axes = FALSE) {
+                                      exclude_zero = FALSE,
+                                      require_equal_axes = FALSE) {
   data = acti_standardize_data(data, subset_xyz = FALSE)
   sample_rate = get_sample_rate(data, sample_rate)
   same = rep(FALSE, nrow(data))
@@ -623,7 +623,7 @@ acti_flag_repeated_samples = function(data, sample_rate = NULL, min_length = 2,
     same = c(pair, FALSE) | c(FALSE, pair)
   }
   data$flag_repeated_samples = mark_sample_runs(same, min_length = min_length,
-    time = data$time, sample_rate = sample_rate)
+                                                time = data$time, sample_rate = sample_rate)
   data
 }
 
@@ -647,17 +647,17 @@ acti_flag_repeated_samples = function(data, sample_rate = NULL, min_length = 2,
 #' @return Input data with a character column of CDC-style flag letters.
 #' @export
 acti_flag_cdc_labels = function(data, flag_map = c(
-    A = "flag_spike_X", B = "flag_spike_Y", C = "flag_spike_Z",
-    D = "flag_device_max_X", E = "flag_device_max_Y", F = "flag_device_max_Z",
-    G = "flag_device_min_X", H = "flag_device_min_Y", I = "flag_device_min_Z",
-    J = "flag_contiguous_max_X", K = "flag_contiguous_max_Y",
-    L = "flag_contiguous_max_Z", M = "flag_contiguous_min_X",
-    N = "flag_contiguous_min_Y", O = "flag_contiguous_min_Z",
-    P = "flag_impossible", Q = "flag_all_zero", R = "flag_repeated_samples",
-    S = "flag_spike_second_X", T = "flag_spike_second_Y",
-    U = "flag_spike_second_Z", V = "flag_adjacent_invalid",
-    W = "flag_interval_jump_X", X = "flag_interval_jump_Y",
-    Y = "flag_interval_jump_Z"), output = "PAXFLGSM", separator = "") {
+  A = "flag_spike_X", B = "flag_spike_Y", C = "flag_spike_Z",
+  D = "flag_device_max_X", E = "flag_device_max_Y", F = "flag_device_max_Z",
+  G = "flag_device_min_X", H = "flag_device_min_Y", I = "flag_device_min_Z",
+  J = "flag_contiguous_max_X", K = "flag_contiguous_max_Y",
+  L = "flag_contiguous_max_Z", M = "flag_contiguous_min_X",
+  N = "flag_contiguous_min_Y", O = "flag_contiguous_min_Z",
+  P = "flag_impossible", Q = "flag_all_zero", R = "flag_repeated_samples",
+  S = "flag_spike_second_X", T = "flag_spike_second_Y",
+  U = "flag_spike_second_Z", V = "flag_adjacent_invalid",
+  W = "flag_interval_jump_X", X = "flag_interval_jump_Y",
+  Y = "flag_interval_jump_Z"), output = "PAXFLGSM", separator = "") {
   default_map = missing(flag_map)
   if (!is.character(flag_map) || is.null(names(flag_map)) ||
       anyNA(flag_map) || any(!nzchar(names(flag_map))) || anyDuplicated(names(flag_map))) {
@@ -705,10 +705,10 @@ acti_flag_cdc_labels = function(data, flag_map = c(
 #' res = acti_raw_data
 #' out = acti_flag_qc(res)
 acti_flag_qc = function(data, dynamic_range = NULL, verbose = TRUE,
-                   flags = c("all", "spike", "interval_jump",
-                             "spike_second",
-                             "same_value", "device_limit",
-                             "all_zero", "impossible")
+                        flags = c("all", "spike", "interval_jump",
+                                  "spike_second",
+                                  "same_value", "device_limit",
+                                  "all_zero", "impossible")
 ){
   data = acti_flag_qc_all(data, dynamic_range, verbose, flags = flags)
   transformations = get_transformations(data)
@@ -752,10 +752,10 @@ acti_flag_qc = function(data, dynamic_range = NULL, verbose = TRUE,
 #' @rdname acti_flag_qc
 #' @export
 acti_flag_qc_all = function(data, dynamic_range = NULL, verbose = TRUE,
-                       flags = c("all", "spike", "interval_jump",
-                                 "spike_second",
-                                 "same_value", "device_limit",
-                                 "all_zero", "impossible")) {
+                            flags = c("all", "spike", "interval_jump",
+                                      "spike_second",
+                                      "same_value", "device_limit",
+                                      "all_zero", "impossible")) {
   transformations = get_transformations(data)
   transforms = NULL
   is_acc = is.AccData(data)
@@ -855,3 +855,10 @@ acti_flag_qc_all = function(data, dynamic_range = NULL, verbose = TRUE,
   # nocov end
   data
 }
+
+#' @rdname acti_flag_qc
+#' @description `flag_qc_all()` is the pre-0.8.0 name of `acti_flag_qc_all()`,
+#' kept so that packages using it keep working.  It will be deprecated in a
+#' future release; use `acti_flag_qc_all()` instead.
+#' @export
+flag_qc_all = acti_flag_qc_all

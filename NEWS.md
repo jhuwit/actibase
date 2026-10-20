@@ -13,6 +13,8 @@
 
 # actibase 0.8.0
 
+* `flag_qc_all()` is kept as an alias of `acti_flag_qc_all()` so that
+  packages using the old name keep working; it will be deprecated later.
 * `acti_fill_zeros()` gains `method = "actilife"`, which fills only all-zero runs at least one second (`sample_rate` rows) long, as in idle sleep, and keeps shorter runs (e.g. a single recorded `(0, 0, 0)` sample) as ActiLife does. The default `method = "all"` is unchanged.
 * `get_sample_rate()` now uses a message, not a warning, when it guesses the sample rate from the timestamps.
 

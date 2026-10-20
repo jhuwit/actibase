@@ -3,6 +3,7 @@
 \name{acti_flag_qc}
 \alias{acti_flag_qc}
 \alias{acti_flag_qc_all}
+\alias{flag_qc_all}
 \title{Flag Quality Control Values}
 \usage{
 acti_flag_qc(
@@ -14,6 +15,14 @@ acti_flag_qc(
 )
 
 acti_flag_qc_all(
+  data,
+  dynamic_range = NULL,
+  verbose = TRUE,
+  flags = c("all", "spike", "interval_jump", "spike_second", "same_value",
+    "device_limit", "all_zero", "impossible")
+)
+
+flag_qc_all(
   data,
   dynamic_range = NULL,
   verbose = TRUE,
@@ -37,7 +46,9 @@ A data set with a \code{flags} column (\code{acti_flag_qc}) or a number of
 columns starting with \verb{flag_*} (\code{acti_flag_qc_all})
 }
 \description{
-Flag Quality Control Values
+\code{flag_qc_all()} is the pre-0.8.0 name of \code{acti_flag_qc_all()},
+kept so that packages using it keep working.  It will be deprecated in a
+future release; use \code{acti_flag_qc_all()} instead.
 }
 \examples{
 res = acti_raw_data
