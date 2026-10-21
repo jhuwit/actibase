@@ -1,4 +1,4 @@
-# actibase (development version)
+# actibase 0.8.0
 
 * New `acti_standardize_epoch()` (and `acti_standardise_epoch()`) converts
   an epoch given as a number, a string (`"1 min"`, `"30s"`, `"1 hr"`), a
@@ -10,9 +10,6 @@
 * The internal `tzoffset_to_tz()` now uses the correct inverted `Etc/GMT`
   sign convention (`"-05:00"` is `"Etc/GMT+5"`), matching actiread.
 * `acti_flag_interval_jump()` now defaults to `verbose = TRUE`.
-
-# actibase 0.8.0
-
 * `flag_qc_all()` is kept as an alias of `acti_flag_qc_all()` so that
   packages using the old name keep working; it will be deprecated later.
 * `acti_fill_zeros()` gains `method = "actilife"`, which fills only all-zero runs at least one second (`sample_rate` rows) long, as in idle sleep, and keeps shorter runs (e.g. a single recorded `(0, 0, 0)` sample) as ActiLife does. The default `method = "all"` is unchanged.
