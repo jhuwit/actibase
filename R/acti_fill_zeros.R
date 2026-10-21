@@ -34,7 +34,9 @@ sort_time_df = function(data, prefix = NULL) {
 #' @examples
 #' acti_fill_zeros(acti_raw_data)
 #' acti_fill_zeroes(acti_raw_data)
-#' acti_fill_zeros(acti_raw_data, method = "actilife")
+#' \donttest{
+#'    acti_fill_zeros(acti_raw_data, method = "actilife")
+#' }
 acti_fill_zeros = function(data, method = c("all", "actilife"),
                            sample_rate = NULL) {
   method = match.arg(method)

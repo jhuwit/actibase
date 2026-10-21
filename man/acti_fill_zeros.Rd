@@ -42,5 +42,7 @@ a later step that treats all-zero rows as idle sleep (such as
 \examples{
 acti_fill_zeros(acti_raw_data)
 acti_fill_zeroes(acti_raw_data)
-acti_fill_zeros(acti_raw_data, method = "actilife")
+\donttest{
+   acti_fill_zeros(acti_raw_data, method = "actilife")
+}
 }
