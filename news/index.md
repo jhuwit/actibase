@@ -23,6 +23,8 @@
 
 ## actibase 0.8.0
 
+CRAN release: 2026-10-21
+
 - [`flag_qc_all()`](https://jhuwit.github.io/actibase/reference/acti_flag_qc.md)
   is kept as an alias of
   [`acti_flag_qc_all()`](https://jhuwit.github.io/actibase/reference/acti_flag_qc.md)

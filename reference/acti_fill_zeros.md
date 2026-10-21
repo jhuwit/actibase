@@ -78,7 +78,8 @@ acti_fill_zeroes(acti_raw_data)
 #>  9 2019-09-17 18:40:00 0.016  0     1.01 
 #> 10 2019-09-17 18:40:00 0.012  0     1.02 
 #> # ℹ 240,490 more rows
-acti_fill_zeros(acti_raw_data, method = "actilife")
+# \donttest{
+   acti_fill_zeros(acti_raw_data, method = "actilife")
 #> # A tibble: 240,500 × 4
 #>    time                    X      Y     Z
 #>    <dttm>              <dbl>  <dbl> <dbl>
@@ -93,4 +94,5 @@ acti_fill_zeros(acti_raw_data, method = "actilife")
 #>  9 2019-09-17 18:40:00 0.016  0     1.01 
 #> 10 2019-09-17 18:40:00 0.012  0     1.02 
 #> # ℹ 240,490 more rows
+# }
 ```
