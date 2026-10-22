@@ -1,6 +1,8 @@
 # Changelog
 
-## actibase (development version)
+## actibase 0.8.0
+
+CRAN release: 2026-10-21
 
 - New
   [`acti_standardize_epoch()`](https://jhuwit.github.io/actibase/reference/acti_standardize_epoch.md)
@@ -20,11 +22,6 @@
   actiread.
 - [`acti_flag_interval_jump()`](https://jhuwit.github.io/actibase/reference/acti_flag_spike.md)
   now defaults to `verbose = TRUE`.
-
-## actibase 0.8.0
-
-CRAN release: 2026-10-21
-
 - [`flag_qc_all()`](https://jhuwit.github.io/actibase/reference/acti_flag_qc.md)
   is kept as an alias of
   [`acti_flag_qc_all()`](https://jhuwit.github.io/actibase/reference/acti_flag_qc.md)
